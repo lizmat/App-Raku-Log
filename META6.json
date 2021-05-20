@@ -1,0 +1,26 @@
+{
+  "auth": "cpan:ELIZABETH",
+  "authors": [
+    "Elizabeth Mattijsen"
+  ],
+  "build-depends": [
+  ],
+  "depends": [
+    "App::IRC::Log:ver<0.0.1>:auth<cpan:ELIZABETH>"
+  ],
+  "description": "Cro application for presenting Raku IRC logs",
+  "license": "Artistic-2.0",
+  "name": "App::Raku::Logs",
+  "perl": "6.d",
+  "provides": {
+    "App::Raku::Logs": "lib/App/Raku/Logs.rakumod"
+  },
+  "resources": [
+  ],
+  "source-url": "",
+  "tags": [
+  ],
+  "test-depends": [
+  ],
+  "version": "0.0.1"
+}
