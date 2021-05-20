@@ -1,0 +1,20 @@
+<html>
+<head>
+  <title>Entries around <.around> on #<.channel> IRC Channel</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <table class="chat" valign="top">
+    <@entries>
+      <?{ .is-target }><tr><td colspan="3"><hr/></td></tr></?>
+      <tr class="<?.conversation>talk odd</?><!.conversation>special</!>" id="<.target>">
+        <td class="time" align="right"><.hh-mm></td>
+        <td class="nick"><&HTML(.sender)></td>
+        <td class="message"><&HTML(.message)></td>
+      </tr>
+      <?{ .is-target }><tr><td colspan="3"><hr/></td></tr></?>
+    </@>
+  </table>
+</body>
+</html>

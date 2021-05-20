@@ -1,0 +1,151 @@
+<html>
+<head>
+  <title>Search results on #<.name> IRC Channel</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1 align="center" style="font-weight: bolder">#<.name></h1>
+  <hr/>
+  <&links($_, .name, .type, .message-type, .entries-pp)>
+  <hr/>
+  <table class="chat" valign="top">
+    <tr class="head">
+      <th>Time</th>
+      <th>Nick</th>
+      <th>Message</th>
+    </tr>
+    <@entries>
+      <?{ .human-date }><tr><td class="date" colspan="3"><hr/><.human-date><hr/></td></tr></?>
+      <tr class="<?.conversation>talk odd</?><!.conversation>special</!>" id="<.target>">
+        <td class="time" align="right"><.hh-mm></td>
+        <td class="nick"><&HTML(.sender)>&nbsp;<a href="/<.channel>/<.date>.html#<.relative-target>">§</a></td>
+        <td class="message"><&HTML(.message)></td>
+      </tr>
+    </@>
+  </table>
+  <hr/>
+  <&links($_, .name, .type, .message-type, .entries-pp)>
+  <div id="footer">Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a><br/>
+  Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log</a>. Thank you!
+  <br/>(<.elapsed> msecs)
+  </div>
+</body>
+</html>
+
+<:sub day-pulldown($_, $prefix, $value)>&nbsp;<select
+  name="<$prefix>-day" id="<$prefix>-day">
+  <option value="">Day</option>
+  <@days>
+    <option value="<$_>"<?{ $_ eq $value }> selected</?>><$_></option>
+  </@>
+  </select></:>
+
+<:sub month-pulldown($_, $prefix, $value)>&nbsp;<select
+  name="<$prefix>-month" id="<$prefix>-month">
+    <option value="">Month</option>
+    <@months>
+      <option value="<.key>"<?{ .key eq $value }> selected</?>><.value></option>
+    </@>
+  </select></:>
+
+<:sub year-pulldown($_, $prefix, $value)>&nbsp;<select
+  name="<$prefix>-year" id="<$prefix>-year">
+  <option value="">Year</option>
+  <@years>
+    <option value="<$_>"<?{ $_ eq $value }> selected</?>><$_></option>
+  </@>
+  </select></:>
+
+<:sub links($_, $channel, $type, $message-type, $pp)>
+<p>
+<table width="100%"><tr>
+  <form action="/search.html">
+  <td>
+    <table><tr>
+      <td>Search&nbsp;<input
+            name="query"
+            placeholder="Enter query"
+            value="<.query>"
+            onkeydown="if (event.keyCode == 13) {
+                this.form.submit();
+                return false;
+            }"
+          />
+      </td>
+      <td><label for="type"/>
+        <select name="type" id="type">
+          <@type-options>
+            <option value="<.key>"<?{ .key eq $type }> selected</?>><.value></option>
+          </@>
+        </select>
+      </td>
+      <td><label for="channel">on channel</label>
+        <select name="channel" id="channel">
+        <@channels>
+          <option value="<$_>"<?{ $_ eq $channel }> selected</?>><$_></option>
+        </@>
+        </select>
+      </td>
+      <td>by&nbsp;nick(s)&nbsp;<input
+            name="nicks"
+            value="<.nicks>"
+            placeholder="Enter nick(s)"
+            onkeydown="if (event.keyCode == 13) {
+                this.form.submit();
+                return false;
+             }"
+          />
+      </td>
+      <td><input type="submit" name="submit", value="Search"/></td>
+    </tr>
+    <tr>
+      <td>From<&day-pulldown($_, 'from', .from-day)><&month-pulldown($_, 'from', .from-month)><&year-pulldown($_, 'from', .from-year)></td>
+      <td><input type="checkbox" name="all" value="True"<?{ .all }> checked</?>> all words</td>
+      <td align="right"><label for="message-type"/>
+        <select name="message-type" id="message-type">
+          <@message-options>
+            <option value="<.key>"<?{ .key eq $message-type }> selected</?>><.value></option>
+          </@>
+        </select>
+      </td>
+      <td align="right"><input type="checkbox" name="include-aliases" value="True"<?{ .include-aliases }> checked</?>> include nick aliases</td>
+      <td><label for="entries-pp"/>
+        <select name="entries-pp" id="entries-pp">
+        <@entries-pp-options>
+          <option value="<$_>"<?{ $_ eq $pp }> selected</?>><$_></option>
+        </@>
+        </select>max
+      </td>
+    </tr>
+    <tr>
+      <td>Until<&day-pulldown($_, 'to', .to-day)><&month-pulldown($_, 'to', .to-month)><&year-pulldown($_, 'to', .to-year)></td>
+      <td><input type="checkbox" name="ignorecase" value="True"<?{ .ignorecase }> checked</?>> case insensitive</td>
+      <td></td>
+      <td></td>
+      <td>
+        <input type="submit" name="first" value="|&lt;"/>
+        <?{ .first-target }>
+          <input type="hidden" name="first-target" value="<.first-target>"/>
+        </?>
+        <input type="submit" name="prev" value="&lt;"/<!{ .first-target }> disabled</!>>
+        <?{ .last-target }>
+          <input type="hidden" name="last-target" value="<.last-target>"/>
+        </?>
+        <input type="submit" name="next" value="&gt;"/<!{ .last-target }> disabled</!>>
+        <input type="submit" name="last" value="&gt;|"/>
+      </td>
+    </tr>
+    <tr>
+    </tr>
+  </table></td>
+  </form>
+  <td align="right">
+    <a href="/<.name>/today">Today</a>
+    <a href="/<.name>/random">I feel lucky</a>
+    <a href="/<.name>/index.html">Index</a>
+    <a href="/home.html">Home</a>
+  </td>
+</tr></table>
+</p>
+</:>

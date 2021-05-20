@@ -1,5 +1,5 @@
 use Test;
-use App::Raku::Logs;
+use App::Raku::Log;
 
 pass "replace me";
 

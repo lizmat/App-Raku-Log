@@ -16,6 +16,13 @@
     "App::Raku::Logs": "lib/App/Raku/Logs.rakumod"
   },
   "resources": [
+    "static/favicon.ico",
+    "static/style.css",
+    "templates/around.crotmp",
+    "templates/day.crotmp",
+    "templates/home.crotmp",
+    "templates/index.crotmp",
+    "templates/search.crotmp"
   ],
   "source-url": "",
   "tags": [

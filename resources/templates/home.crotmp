@@ -1,0 +1,37 @@
+<html>
+<head>
+  <title>Welcome to the home of the Raku Programming Language IRC logs</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <h1>Welcome to the home of the Raku Programming Language IRC logs</h1>
+  <p>
+This website provides access to the historic IRC logs of the development of
+the <a href="https://raku.org">Raku Programming Language</a> (née Perl 6).
+They are provided here as complete as possible, but there is no guarantee
+that these logs are by any means complete: network issues can cause an IRC
+logger to lose connection with the IRC server, while people are still chatting
+on a channel.  Thus losing parts of the conversation, at least as seen by some
+people on a channel.
+  </p>
+  <p>
+The following logs are currently available (in alphabetical order):
+  </p>
+  <@channels>
+    </hr>
+    <h2>#<.name> <.first-human-date> - <.last-human-date></h2>
+    <p><form action="/<.name>/search.html">Search: <input name="query"/></form></p>
+    <p>
+    <@years>
+      <span style="font-weight: bold"><.year>:</span>
+      <@months>
+        <a href="/<.channel>/<.month>"><.human-month></a>
+      </@>
+    </@>
+    </p>
+  </@>
+  <div id="footer">Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a><br/>
+  Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log</a>. Thank you!</div>
+</body>
+</html>

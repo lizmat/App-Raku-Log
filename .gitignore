@@ -1,2 +1,7 @@
 .precomp/
-/App-Raku-Logs-*
+/App-Raku-Log-*
+/releases/
+/html/*
+/state/
+*.gz
+/logs
