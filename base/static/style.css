@@ -21,6 +21,15 @@ h1, h2, h3,  #footer * {
     padding-right: 1ex;
 }
 
+#test-t {
+    background-color: #ddffdd;
+	border: 2px solid;
+    color: #000011;
+    display: inline;
+    padding-left: 1ex;
+    padding-right: 1ex;
+}
+
 #commit {
     background-color: #ffdddd;
 	border: 2px solid;

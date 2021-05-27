@@ -1,0 +1,19 @@
+<html>
+<head>
+  <title>Selected entries on #<.channel> IRC Channel</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <table class="chat" valign="top">
+    <@entries>
+      <?{ .human-date }><tr><td class="date" colspan="3"><hr/><.human-date><hr/></td></tr></?>
+      <tr class="<?.conversation>talk odd</?><!.conversation>special</!>" id="<.target>">
+        <td class="time" align="right"><.hh-mm></td>
+        <td class="nick"><&HTML(.sender)>&nbsp;<a href="/<.channel>/<.date>.html#<.relative-target>">§</a></td>
+        <td class="message"><&HTML(.message)></td>
+      </tr>
+    </@>
+  </table>
+</body>
+</html>

@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Entries around <.around> on #<.channel> IRC Channel</title>
+  <title>Entries around <.target> on #<.channel> IRC Channel</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
