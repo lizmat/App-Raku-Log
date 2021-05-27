@@ -22,7 +22,12 @@ sub MAIN(
   IO() :$zip-dir      = $base-dir.child('zip'),
        :$host         = 'localhost',
        :$port         = 10000,
+       :$channels,
   ) {
+
+    my @channels = $channels
+      ?? $channels.split(",")
+      !! App::IRC::Log.default-channels($log-dir);
 
     my $ail := App::IRC::Log.new:
       :$log-class, :$log-dir,
@@ -30,7 +35,7 @@ sub MAIN(
       colorize-nick => &colorize-nick,
       htmlize       => &htmlize,
       day-plugins   => day-plugins(),
-channels => <raku raku-dev moarvm>,
+      channels      => @channels,
     ;
 
     my $service := Cro::HTTP::Server.new:
