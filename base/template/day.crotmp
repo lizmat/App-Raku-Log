@@ -18,11 +18,13 @@
         </td></tr>
       </?>
       <!.control-events>
-        <?{ .sender && .sender ne '"' }>
-          <tr id="nick">
-            <td class="nick" style="font-size: 120%;"><&HTML(.sender)></td>
-            <td id="<.relative-target>" align="right"><a href="#<.relative-target>">§</a></td>
-          </tr>
+        <?{ .sender && .sender ne '"'}>
+          <!{ .commit }>
+            <tr id="nick">
+              <td class="nick" style="font-size: 120%;"><&HTML(.sender)></td>
+              <td id="<.relative-target>" align="right"><a href="#<.relative-target>">§</a></td>
+            </tr>
+          </!>
         </?>
         <tr><td class="talk odd"
           <?{ .commit }> id="commit"</?>

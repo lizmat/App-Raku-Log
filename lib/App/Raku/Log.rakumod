@@ -112,7 +112,6 @@ sub merge-control-messages(@entries) {
             }
             else {
                 $merging := @entries[$index] := Map.new((
-                  message         => "",
                   control-events  => [ %entry<hh-mm> => %entry<message> ],
                   relative-target => %entry<relative-target>,
                 ));
@@ -245,9 +244,9 @@ sub mark-camelia-invocations(@entries --> Nil) {
 
 sub day-plugins() is export {
     my constant @day-plugins =
-      &merge-control-messages,
       &merge-commit-messages, 
       &merge-test-t-messages, 
+      &merge-control-messages,
       &mark-camelia-invocations
     ;
 }
