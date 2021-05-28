@@ -157,8 +157,7 @@ tr, td {
 .chat th { border-bottom: 1px solid #C0C0C0; }
 
 .chat .nick {
-    text-align: right;
-    border-right: 1px solid #C0C0C0;
+    border-left: 2px solid #C0C0C0;
     font-weight: bold;
 }
 

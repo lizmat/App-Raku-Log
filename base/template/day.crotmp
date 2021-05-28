@@ -9,20 +9,33 @@
   <&links($_, .channel, .date)>
   <hr/>
   <table class="chat" valign="top">
-    <tr class="head">
-      <th>Time</th>
-      <th>Nick</th>
-      <th>Message</th>
-    </tr>
     <@entries>
-      <tr class="<?.conversation>talk odd</?><!.conversation>special</!>" id="<.relative-target>">
-        <td class="time"><.hh-mm></td>
-        <td class="nick"><&HTML(.sender)>&nbsp;<a href="#<.relative-target>">§</a></td>
-        <td class="message"
+      <?.control-events>
+        <tr class="special" id="<.relative-target>"><td colspan="2"><a href="#<.relative-target>">§</a>
+        <@control-events>
+          <b><.key></b> <&HTML(.value)>
+        </@>
+        </td></tr>
+      </?>
+      <!.control-events>
+        <?{ .sender && .sender ne '"' }>
+          <tr id="nick">
+            <td class="nick" style="font-size: 120%;"><&HTML(.sender)></td>
+            <td id="<.relative-target>" align="right"><a href="#<.relative-target>">§</a></td>
+          </tr>
+        </?>
+        <tr><td class="talk odd"
           <?{ .commit }> id="commit"</?>
           <?{ .test-t }> id="test-t"</?>
         ><&HTML(.message)></td>
-      </tr>
+        <?.hh-mm>
+          <td><.hh-mm></td>
+        </?>
+        <!.hh-mm>
+          <td></td>
+        </!>
+        </tr>
+      </!>
     </@>
   </table>
   <&links($_, .channel, .date)>

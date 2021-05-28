@@ -99,20 +99,26 @@ sub htmlize($entry, %colors) is export {
 sub merge-control-messages(@entries) {
     my $merging;
     for @entries.kv -> $index, %entry {
-        if %entry<ordinal> {
-            if !%entry<conversation> {
-                if $merging || !@entries[$index - 1]<conversation> {
-                    $merging = $index - 1 without $merging;
-                    @entries[$merging]<message> ~= ", %entry<message>";
-                    @entries[$index] = Any;
+        if !%entry<conversation> {
+            if $merging {
+                my @events := $merging<control-events>;
+                if %entry<hh-mm> -> $hh-mm {
+                    @events.push: $hh-mm => [%entry<message>];
                 }
+                else {
+                    @events.tail.value ~= ", %entry<message>";
+                }
+                @entries[$index] = Any;
             }
             else {
-                $merging = Any;
+                $merging := @entries[$index] := Map.new((
+                  control-events  => [ %entry<hh-mm> => %entry<message> ],
+                  relative-target => %entry<relative-target>,
+                ));
             }
         }
-        else {
-            $merging = Any;
+        elsif $merging {
+            $merging := Any;
         }
     }
     @entries.grep(*.defined);
