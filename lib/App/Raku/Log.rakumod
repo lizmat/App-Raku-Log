@@ -112,6 +112,7 @@ sub merge-control-messages(@entries) {
             }
             else {
                 $merging := @entries[$index] := Map.new((
+                  message         => "",
                   control-events  => [ %entry<hh-mm> => %entry<message> ],
                   relative-target => %entry<relative-target>,
                 ));
