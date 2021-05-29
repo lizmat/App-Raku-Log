@@ -149,6 +149,9 @@ sub merge-commit-messages(@entries) {
                 }
 
                 if ++$i < $index {
+                    ++$i   # correct if we stopped because of date boundary
+                      if $i == 0
+                      && !@entries[$i]<message>.starts-with($prefix);
                     my int $final = $i;
                     my str $message = @entries[$i]<message>;
                     while ++$i <= $index && @entries[$i] -> \entry {
