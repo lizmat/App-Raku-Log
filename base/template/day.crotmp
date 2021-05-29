@@ -21,7 +21,7 @@
         <?{ .sender && .sender ne '"'}>
           <!{ .commit }>
             <tr id="nick">
-              <td class="nick" style="font-size: 120%;"><&HTML(.sender)></td>
+              <td class="nick" style="font-size: 110%;"><&HTML(.sender)></td>
               <td id="<.relative-target>" align="right"><a href="#<.relative-target>">§</a></td>
             </tr>
           </!>
@@ -31,7 +31,7 @@
           <?{ .test-t }> id="test-t"</?>
         ><&HTML(.message)></td>
         <?.hh-mm>
-          <td><.hh-mm></td>
+          <td align="right"><.hh-mm></td>
         </?>
         <!.hh-mm>
           <td></td>
