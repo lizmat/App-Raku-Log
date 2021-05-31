@@ -108,12 +108,14 @@ sub merge-control-messages(@entries) {
                 else {
                     @events.tail.value ~= ", %entry<message>";
                 }
+                $merging<targets>.push: %entry<relative-target>;
                 @entries[$index] = Any;
             }
             else {
                 $merging := @entries[$index] := Map.new((
                   control-events  => [ %entry<hh-mm> => %entry<message> ],
                   relative-target => %entry<relative-target>,
+                  targets         => (my str @targets),
                 ));
             }
         }
@@ -132,40 +134,29 @@ sub merge-commit-messages(@entries) {
             with $message.index(": review:")
               // $message.index(": review:") -> int $pos is copy {
 
-                my $prefix  := $message.substr(0,++$pos);
-                my int $i    = $index;
-                my int $skipped;
+                my $prefix := $message.substr(0,++$pos);
+                my $nick   := %entry<nick>;
+                my int $i   = $index;
+                my int @indices = $index;
                 while --$i >= 0 && @entries[$i] -> \entry {
-                    if entry<message>.starts-with($prefix) {
-                        $skipped = 0;
-                    }
-                    elsif $skipped == 2 {
-                        $i += $skipped;
-                        last;
-                    }
-                    else {
-                        ++$skipped;
-                    }
+                    last if entry<commit>;  # ran into previous commit
+                    @indices.unshift($i)
+                      if entry<nick> eq $nick
+                      && entry<message>.starts-with($prefix);
                 }
 
-                if ++$i < $index {
-                    ++$i   # correct if we stopped because of date boundary
-                      if $i == 0
-                      && !@entries[$i]<message>.starts-with($prefix);
-                    my int $final = $i;
-                    my str $message = @entries[$i]<message>;
-                    while ++$i <= $index && @entries[$i] -> \entry {
-                        if entry<message>.starts-with($prefix) {
-                            $message = $message
-                              ~ '<br/> &nbsp;&nbsp;'
-                              ~ entry<message>.substr($pos);
-                            entry = Any;
-                        }
-                    }
-                    with @entries[$final] -> \entry {
-                        entry<message> := $message;
+                if @indices > 1 {
+                    my str @targets = @entries[@indices].map: *<relative-target>;
+                    my int $first = @indices.shift;
+                    with @entries[$first] -> \entry {
+                        entry<message> := entry<message>
+                          ~  @entries[@indices].map({
+                              '<br/> &nbsp;&nbsp;' ~ .<message>.substr($pos)
+                          }).join;
+                        entry<targets> := @targets;
                         entry<commit>  := True;
                     }
+                    @entries[$_] := Any for @indices;
                 }
             }
         }

@@ -12,6 +12,7 @@
     <@entries>
       <?.control-events>
         <tr class="special" id="<.relative-target>"><td colspan="2"><a href="#<.relative-target>">§</a>
+        <@targets><a name="<$_>"/></@>
         <@control-events>
           <b><.key></b> <&HTML(.value)>
         </@>
@@ -29,7 +30,8 @@
         <tr><td class="talk odd"
           <?{ .commit }> id="commit"</?>
           <?{ .test-t }> id="test-t"</?>
-        ><&HTML(.message)></td>
+        ><@targets><a name="<$_>"/></@>
+        <&HTML(.message)></td>
         <?.hh-mm>
           <td align="right"><.hh-mm></td>
         </?>

@@ -2,7 +2,7 @@
 
 use v6.*;
 
-use App::IRC::Log:ver<0.0.1>:auth<cpan:ELIZABETH>;
+use App::IRC::Log:ver<0.0.2>:auth<cpan:ELIZABETH>;
 #use App::Raku::Log:ver<0.0.1>:auth<cpan:ELIZABETH>;
 use IRC::Log::Colabti:ver<0.0.30>:auth<cpan:ELIZABETH>;
 use Cro::HTTP::Server:ver<0.8.5>;
