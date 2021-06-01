@@ -170,13 +170,12 @@ sub merge-test-t-messages(@entries) {
       csv-ip5xs csv-ip5xs-20 csv-parser csv-test-xs-20
       test test-t test-t-20
     >;
-    my constant Tux   = '[Tux]';
-    my constant TuxCM = '[TuxCM]';
+    my constant Tux   = '[Tux]' | '[TuxCM]' | '|Tux|';
 
     for @entries.kv -> $index, \entry {
         if entry
           && entry<conversation>
-          && entry<nick> eq Tux | TuxCM
+          && entry<nick> eq Tux
           && entry<message> -> \message {
             my $nick-used := entry<nick>;
             with message.index(" ") -> \pos {
