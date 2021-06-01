@@ -49,6 +49,10 @@ sub htmlize($entry, %colors) is export {
 
     # Something with a text
     if $entry.conversation {
+        # escaping <  > and &
+        $text .= subst('&', '&amp;', :global);
+        $text .= subst('<', '&lt;',  :global);
+        $text .= subst('>', '&gt;',  :global);
 
         # URL linking
         $text .= subst(
