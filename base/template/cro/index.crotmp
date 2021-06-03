@@ -1,0 +1,54 @@
+<html>
+<head>
+  <title>Index of the #<.name> IRC Channel</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <img src="https://cro.services/images/header.svg" align="left" alt="Cro logo"/>
+  <p>Welcome to the logs of the IRC channel that is associated with <a href="https://cro.services">Cro</a>.</p>
+  <h1 align="center" style="font-weight: lighter"><.first-human-date></a> - <.last-human-date></h1>
+  <p>
+  <&links($_, .name)>
+  <@years>
+    <h2><.year></h2>
+    <p>
+    <@months>
+      <span style="font-weight: bold"><.human-month>:</span>
+      <@dates>
+        <?.conversation><a href="<.date>.html"><.day></a></?>
+        <!.conversation><.day></!>
+      </@>
+    </@>
+    </p>
+  </@>
+  </p>
+  <&links($_, .name)>
+  <div id="footer">Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a><br/>
+  Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log</a>. Thank you!</div>
+</body>
+</html>
+
+<:sub links($_, $channel)>
+<p>
+<table width="100%">
+<tr>
+  <td>
+    <form action="search.html">Search: <input name="query"/></form>
+  </td>
+  <td align="right">
+    <form>
+      <select name="channel" id="channel" onchange="if (this.value) window.location.href=this.value">>
+      <@channels>
+        <option value="/<$_>/index.html"<?{ $_ eq $channel }> selected</?>><$_></option>
+      </@>
+    </select>
+    <a href="today">Today</a>
+    <a href="random">I feel lucky</a>
+    <a href="/home.html">Home</a>
+    </form>
+  </td>
+</tr>
+</table>
+</p>
+</:>
