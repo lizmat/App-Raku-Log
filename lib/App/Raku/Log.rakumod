@@ -152,10 +152,11 @@ sub merge-commit-messages(@entries) {
                 if @indices > 1 {
                     my str @targets = @entries[@indices].map: *<relative-target>;
                     my int $first = @indices.shift;
+                    ++$pos;  # lose extra space
                     with @entries[$first] -> \entry {
                         entry<message> := entry<message>
                           ~  @entries[@indices].map({
-                              '<br/> &nbsp;&nbsp;' ~ .<message>.substr($pos)
+                              "<br/>\n&nbsp;&nbsp;" ~ .<message>.substr($pos)
                           }).join;
                         entry<targets> := @targets;
                         entry<commit>  := True;
