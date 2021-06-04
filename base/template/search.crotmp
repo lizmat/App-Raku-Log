@@ -141,6 +141,7 @@
   </table></td>
   </form>
   <td align="right">
+    <a href="/<.name>/live.html">Live</a>
     <a href="/<.name>/today">Today</a>
     <a href="/<.name>/random">I feel lucky</a>
     <a href="/<.name>/index.html">Index</a>

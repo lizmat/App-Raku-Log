@@ -42,6 +42,7 @@
         <option value="/<$_>/index.html"<?{ $_ eq $channel }> selected</?>><$_></option>
       </@>
     </select>
+    <a href="live.html">Live</a>
     <a href="today">Today</a>
     <a href="random">I feel lucky</a>
     <a href="/home.html">Home</a>
