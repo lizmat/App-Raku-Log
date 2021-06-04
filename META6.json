@@ -6,7 +6,7 @@
   "build-depends": [
   ],
   "depends": [
-    "App::IRC::Log:ver<0.0.3>:auth<cpan:ELIZABETH>",
+    "App::IRC::Log:ver<0.0.4>:auth<cpan:ELIZABETH>",
     "Cro::HTTP::Server:ver<0.8.5>",
     "IRC::Log::Colabti:ver<0.0.30>:auth<cpan:ELIZABETH>"
   ],
