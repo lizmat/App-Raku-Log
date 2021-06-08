@@ -177,33 +177,45 @@ sub merge-test-t-messages(@entries) {
     my constant Tux   = '[Tux]' | '[TuxCM]' | '|Tux|';
 
     for @entries.kv -> $index, \entry {
+        # An entry by Tux?
         if entry
           && entry<conversation>
           && entry<nick> eq Tux
           && entry<message> -> \message {
             my $nick-used := entry<nick>;
-            with message.index(" ") -> \pos {
+
+            # The start of a test result stream?
+            with message.index(' ') -> \pos {
                 if message.substr(0,pos) eq 'Rakudo' {
-                    my %tests;
-                    my int $i    = $index;
+
+                    # Start looking for test result stream.  Allow for up to
+                    # three messages inbetween.
+                    my int @indices;
+                    my int $i = $index;
                     my int $skipped;
                     while @entries[++$i] -> \this-entry {
-                        with this-entry<nick> eq $nick-used {
-                            if this-entry<message> -> \this-message {
-                                with this-message.index(" ") -> \pos {
-                                    my $first := this-message.substr(0,pos);
-                                    if %head{$first} {
-                                        %tests{$first} = this-message;
-                                        @entries[$i] = Any;
-                                        $skipped = 0;
-                                    }
-                                }
-                            }
-                            elsif ++$skipped == 3 {
-                                last;
-                            }
+                        if this-entry<nick> eq $nick-used {
+                            last   # ran into another test result stream
+                              if this-entry<message>.substr(0,pos) eq 'Rakudo';
+                            @indices.push: $i;
+                            $skipped = 0;
+                        }
+                        elsif ++$skipped == 3 {
+                            last;
                         }
                     }
+                    next unless @indices;  # nothing found
+
+                    # Collect the test-stream, remove entries after collection
+                    my %tests;
+                    for @entries[@indices] -> \this-entry {
+                        given this-entry<message> {
+                            %tests{.substr(0, .index(' '))} := $_;
+                            this-entry = Any;
+                        }
+                    }
+
+                    # Synthesize the new message
                     entry<message> := '<table><tr colspan="4">'
                       ~ message
                       ~ "</tr>\n"
