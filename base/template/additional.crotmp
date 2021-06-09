@@ -1,0 +1,37 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+  <table class="chat" valign="top">
+    <?.up-target>
+      <tr><td><a href="scroll-up.html?target=<.up-target>&number-entries=<.up-entries>">scroll up</a></td></tr>
+    </?>
+    <@entries>
+      <?{ .human-date }><tr><td class="date" colspan="2"><hr/><a href="<.date>.html"><.human-date><hr/></td></tr></?>
+      <?{ .sender && .sender ne '"'}>
+        <!{ .commit }>
+          <tr id="nick">
+            <td class="nick" style="font-size: 110%;"><&HTML(.sender)></td>
+            <td id="<.relative-target>" align="right"><a href="<.date>.html#<.relative-target>">§</a></td>
+          </tr>
+        </!>
+      </?>
+      <tr><td class="talk odd"
+        <?{ .commit }> id="commit"</?>
+        <?{ .test-t }> id="test-t"</?>
+      ><&HTML(.message)></td>
+      <?.hh-mm>
+        <td align="right"><.hh-mm></td>
+      </?>
+      <!.hh-mm>
+        <td></td>
+      </!>
+      </tr>
+    </@>
+    <?.down-target>
+      <tr><td><a href="scroll-down.html?target=<.down-target>&number-entries=<.down-entries>">scroll down</a></td></tr>
+    </?>
+  </table>
+</body>
+</html>

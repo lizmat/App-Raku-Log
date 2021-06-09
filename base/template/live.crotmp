@@ -3,45 +3,48 @@
   <title>#<.channel> Live</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <link rel="stylesheet" type="text/css" href="style.css">
+  <script type="text/javascript">
+    function scrollToBottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+    history.scrollRestoration = "manual";
+    window.onload = scrollToBottom;
+  </script>
 </head>
 <body>
   <h1 align="center" style="font-weight: bold">#<.channel> Live</h1>
   <&links($_, .channel)>
   <hr/>
   <table class="chat" valign="top">
+    <tr><td><a href="scroll-up.html?target=<.up-target>">scroll up</a></td></tr>
     <@entries>
-      <?{ .human-date }><tr><td class="date" colspan="2"><hr/><a href="<.date>.html"><.human-date><hr/></td></tr></?>
-      <?.control-events>
-        <tr class="special" id="<.relative-target>"><td colspan="2"><a href="<.date>.html#<.relative-target>">§</a>
-        <@targets><a name="<$_>"/></@>
-        <@control-events>
-          <b><.key></b> <&HTML(.value)>
-        </@>
-        </td></tr>
+      <?{ .human-date }>
+        <tr<?.up-removable> id="up-removable"</?><?.down-removable> id="down-removable"</?>>
+          <td class="date" colspan="2"><hr/><a href="<.date>.html"><.human-date><hr/></td>
+        </tr>
       </?>
-      <!.control-events>
-        <?{ .sender && .sender ne '"'}>
-          <!{ .commit }>
-            <tr id="nick">
-              <td class="nick" style="font-size: 110%;"><&HTML(.sender)></td>
-              <td id="<.relative-target>" align="right"><a href="<.date>.html#<.relative-target>">§</a></td>
-            </tr>
-          </!>
-        </?>
-        <tr><td class="talk odd"
+      <?{ .sender && .sender ne '"'}>
+        <!{ .commit }>
+          <tr id="nick"<?.up-removable> id="up-removable"</?><?.down-removable> id="down-removable"</?>>
+            <td class="nick" style="font-size: 110%;"><&HTML(.sender)></td>
+            <td id="<.relative-target>" align="right"><a href="<.date>.html#<.relative-target>">§</a></td>
+          </tr>
+        </!>
+      </?>
+      <tr<?.up-removable> id="up-removable"</?><?.down-removable> id="down-removable"</?>>
+        <td class="talk odd"
           <?{ .commit }> id="commit"</?>
           <?{ .test-t }> id="test-t"</?>
-        ><@targets><a name="<$_>"/></@>
-        <&HTML(.message)></td>
+        ><&HTML(.message)></td>
         <?.hh-mm>
           <td align="right"><.hh-mm></td>
         </?>
         <!.hh-mm>
           <td></td>
         </!>
-        </tr>
-      </!>
+      </tr>
     </@>
+    <tr><td><a href="scroll-down.html?target=<.down-target>&current-entries=<.down-entries>">scroll down</a></td></tr>
   </table>
   <div id="footer">Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a><br/>
   Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log</a>. Thank you!</div>

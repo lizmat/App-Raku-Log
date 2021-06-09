@@ -6,9 +6,9 @@
   "build-depends": [
   ],
   "depends": [
-    "App::IRC::Log:ver<0.0.5>:auth<cpan:ELIZABETH>",
+    "App::IRC::Log:ver<0.0.6>:auth<cpan:ELIZABETH>",
     "Cro::HTTP::Server:ver<0.8.5>",
-    "IRC::Log::Colabti:ver<0.0.30>:auth<cpan:ELIZABETH>"
+    "IRC::Log::Colabti:ver<0.0.31>:auth<cpan:ELIZABETH>"
   ],
   "description": "Cro application for presenting Raku IRC logs",
   "license": "Artistic-2.0",
@@ -18,13 +18,6 @@
     "App::Raku::Log": "lib/App/Raku/Log.rakumod"
   },
   "resources": [
-    "static/favicon.ico",
-    "static/style.css",
-    "template/around.crotmp",
-    "template/day.crotmp",
-    "template/home.crotmp",
-    "template/index.crotmp",
-    "template/search.crotmp"
   ],
   "source-url": "",
   "tags": [
