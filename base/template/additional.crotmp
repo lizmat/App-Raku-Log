@@ -5,7 +5,7 @@
 <body>
   <table class="chat" valign="top">
     <?.up-target>
-      <tr><td><a href="scroll-up.html?target=<.up-target>&number-entries=<.up-entries>">scroll up</a></td></tr>
+      <tr><td><a href="scroll-up.html?target=<.up-target>&current-entries=<.up-entries>">scroll up</a></td></tr>
     </?>
     <@entries>
       <?{ .human-date }><tr><td class="date" colspan="2"><hr/><a href="<.date>.html"><.human-date><hr/></td></tr></?>
@@ -30,7 +30,7 @@
       </tr>
     </@>
     <?.down-target>
-      <tr><td><a href="scroll-down.html?target=<.down-target>&number-entries=<.down-entries>">scroll down</a></td></tr>
+      <tr><td><a href="scroll-down.html?target=<.down-target>&current-entries=<.down-entries>">scroll down</a></td></tr>
     </?>
   </table>
 </body>
