@@ -3,3 +3,4 @@
 /releases/
 *.gz
 /logs
+node_modules

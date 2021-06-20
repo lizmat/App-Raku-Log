@@ -1,97 +1,607 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Log of #<.channel> on <.date-human></title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <h1 align="center" style="font-weight: bold">#<.channel></h1>
-  <&links($_, .channel, .date)>
-  <hr/>
-  <table class="chat" valign="top">
-    <@entries>
-      <?.control-events>
-        <tr class="special" id="<.relative-target>"><td colspan="2"><a href="#<.relative-target>">§</a>
-        <@targets><a name="<$_>"/></@>
-        <@control-events>
-          <b><.key></b> <&HTML(.value)>
-        </@>
-        </td></tr>
-      </?>
-      <!.control-events>
-        <?{ .sender && .sender ne '"'}>
-          <!{ .commit }>
-            <tr id="nick">
-              <td class="nick" style="font-size: 110%;"><&HTML(.sender)></td>
-              <td id="<.relative-target>" align="right"><a href="#<.relative-target>">§</a></td>
-            </tr>
-          </!>
-        </?>
-        <tr><td class="talk odd"
-          <?{ .commit }> id="commit"</?>
-          <?{ .test-t }> id="test-t"</?>
-        ><@targets><a name="<$_>"/></@>
-        <&HTML(.message)></td>
-        <?.hh-mm>
-          <td align="right"><.hh-mm></td>
-        </?>
-        <!.hh-mm>
-          <td></td>
-        </!>
-        </tr>
-      </!>
-    </@>
-  </table>
-  <&links($_, .channel, .date)>
-  <div id="footer">Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a><br/>
-  Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log</a>. Thank you!</div>
-</body>
-</html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<:sub links($_, $channel, $date)>
-<hr/>
-<table width="100%">
-  <tr>
-    <td align="left"> 
-      <a href="first"><span style="font-weight: bold">|&lt;</span></a>
-      &nbsp;
-      <a href="<.prev-year>"><span style="font-weight: bold">&lt;&lt;&lt;</span></a>
-      &nbsp;
-      <a href="<.prev-month>"><span style="font-weight: bold">&lt;&lt;</span></a>
-      &nbsp;
-      <a href="prev/<.date>"><span style="font-weight: bold">&lt;</span></a>
-      &nbsp;
-      <span style="font-weight: bold"><.date-human></span>
-      &nbsp;
-      <a href="next/<.date>"><span style="font-weight: bold">&gt;</span></a>
-      &nbsp;
-      <a href="<.next-month>"><span style="font-weight: bold">&gt;&gt;</span></a>
-      &nbsp;
-      <a href="<.next-year>"><span style="font-weight: bold">&gt;&gt;&gt;</span></a>
-      &nbsp;
-      <a href="last"><span style="font-weight: bold">&gt;|</span></a>
-    </td>
-    <td>
-      <form action="search.html">Search&nbsp;<input name="query"/></form>
-    </td>
-    <td align="right">
-      <form>
-      <label for="channel">Channel</label>
-      <select name="channel" id="channel" onchange="if (this.value) window.location.href=this.value">>
-        <@channels>
-          <option value="/<$_>/this/<$date>"<?{ $_ eq $channel }> selected</?>><$_></option>
-        </@>
-      </select>
-      </form>
-    </td>
-    <td align="right">
-      <a href="live.html">Live</a>
-      <a href="today">Today</a>
-      <a href="random">I feel lucky</a>
-      <a href="<.date>.log">Raw</a>
-      <a href="index.html">Index</a>
-      <a href="/home.html">Home</a>
-    </td>
-  </tr>
-</table>
-</:>
+    <title>Log of #<.channel> on <.date-human> - Raku Programming Language Log Collection</title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/bulma-calendar.min.css">
+    <script src="/bulma-calendar.min.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+
+          // Get all "navbar-burger" elements
+          const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+          // Check if there are any navbar burgers
+          if ($navbarBurgers.length > 0) {
+
+              // Add a click event on each of them
+              $navbarBurgers.forEach( el => {
+                  el.addEventListener('click', () => {
+
+                      // Get the target from the "data-target" attribute
+                      const target = el.dataset.target;
+                      const $target = document.getElementById(target);
+
+                      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                      el.classList.toggle('is-active');
+                      $target.classList.toggle('is-active');
+                  });
+              });
+          }
+
+          var options = {
+              displayMode: 'inline', color: 'danger', showHeader: false, showFooter: false, weekStart: 1,
+              dateFormat: 'yyyy-MM-dd', startDate: new Date("<.date>"), endDate: new Date("<.date>"),
+              minDate: new Date("<.first-date>"), maxDate: new Date("<.last-date>")
+              // TODO anyone wanting to add a working minDate: 'today' here?
+          };
+          // Initialize all input of type date
+          var calendars = bulmaCalendar.attach('[type="date"]', options);
+
+          // Loop on each calendar initialized
+          for (var i = 0; i < calendars.length; i++) {
+              // Add listener to select event
+              calendars[i].on('select', date => {
+                  var value = date.data.datePicker.value() + '.html';
+                  window.location = value;
+              });
+          }
+
+          if (document.getElementById("system-msg-hide-mobile").checked || document.getElementById("system-msg-hide").checked) {
+              toggleSystemMessages();
+          }
+      });
+
+      var leftToggled = false; // TODO get this out of cookies later
+      var rightToggled = false;
+      /* Set the width of the sidebar to 300px and the left margin of the page content to 300px */
+      function toggleSidebar(id) {
+          var sidebar = document.getElementById(id);
+          var isLeft = id === 'left-sidebar';
+          var toggleState = isLeft ? leftToggled : rightToggled;
+          sidebar.style.display = toggleState ? "block" : "none";
+          if (isLeft) {
+              leftToggled = !leftToggled;
+          } else {
+              rightToggled = !rightToggled;
+          }
+      }
+
+      function toggleSystemMessages() {
+          var systemMessages = document.getElementsByClassName("special-system");
+          for (var i = 0; i != systemMessages.length; i++) {
+              systemMessages[i].classList.toggle('is-hidden');
+          }
+      }
+
+      var flag = true;
+      function filterMessagesByNick(nick) {
+          // * Take the value, go over all the divs and when the sender contains the value, set hiding depending on the flag
+          // * If empty, then show all
+          var rows = document.querySelectorAll('.column-author');
+          for (var i = 0; i != rows.length; i++) {
+              if (rows[i].textContent.indexOf(nick) !== -1) { // matches nick
+                  if (flag) { // if we should show matching ones
+                      rows[i].parentElement.classList.remove('is-hidden');
+                  } else { // if we should hide matching ones
+                      rows[i].parentElement.classList.add('is-hidden');
+                  }
+              } else { // no match
+                  if (flag) { // if we should hide non-matching ones
+                      rows[i].parentElement.classList.add('is-hidden');
+                  } else { // if we should show non-matching ones
+                      rows[i].parentElement.classList.remove('is-hidden');
+                  }
+              }
+          }
+      }
+
+      function filterMessagesByText(text) {
+          // The algorithm is:
+          // * Take the value, go over all the divs and when the sender contains the value, set hiding depending on the flag
+          // * If empty, then show all
+          var rows = document.querySelectorAll('.column-message');
+          for (var i = 0; i != rows.length; i++) {
+              if (rows[i].textContent.indexOf(text) !== -1) {
+                  rows[i].parentElement.classList.remove('is-hidden');
+              } else { // no match
+                  rows[i].parentElement.classList.add('is-hidden');
+              }
+          }
+      }
+    </script>
+  </head>
+  <body class="has-navbar-fixed-top">
+
+    <!-- Header -->
+    <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+
+      <div id="navbar-left-toggle" class="navbar-filter-settings has-tooltip-bottom" data-tooltip="Toggle filter sidebar">
+        <a class="navbar-item navbar-sidebar-btn " onclick="toggleSidebar('left-sidebar')">
+
+          <span class="icon-text filter">
+            <span class="icon">
+              <i class="fas fa-cogs"></i>
+            </span>
+            <span class="sidebar-title">Filter</span>
+          </span>
+
+          <span class="icon icon-sidebar-state">
+            <i class="fas fa-chevron-left"></i>
+          </span>
+        </a>
+      </div>
+
+
+      <div class="navbar-brand">
+        <a class="navbar-item" href="/">
+          <img src="https://raw.githubusercontent.com/Raku/marketing/master/LOGOs/Camelia/Alt-Variants/Perfect-Rainbow--1533512427/Camelia%20-%20Recoloured%20-%20Perfect%20Rainbow.png" width="40" height="28" alt="Home">
+        </a>
+
+        
+        <!-- Add action to open modal window with channels or the right sidebar -->
+
+        <div class="navbar-item dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <a class="is-text navbar-current-channel-name" aria-haspopup="true" aria-controls="dropdown-menu4">
+              <span class="icon-text">
+                <span>#<.channel></span>
+                <span class="icon">
+                  <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </span>
+              </span>
+            </a>
+          </div>
+          <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item">
+                <div class="menu">
+                  <ul class="menu-list">
+                    <@channels : $c>
+                      <li><a href="/<$c>/<.date>.html"><$c></a></li>
+                    </@>
+                  </ul>
+                  
+                </div>
+                
+                
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navMenu" class="navbar-menu">
+        <div class="navbar-start">
+
+          <div class="navbar-delimiter"></div>
+
+          <a href="/<.channel>/today" class="navbar-item has-tooltip-bottom" data-tooltip="Show today messages">
+            <span class="icon-text">
+              <span class="icon"><i class="fas fa-inbox"></i></span>
+              <span class="navbar-item-title">Today</span>
+            </span>
+          </a>
+
+          <div class="navbar-delimiter"></div>
+          
+          <a href="/<.date>.log" class="navbar-item has-tooltip-bottom" data-tooltip="Download the page">
+            <span class="icon-text">
+              <span class="icon"><i class="fas fa-download"></i></span>
+              <span class="navbar-item-title">Raw</span>
+            </span>
+          </a>
+
+          <div class="navbar-delimiter"></div>
+          
+          <a href="search.html" class="navbar-item has-tooltip-bottom navbar-search-link" data-tooltip="Go to search page">
+            <span class="icon-text">
+              <span class="icon">
+                <i class="fas fa-search"></i>
+              </span>
+              <span class="navbar-item-title">Search</span>
+            </span>
+          </a>
+
+          <!-- Mobile only forms in header -->
+          <div id="mobile-forms" class="is-hidden-tablet">
+            <!-- TODO: center text here -->
+            <div class="block has-text-centered">
+            <span class="title is-4">Filter settings</span>
+            </div>
+
+            <input class="input" type="text" placeholder="Filter" oninput="filterMessagesByText(this.value);">
+
+            <div class="block">
+              <p><strong>User</strong></p>
+
+              <div class="field has-addons">
+                <input class="input" type="text" placeholder="Messages by nick" oninput="filterMessagesByNick(this.value);">
+
+                <div class="control">
+                  <a class="button">
+                    <span class="icon">
+                      <i class="fas fa-user-times"></i>
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              <label class="checkbox">
+                <strong>Hide system messages</strong>
+                <input id="system-msg-hide-mobile" type="checkbox" onclick="toggleSystemMessages();">
+              </label>
+
+            </div>
+          </div>
+          <!-- Mobile only forms in header ends -->
+
+        </div>
+      </div>
+      </div>
+
+      <div id="navbar-right-toggle" class="navbar-end has-tooltip-bottom is-hidden-touch" data-tooltip="Toggle channel list">
+        <a class="navbar-item navbar-channels navbar-sidebar-btn" onClick="toggleSidebar('right-sidebar')">
+          <span class="icon icon-sidebar-state">
+            <i class="fas fa-chevron-right"></i>
+          </span>
+
+          <span class="icon-text channel-list">
+            <span class="icon">
+              <i class="fas fa-list"></i>
+            </span>
+            <span class="sidebar-title">Channel list</span>
+          </span>
+        </a>
+      </div>
+
+    </nav>
+    <!-- header ends -->
+
+    <!-- Left sidebar  -->
+    <div id="wrapper">
+      <div class="columns">
+        <div id="left-column" class="column is-narrow is-hidden-mobile">
+          <div id="left-sidebar" class="sidebar is-hidden-mobile">
+
+            <div class="block">
+              <p><strong>User</strong></p>
+
+              <div class="field has-addons">
+                <div class="control">
+                  <input class="input" type="text" placeholder="Messages by nick" oninput="filterMessagesByNick(this.value);">
+                </div>
+                <div class="control has-tooltip-bottom" data-tooltip="Exclude user">
+                  <!-- Add class is-primary when active -->
+                  <button class="button">
+                    <span class="icon">
+                      <i class="fas fa-user-times"></i>
+                    </span>
+                  </button>
+                </div>
+              </div>
+
+              
+
+              <label class="checkbox">
+                <strong>Hide system messages</strong>
+                <input id="system-msg-hide" type="checkbox" onclick="toggleSystemMessages();">
+              </label>
+
+            </div>
+
+            <div class="block">
+              <p><strong>Filter</strong></p>
+              <input class="input" type="text" placeholder="Filter" oninput="filterMessagesByText(this.value);">
+            </div>
+
+            <hr>
+            
+            <div class="block">
+              <p><strong>Calendar</strong></p>
+
+              <input id="sidebar-datepicker" type="date">
+            </div>
+          </div>
+        </div>
+        <!-- Left sidebar ends -->
+
+        
+
+
+
+        <!-- main container -->
+        <div class="column">
+
+          <section class="section">
+            <div id="main-container" class="container">
+
+              <nav class="level">
+                <!-- Left side -->
+                <div class="level-left">
+                  <div class="level-item">
+
+                    <div class="msg-log-date-switcher">
+
+                      <a href="/<.channel>/prev/<.date>">
+                        <button class="button is-primary">
+                          <span class="icon">
+                            <i class="fas fa-chevron-left"></i>
+                          </span>
+                        </button>
+                      </a>
+
+                      <span class="title is-4 today-date"><.date-human></span>
+
+                      <a href="/<.channel>/next/<.date>">
+                        <button class="button is-primary">
+                          <span class="icon">
+                            <i class="fas fa-chevron-right"></i>
+                          </span>
+                        </button>
+                      </a>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="level-right">
+                  <div class="level-item">
+                    <div class="message-amount is-size-4">
+                      <strong><.entries.elems()></strong> messages
+                    </div>
+                  </div>
+                </div>
+              </nav>
+
+
+
+              <!-- message log -->
+              <section id="message-log">
+                <table class="table is-fullwidth">
+                <@entries>
+                <?.control-events>
+                  <tr class="special-system" id="<.relative-target>">
+                    <td colspan="3">
+                    <div class="is-size-7">
+                    <@control-events>
+                      <b><.key></b> <&HTML(.value)>
+                    </@>
+                    </div>
+                  </td>
+                    <td class="column-buttons">
+                      <div class="dropdown is-hoverable is-hidden-tablet">
+                        <div class="dropdown-trigger">
+                          <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
+                            <span class="icon is-small">
+                              <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="dropdown-menu msg-mobile-dropdown" id="dropdown-menu4" role="menu">
+                          <div class="dropdown-content">
+                            <div class="dropdown-item">
+                              <div class="menu">
+                                <ul class="menu-list">
+                                  <li>
+                                    <a id="<.relative-target>" href="#<.relative-target>" title="Copy direct link to the message" class="msg-log-btn">
+                                      <span class="icon-text filter">
+                                        <span class="icon">
+                                          <i class="fas fa-link"></i>
+                                        </span>
+                                        <span>Message link</span>
+                                      </span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="is-hidden-mobile desktop-buttons">
+                        <a href="#<.relative-target>" title="Copy direct link to the message" class="msg-log-btn">
+                          <span class="icon">
+                            <i class="fas fa-link"></i>
+                          </span>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+
+
+                  </tr>
+                </?>
+                <!.control-events>
+                  <tr <?{ .commit }> class="special-commit"</?><?{ .test-t }> class="special-test"</?> id="<.relative-target>">
+	            <td class="column-time"><?{ .hh-mm }><.hh-mm></?></td>
+                    <td class="column-author"><strong><?{ .sender && .sender ne '"'}><&HTML(.sender)></?></strong></td>
+	            <td class="column-message"><&HTML(.message)></td>
+                    <td class="column-buttons">
+                      
+                      <div class="dropdown is-hoverable is-hidden-tablet">
+                        <div class="dropdown-trigger">
+                          <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
+                            <span class="icon is-small">
+                              <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="dropdown-menu msg-mobile-dropdown" id="dropdown-menu4" role="menu">
+                          <div class="dropdown-content">
+                            <div class="dropdown-item">
+                              <div class="menu">
+                                <ul class="menu-list">
+                                  <li>
+                                    <a href="#">
+                                      <span class="icon-text filter">
+                                        <span class="icon">
+                                          <i class="fas fa-play-circle"></i>
+                                        </span>
+                                        <span>Run code</span>
+                                      </span>
+                                    </a>
+                                  </li>
+
+                                  <li>
+                                    <a href="#">
+                                      <span class="icon-text filter">
+                                        <span class="icon">
+                                          <i class="fas fa-check-circle"></i>
+                                        </span>
+                                        <span>Mark</span>
+                                      </span>
+                                    </a>
+                                  </li>
+
+                                  <li>
+                                    <a id="<.relative-target>" href="#<.relative-target>" title="Copy direct link to the message" class="msg-log-btn">
+                                      <span class="icon-text filter">
+                                        <span class="icon">
+                                          <i class="fas fa-link"></i>
+                                        </span>
+                                        <span>Message link</span>
+                                      </span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+                              
+                              
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+
+                      <div class="is-hidden-mobile desktop-buttons">
+                        <a href="#" title="Run code" class="msg-log-btn">
+                          <span class="icon">
+                            <i class="fas fa-play-circle"></i>
+                          </span>
+                        </a>
+
+                        <a href="#" title="Mark this message" class="msg-log-btn">
+                          <span class="icon">
+                            <i class="fas fa-check-circle"></i>
+                          </span>
+                        </a>
+
+                        <a href="#<.relative-target>" title="Copy direct link to the message" class="msg-log-btn">
+                          <span class="icon">
+                            <i class="fas fa-link"></i>
+                          </span>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </!>
+                </@>
+                </table>
+
+              </section>
+              <!-- message log ends -->
+              
+            </div>
+          </section>
+        </div>
+        <!-- main container ends -->
+
+        <!-- Right sidebar -->
+        <div id="right-column" class="column is-narrow is-hidden-touch">
+          <div id="right-sidebar" class="sidebar is-right is-hidden-touch">
+
+            <div class="block">
+              <nav class="level">
+                <div class="level-left">
+                  <div class="level-item">
+                    <strong>Channel list</strong>
+                  </div>
+                </div>
+                <div class="level-right">
+                  <div class="level-item">
+                    <label class="checkbox">
+                      <input type="checkbox">
+                      <strong>Archived</strong>
+                    </label>
+                  </div>
+                </div>
+              </nav>
+
+
+              <aside class="menu">
+                <ul class="menu-list">
+                  <@channels : $c>
+                    <li><a href="/<$c>/this/<.date>"<?{ $c eq .channel }> class="is-active"</?>>#<$c></a>
+                      <div class="sidebar-extra-links">
+                        <a href="/<$c>/today" title="Show today messages from the thread" class="msg-log-btn">
+                          <span class="icon">
+                            <i class="fas fa-inbox"></i>
+                          </span>
+                        </a>
+
+                        <a href="/search.html?channel=<$c>" title="Search in the thread" class="msg-log-btn">
+                          <span class="icon">
+                            <i class="fas fa-search"></i>
+                          </span>
+                        </a>
+                      </div>
+                    </li>
+                  </@>
+                </ul>
+              </aside>
+
+
+            </div>
+          </div>
+        </div>
+        <!-- Right sidebar ends -->
+
+      </div>
+    </div>
+    <!-- Columns end -->
+
+
+    <footer class="footer">
+      <div class="container has-text-centered">
+
+        <nav class="level">
+          <!-- Left side -->
+          <div class="level-left">
+            <div class="level-item">
+              <p>
+                Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Right side -->
+          <div class="level-right">
+            <p class="level-item">
+              Please report any issues / comments / feature requests&nbsp;<a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log.</a> Thank you!
+            </p>
+          </div>
+        </nav>
+
+      </div>
+    </footer>
+
+    <!-- Include Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"></script>
+  </body>
+</html>

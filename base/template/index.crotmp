@@ -1,54 +1,196 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Index of the #<.name> IRC Channel</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <h1 align="center" style="font-weight: bolder">#<.name></h1>
-  <h1 align="center" style="font-weight: lighter"><.first-human-date></a> - <.last-human-date></h1>
-  <p>
-  <&links($_, .name)>
-  <@years>
-    <h2><.year></h2>
-    <p>
-    <@months>
-      <span style="font-weight: bold"><.human-month>:</span>
-      <@dates>
-        <?.conversation><a href="<.date>.html"><.day></a></?>
-        <!.conversation><.day></!>
-      </@>
-    </@>
-    </p>
-  </@>
-  </p>
-  <&links($_, .name)>
-  <div id="footer">Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a><br/>
-  Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log</a>. Thank you!</div>
-</body>
-</html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<:sub links($_, $channel)>
-<p>
-<table width="100%">
-<tr>
-  <td>
-    <form action="search.html">Search: <input name="query"/></form>
-  </td>
-  <td align="right">
-    <form>
-      <select name="channel" id="channel" onchange="if (this.value) window.location.href=this.value">>
-      <@channels>
-        <option value="/<$_>/index.html"<?{ $_ eq $channel }> selected</?>><$_></option>
-      </@>
-    </select>
-    <a href="live.html">Live</a>
-    <a href="today">Today</a>
-    <a href="random">I feel lucky</a>
-    <a href="/home.html">Home</a>
-    </form>
-  </td>
-</tr>
-</table>
-</p>
-</:>
+    <title>#<.name> IRC channel index - Raku Programming Language Log Collection</title>
+    <link rel="stylesheet" href="/main.css">
+
+  </head>
+  <body>
+    <!-- header ends -->
+
+    <div id="wrapper">
+
+      <!-- main container -->
+
+      <section class="section homepage">
+        <nav id="main-container" class="container homepage">
+
+          <nav class="block">
+
+            <nav class="level py-3">
+              <div class="level-left">
+                <div class="level-item title is-size-5-mobile">
+
+                  <div class="navbar-item dropdown is-hoverable">
+
+                    <div class="dropdown-trigger">
+                      <div class="title is-size-4 is-size-5-mobile" aria-haspopup="true" aria-controls="dropdown-menu4">
+                        <span class="icon-text">
+                          <span>#<.name></span>
+                          <span class="icon">
+                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                          </span>
+                        </span>
+
+                      </div>
+                    </div>
+                    <div class="dropdown-menu channel-name-dropdown" id="dropdown-menu4" role="menu">
+                      <div class="dropdown-content">
+                        <div class="dropdown-item">
+                          <div class="menu">
+                            <ul class="menu-list">
+                              <li><a href="/home.html">Homepage</a></li>
+                              <@channels>
+                              <li><a href="/<$_>/index.html">#<$_></a></li>
+                              </@>
+                            </ul>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item subtitle is-size-4 is-size-5-mobile has-text-centered">
+                  <.first-human-date></a> - <.last-human-date>
+                </div>
+
+              </div>
+
+            </nav>
+
+            <hr>
+
+            <!-- navigation -->
+            <nav class="level is-mobile">
+              <div class="level-item">
+                <a href="/home.html" class="button is-text">Home</a>
+              </div>
+
+              <div class="level-item">
+                <a href="/search.html?channel=<.name>" class="button is-text">Search</a>
+              </div>
+              <div class="level-item">
+                <a href="/<.name>/live.html" class="button is-text">Live</a>
+              </div>
+              <div class="level-item">
+                <a href="/<.name>/today" class="button is-text">
+                  Today
+                </a>
+              </div>
+
+              <div class="level-item">
+                <a class="button is-text" href="/<.name>/random">
+                  I feel lucky
+                </a>
+              </div>
+            </nav>
+
+
+            <hr>
+
+            <nav class="level mt-3">
+              <div class="level-left">
+                <div class="level-item title is-4 is-size-5-mobile">
+                  Channel index
+                </div>
+              </div>
+
+
+              <div class="level-right">
+                <form class="level" action="search.html">
+                  <div class="level-item">
+                    <div class="control is-inline-flex">
+                      <div class="select">
+                        <select name="channel">
+                          <@channels>
+                            <option value="<$_>">#<$_></option>
+                          </@>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="level-item">
+                    <div class="control has-icons-right is-inline-flex">
+                      <input name="query" class="input" type="text" placeholder="Search">
+                      <span class="icon is-small is-right">
+                        <i class="fas fa-search"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="level-item">
+                    <div class="control is-inline-flex">
+                      <button type="submit" class="button is-primary">Submit</button>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </nav>
+
+            <@years>
+              <div class="block">
+                <div class="title is-4"><.year></div>
+
+                <@months>
+                  <div class="month-log">
+                    <div class="month"><.human-month></div>
+                    <@dates>
+                      <?.conversation><a href="<.date>.html"><div class="day"><.day></div></a></?>
+                      <!.conversation><div class="day <?.empty>empty</?>"><.day></div></!>
+                    </@>
+                  </div>
+                </@>
+              </div>
+            </@>
+
+            </div>
+
+
+          </div>
+      </section>
+      <!-- main container ends -->
+
+
+        </div>
+        <!-- Columns end -->
+
+
+        <footer class="footer">
+          <div class="container has-text-centered">
+
+            <nav class="level">
+              <!-- Left side -->
+              <div class="level-left">
+                <div class="level-item">
+                  <p>
+                    Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org/">Raku Programming Language</a>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Right side -->
+              <div class="level-right">
+                <p class="level-item">
+                  Please report any issues / comments / feature requests&nbsp;<a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log.</a>
+                </p>
+              </div>
+            </nav>
+
+          </div>
+        </footer>
+
+        <!-- Include Font Awesome -->
+        <script defer src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"></script>
+  </body>
+</html>

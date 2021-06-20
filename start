@@ -13,7 +13,7 @@ use App::Raku::Log;
 my constant $log-class = IRC::Log::Colabti;
 
 sub MAIN(
-  IO()  $log-dir      = 'logs',
+  IO()  $log-dir      = 'IRC-logs',
   IO()  $base-dir     = "base",
   IO() :$rendered-dir = $base-dir.child('rendered'),
   IO() :$state-dir    = $base-dir.child('state'),
@@ -43,6 +43,7 @@ sub MAIN(
       :$host, :$port,
     ;
     $service.start;
+    say "The website is started at http://$host:$port/";
 
     react whenever signal(SIGINT) {
         $service.stop;

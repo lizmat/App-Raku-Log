@@ -1,0 +1,718 @@
+// Import required modules.
+@charset "utf-8";
+
+// To override any of these variables, just set them before importing Bulma. 
+$primary: #AA133F;
+$navbar-red-delimiter: #7C0E2E;
+
+$border: #BFBFBF;
+$border-light: #DEDEDE;
+
+$input-placeholder-color: #575757;
+
+$menu-item-hover-background-color: $border-light;
+
+// Import the initial variables
+@import "../node_modules/bulma/sass/utilities/initial-variables";
+@import "../node_modules/bulma/sass/utilities/derived-variables";
+@import "../node_modules/bulma/sass/utilities/functions";
+
+// Import a Google Font
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+// Customize Bulma variables
+// Disable the widescreen breakpoint
+// $widescreen-enabled: false;
+
+// The container horizontal gap, which acts as the offset for breakpoints
+$gap: 32px;
+
+$fullhd: 1180px + (2 * $gap);
+
+$sidebar-width: 300px;
+
+$section-padding: 2rem 1.5rem;
+
+// Typography
+$family-sans-serif: "Lato", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+$family-monospace: monospace;
+$render-mode: optimizeLegibility;
+
+// Colors override
+
+$scheme-main: #FAFAFA;
+$scheme-main-bis: #F7F9FB;
+$scheme-main-ter: #F5F5FE;
+
+$body-background-color: $scheme-main-ter;
+
+// Navbar
+$navbar-background-color: $primary;
+$navbar-height-size: 3.125rem;
+
+$navbar-item-color: $text-invert;
+$navbar-item-hover-color: $text-invert;
+$navbar-item-hover-background-color: $navbar-red-delimiter;
+
+$navbar-breakpoint: $tablet;
+
+$footer-color: true;
+$footer-padding: 1.5rem 1.5rem 2rem;
+
+// Cards
+$card-media-margin: 0.5rem;
+// $card-shadow: 0 0.5em 0.5em -0.125em rgba($scheme-invert, 0.05), 0 0px 0 1px rgba($scheme-invert, 0.02);
+$card-shadow: unset;
+
+// Disable column gap, because we handle gaps manually
+$column-gap: 0;
+
+// Initial Bulma stuff
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+@import "../node_modules/bulma/sass/base/_all.sass";
+@import "../node_modules/bulma/sass/form/_all.sass";
+
+// Layout
+@import "../node_modules/bulma/sass/layout/footer.sass";
+@import "../node_modules/bulma/sass/layout/section.sass";
+
+// Components
+@import "../node_modules/bulma/sass/components/navbar.sass";
+@import "../node_modules/bulma/sass/components/dropdown.sass";
+@import "../node_modules/bulma/sass/components/level.sass";
+// @import "../node_modules/bulma/sass/components/card.sass";
+@import "../node_modules/bulma/sass/components/menu.sass";
+
+// Elements
+@import "../node_modules/bulma/sass/elements/button.sass";
+@import "../node_modules/bulma/sass/elements/container.sass";
+@import "../node_modules/bulma/sass/elements/content.sass";
+@import "../node_modules/bulma/sass/elements/other.sass"; // delete button, block heading
+@import "../node_modules/bulma/sass/elements/icon.sass";
+@import "../node_modules/bulma/sass/elements/title.sass";
+@import "../node_modules/bulma/sass/elements/table.sass";
+
+// Helpers
+@import "../node_modules/bulma/sass/helpers/typography.sass";
+@import "../node_modules/bulma/sass/helpers/visibility.sass";
+@import "../node_modules/bulma/sass/helpers/color.sass";
+@import "../node_modules/bulma/sass/helpers/spacing.sass";
+
+@import "../node_modules/bulma/sass/grid/columns.sass";
+
+// Import extensions
+@import '../node_modules/bulma-tooltip/src/sass/index.sass';
+
+// Import our files
+@import 'sidebar';
+
+
+
+// Our site custom styles
+body {
+  display: flex;
+  // min-height: calc(100vh - $footer-height);
+  min-height: calc(100vh);
+  flex-direction: column;
+}
+  
+#wrapper {
+  flex: 1;
+}
+
+.footer {
+  max-height: 52px;
+  border-top: 1px solid $border;
+  padding: 1rem 1.5rem 2rem;
+
+  @include mobile {
+    max-height: 250px;
+    padding-top: 0.5rem;
+  }
+
+  .level-right .level-item {
+    a {
+      margin-left: 5px;
+    }
+    @include mobile {
+      flex-wrap: wrap;
+    }
+    
+  }
+}
+
+// We have long footer, so let's split it
+@include until($widescreen) {
+  .footer {
+    max-height: 82px;
+    padding: 0.5rem 1.5rem 2rem;
+    .level, .level-left, .level-right {
+      display: block;
+    }
+  }
+}
+
+@include until(720px) {
+  .footer {
+    max-height: 100%;
+  }
+}
+
+
+// Navbar (site header) styles
+.navbar-channels-dropdown {
+  margin-left: -0.5rem;
+
+  .dropdown-content {
+    max-height: 450px;
+    min-width: 220px;
+    max-width: 300px;
+    overflow-y: scroll;
+  }
+}
+
+.navbar-item {
+  font-size: 1.125rem; 
+  font-weight: 700;
+}
+
+.navbar-delimiter {
+  height: 100%;
+  width: 1px;
+  background-color: $navbar-red-delimiter;
+}
+
+.navbar-end {
+  .navbar-channels {
+    width: $sidebar-width;
+    display: flex;
+
+    border-left: 1px solid $navbar-red-delimiter;
+  }
+
+  .icon-text.channel-list {
+    margin-left: 50px;
+  }
+}
+
+.navbar-start {
+  justify-content: flex-end;
+  margin-right: 0;
+  margin-left: auto;
+}
+
+#navbar-left-toggle {
+  width: $sidebar-width;
+
+  .navbar-sidebar-btn {
+    width: inherit;
+  }
+}
+
+.navbar-filter-settings {
+  @extend .navbar-end;
+  justify-content: flex-start;
+  margin-left: 0;
+
+  .icon-sidebar-state {
+    position: absolute;
+    right: 16px;
+  }
+
+  .icon-text.filter {
+    margin-left: 90px;
+  }
+
+  border-right: 1px solid $navbar-red-delimiter;
+
+  .navbar-filter {
+    width: inherit;
+  }
+}
+
+.navbar-center {
+  display: flex;
+  flex-direction: row;
+}
+
+// Message los styles
+#message-log {
+  // Table
+  .table {
+    border: 1px solid $border;
+  }
+  
+  .column-time {
+    width: 50px;
+
+    padding: 0.5em 0.5em;
+  }
+
+  .column-buttons {
+    width: 100px;
+    padding: 0.5em 0.25em;
+
+    @include mobile {
+      width: 50px;
+    }
+  }
+
+  .column-author {
+    min-width: 130px;
+  }
+
+  
+  .message-log-block {
+    margin-bottom: 1rem;
+  }
+
+  .time-delimiter {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    line-height: 1.2;
+
+    &::before, &::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid $border-light;
+    }
+
+    &:not(:empty) {
+      ::before {
+        margin-right: .25em;
+        
+      }
+      ::after {
+        margin-left: .25em;
+      }
+    }
+  }
+
+  .time-delimiter-data {
+    padding: 0 0.5rem;
+    font-size: 0.875rem;
+    font-weight: $weight-semibold;
+  }
+
+  .msg-log-title {
+    margin-bottom: 0.5rem;
+  }
+
+  .msg-log-btn {
+    color: $text;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+
+  .msg-mobile-dropdown {
+    margin-left: -9rem;
+  }
+}
+
+
+// Responsiveness
+@import "../node_modules/bulma/sass/utilities/mixins";
+
+@include mobile {
+  // Disable tooltip on mobile
+  [data-tooltip] {
+    &:not(.is-loading),
+    &:not(.is-disabled),
+    &:not([disabled]) {
+      &::before, &::after {
+        display: none;
+      }
+    }
+  }
+
+  .navbar-filter-settings, .navbar-end .navbar-channels {
+    display: none;
+  }
+
+  .navbar-delimiter {
+    display: none;
+  }
+}
+
+@include desktop {
+  .navbar-filter-settings, .navbar-end .navbar-channels {
+    display: flex;
+  }
+}
+
+.msg-log-date-switcher {
+  .button {
+    height: 30px;
+    width: 25px;
+  }
+
+  .today-day {
+    margin: 0 1rem;
+  }
+
+  &.centered {
+    display: flex;
+    justify-content: center; 
+
+    .button {
+      margin: 0 0.25rem;
+    }
+  }
+}
+
+// Display sidebar toggle icons without label in navbar from $table until $widescreen layout
+@include from($tablet) {
+  @include until($widescreen) {
+    #navbar-left-toggle, #navbar-right-toggle, .navbar-end .navbar-channels {
+      width: 50px;
+    }
+    .navbar-sidebar-btn {
+      width: 50px;
+
+      .icon-sidebar-state, .sidebar-title {
+        display: none;
+      }
+    }
+
+    .navbar-filter-settings .icon-text.filter,
+    .navbar-end .icon-text.channel-list {
+      margin-left: 0;
+    }
+
+    .navbar-item-title {
+      display: none;
+    }
+  }
+}
+
+// Mobile forms in navbar
+.navbar {
+  .navbar-current-channel-name {
+    color: $white;
+  }
+
+  #mobile-forms {
+    margin-top: 0.25rem;
+    border-top: 1px solid $navbar-red-delimiter;
+    padding: 1rem;
+
+    .title, strong {
+      color: $text-invert;
+    }
+  }
+}
+
+// Columns for sidebar 
+.column.is-narrow {
+  width: 300px;
+  padding: unset;
+  
+}
+
+a.navbar-burger:hover {
+  color: $scheme-main-bis;
+  background-color: $navbar-red-delimiter;
+}
+
+// Adjust tooltips
+#navbar-left-toggle:hover, #navbar-right-toggle:hover  {
+  &::before {
+    font-weight: $weight-bold;
+  }
+}
+
+
+@include until($widescreen) {
+  #navbar-left-toggle:hover {
+    &::before {
+      margin-left: 3rem;
+    }
+  }
+
+  #navbar-right-toggle:hover {
+    &::before {
+      margin-left: -3rem;
+    }
+  }
+}
+
+@include touch {
+  .navbar-search-link:hover {
+    &::before {
+      margin-left: -3rem;
+    }
+  }
+}
+
+// Homepage styles
+@include mobile {
+  .thread-years p {
+    margin-bottom: 1rem;
+  }
+}
+
+.thread-header {
+  display: flex;
+  align-items: center;
+  
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid $border;
+  // font-size: 1.125rem;
+  font-weight: bold;
+
+  .control.has-icons-right .icon.is-right {
+    height: 28px;
+    width: 28px;
+  }
+
+  .title {
+    margin-bottom: 0;
+  }
+
+  @include mobile {
+    display: block;
+  }
+
+}
+
+.v-div {
+  background-color: $text-light;
+  height: 1rem;
+  width: 2px;
+  margin: 0 0.25rem;
+  
+  @include mobile {
+    display: none;
+  }
+}
+
+a.thread-link {
+  font-weight: $weight-bold;
+}
+
+.thread-search-field, .thread-search-field .input {
+  margin-left: 0.25rem;
+  height: 28px;
+
+}
+
+#main-container hr {
+  height: 1px;
+  border-color: $border;
+  color: $border;
+  background-color: $border; 
+  
+}
+
+.container.homepage {
+  background: $scheme-main;
+  border: 1px solid $border;
+  padding: 1rem;
+  border-radius: 3px;
+}
+
+@include mobile {
+  .section.homepage {
+    padding: 0;
+  }
+
+  .container.homepage {
+    border-radius: 0;
+    border: 0;
+  }
+}
+
+// Search page
+.container.search {
+  .search-result-date {
+    text-align: center;
+    font-weight: $weight-bold;
+  }
+}
+
+@include from(1800px) {
+  .container.has-sidebar {
+    left: -150px;
+  }
+}
+
+@include mobile {
+  section.search {
+    padding: 1rem 0;
+  }
+
+}
+
+// Index channel
+.channel-name-dropdown {
+  .dropdown-content {
+    max-height: 400px;
+    min-width: 220px;
+    max-width: 300px;
+    overflow-y: scroll;
+  }
+}
+
+.month-log {
+  // width: 100%;
+  display: inline-flex;
+  // width: fit-content;
+  flex-wrap: wrap;
+  // width: min-content;
+
+  @include mobile {
+    margin-bottom: 1rem;
+  }
+
+  .day, .month {
+    // display: inline-;
+    border: 1px solid $border;
+    // width: 1.25rem;
+    font-size: 0.875rem;
+    min-width: 32px;
+    padding: 0.25em 0.5em;
+    text-align: center;
+  }
+
+  .day {
+    color: $text-light;
+    &:hover {
+      background-color: $border-light;
+    }
+  }
+
+  a .day {
+    color: $link;
+    font-weight: $weight-bold;
+
+    &:hover {
+      color: $link;
+    }
+  }
+
+  .day.empty {
+    background-color: $border-light;
+  }
+
+  .month {
+    // background: $border-light;
+    width: 96px;
+    font-weight: bold;
+    text-align: center;
+
+  }
+}
+
+.level {
+  a.button.is-text {
+    color: $link;
+  }
+}
+
+
+// Table with messages
+#message-log {
+  .column-message {
+    /* These are technically the same, but use both */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+
+    -ms-word-break: break-all;
+    /* This is the dangerous one in WebKit, as it breaks things wherever */
+    word-break: break-all;
+    /* Instead use this non-standard one: */
+    word-break: break-word;
+
+    /* Adds a hyphen where the word breaks, if supported (No Blink) */
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .table tr.special-system {
+    .desktop-buttons {
+      text-align: right;
+      padding-right: 0.75rem;
+    }
+  }
+
+  .table tr.special-test {
+    border-left: 4px solid $primary;
+    background-color: #ddffdd;
+    font-weight: $weight-bold;
+    color: $text-strong;
+  }
+
+  .table tr.special-commit {
+    border-left: 4px solid $primary;
+    background-color: #ffdddd;
+    font-weight: $weight-bold;
+    color: $text-strong;
+  }
+
+  .table tr.special-commit,
+  .table tr.special-test {
+    .msg-mobile-dropdown {
+      .button.is-text {
+        background-color: $scheme-main;
+      }
+    }
+  }
+
+  // Dispay table cells as blocks on mobile until 480px
+  .message-table {
+    @include until(480px) {
+      td {
+        width: 100%;
+        display: block;
+
+        &.column-time, &.column-author {
+          text-align: center;
+        }
+      }
+
+      .msg-mobile-dropdown {
+        margin-left: 0;
+      }
+    }
+  }
+}
+
+// Adjust level on small screens
+.level.is-mobile {
+  @include mobile {
+    overflow-x: scroll;
+  }
+
+  @include until(400px) {
+      display: block;
+  }
+
+
+  .level-item {
+
+    @include until(400px) {
+      display: block;
+    }
+  }
+
+  .level-item:not(:last-child) {
+    margin-right: 0;
+
+
+  }
+
+  .button {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+    @include until(400px) {
+      display: block;
+    }
+  }
+}

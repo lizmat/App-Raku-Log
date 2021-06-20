@@ -1,37 +1,157 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Welcome to the home of the Raku Programming Language IRC logs</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <h1>Welcome to the home of the Raku Programming Language IRC logs</h1>
-  <p>
-This website provides access to the historic IRC logs of the development of
-the <a href="https://raku.org">Raku Programming Language</a> (née Perl 6).
-They are provided here as complete as possible, but there is no guarantee
-that these logs are by any means complete: network issues can cause an IRC
-logger to lose connection with the IRC server, while people are still chatting
-on a channel.  Thus losing parts of the conversation, at least as seen by some
-people on a channel.
-  </p>
-  <p>
-The following logs are currently available (in alphabetical order):
-  </p>
-  <@channels>
-    </hr>
-    <h2>#<.name> <.first-human-date> - <.last-human-date></h2>
-    <p><a href="/<.name>/live.html">Live</a><form action="/<.name>/search.html">Search: <input name="query"/></form></p>
-    <p>
-    <@years>
-      <span style="font-weight: bold"><.year>:</span>
-      <@months>
-        <a href="/<.channel>/<.month>"><.human-month></a>
-      </@>
-    </@>
-    </p>
-  </@>
-  <div id="footer">Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a><br/>
-  Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log</a>. Thank you!</div>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Homepage - Raku Programming Language Log Collection</title>
+    <link rel="stylesheet" href="/main.css">
+
+  </head>
+  <body>
+    <!-- header ends -->
+
+    <div id="wrapper">
+
+      <!-- main container -->
+
+      <section class="section homepage">
+        <div id="main-container" class="container homepage">
+
+          <div class="block">
+
+            <div class="title is-size-5-mobile">
+              Welcome to the home of the Raku Programming Language IRC logs 
+            </div>
+
+            <p class="py-1">
+              This website provides access to the historic IRC logs of the development of the <a href="https://raku.org" target="_blank">Raku Programming Language</a> (née Perl 6).They are provided here as complete as possible, but there is no guarantee that these logs are by any means complete: network issues can cause an IRC logger to lose connection with the IRC server, while people are still chatting on a channel. Thus losing parts of the conversation, at least as seen by some people on a channel. 
+            </p>
+
+            <hr>
+
+            <nav class="level mt-3">
+              <div class="level-left">
+                <div class="level-item title is-4 is-size-5-mobile">
+                  Channel list
+                </div>
+              </div>
+              
+
+              <div class="level-right">
+                <form class="level" action="search.html">
+                  <div class="level-item">
+                    <div class="control is-inline-flex">
+                      <div class="select">
+                        <select name="channel">
+                          <@channels>
+                          <option value="<.name>">#<.name></option>
+                          </@>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="level-item">
+                    <div class="control has-icons-right is-inline-flex">
+                      <input name="query" class="input" type="text" placeholder="Search">
+                      <span class="icon is-small is-right">
+                        <i class="fas fa-search"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="level-item">
+                    <div class="control is-inline-flex">
+                      <button type="submit" class="button is-primary">Submit</button>
+                    </div>
+                  </div>
+                </form>
+
+              </div>
+            </nav>
+
+
+            <div class="block homepage-thread">
+
+            <@channels>
+              <div class="thread-header">
+                <div class="is-inline-flex is-block-mobile">
+                  <a href="/<.name>/live.html" class="thread-link">
+                    #<.name>
+                  </a>
+
+                </div> 
+
+                <div class="v-div"></div>
+
+                <div class="is-inline-flex is-block-mobile">
+                  <a href="/<.name>/index.html">
+                    <span class="icon-text">
+                      <span class="icon">
+                        <i class="fas fa-calendar-alt"></i>
+                      </span>
+                      <span>Index</span>
+                    </span>
+                  </a>
+                </div>
+                &nbsp;
+                <div class="v-div"></div>
+
+                <div class="inline-flex is-block-mobile">
+                  <.first-human-date> - <.last-human-date>
+                </div>
+
+              </div>
+
+              <div class="block thread-years">
+                <@years>
+                  <p>
+                    <strong><.year></strong>
+                    <@months>
+                      <a href="/<.channel>/<.month>"><.human-month></a>&nbsp;&#124;&nbsp;
+                    </@>
+                  </p>
+                </@>
+              </div>
+            </@>
+
+            <!-- thread list ends -->
+
+          </div>
+      </section>
+      <!-- main container ends -->
+
+
+        </div>
+        <!-- Columns end -->
+
+
+        <footer class="footer">
+          <div class="container has-text-centered">
+
+            <nav class="level">
+              <!-- Left side -->
+              <div class="level-left">
+                <div class="level-item">
+                  <p>
+                    Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org/">Raku Programming Language</a>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Right side -->
+              <div class="level-right">
+                <p class="level-item">
+                  Please report any issues / comments / feature requests&nbsp;<a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log.</a>
+                </p>
+              </div>
+            </nav>
+
+          </div>
+        </footer>
+
+        <!-- Include Font Awesome -->
+        <script defer src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"></script>
+  </body>
 </html>

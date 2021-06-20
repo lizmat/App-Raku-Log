@@ -1,152 +1,465 @@
+<!DOCTYPE html>
 <html>
-<head>
-  <title>Search results on #<.name> IRC Channel</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <h1 align="center" style="font-weight: bolder">#<.name></h1>
-  <hr/>
-  <&links($_, .name, .type, .message-type, .entries-pp)>
-  <hr/>
-  <table class="chat" valign="top">
-    <tr class="head">
-      <th>Time</th>
-      <th>Nick</th>
-      <th>Message</th>
-    </tr>
-    <@entries>
-      <?{ .human-date }><tr><td class="date" colspan="3"><hr/><.human-date><hr/></td></tr></?>
-      <tr class="<?.conversation>talk odd</?><!.conversation>special</!>" id="<.target>">
-        <td class="time" align="right"><.hh-mm></td>
-        <td class="nick"><&HTML(.sender)>&nbsp;<a href="/<.channel>/<.date>.html#<.relative-target>">§</a></td>
-        <td class="message"><&HTML(.message)></td>
-      </tr>
-    </@>
-  </table>
-  <hr/>
-  <&links($_, .name, .type, .message-type, .entries-pp)>
-  <div id="footer">Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a><br/>
-  Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log</a>. Thank you!
-  <br/>(<.elapsed> msecs)
-  </div>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Search - Raku Programming Language Log Collection</title>
+    <link rel="stylesheet" href="/main.css">
+
+  </head>
+  <body>
+    <!-- header ends -->
+
+    <div id="wrapper">
+
+      <div class="columns">
+        <!-- search sidebar -->
+        <div id="left-column" class="column is-narrow is-mobile-fullwidth">
+          <div id="left-sidebar" class="sidebar search-sidebar">
+
+            <button class="delete"></button>
+
+            <div class="block">
+
+
+                <form>
+
+                    <div class="field">
+                      <label class="label">Query</label>
+                      <div class="control">
+                        <input name="query" class="input" type="text" placeholder="Text input" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
+                      </div>
+                    </div>
+
+
+
+                  <div class="block">
+
+                    <div class="field">
+                      <div class="control">
+                        <label class="checkbox">
+                          <input type="checkbox" name="all" value="True"<?{ .all }> checked</?>>
+                          all words
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <div class="control">
+                        <label class="checkbox">
+                          <input type="checkbox" name="ignorecase" value="True"<?{ .ignorecase }> checked</?>>
+                          case insensitive
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <hr>
+
+                  <div class="field">
+                    <label class="label">Username(s)</label>
+                    <div class="control has-icons-left">
+                      <input name="nicks" value="<.nicks>" class="input" type="text" placeholder="Enter nick(s)" value="user" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-user"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                    <div class="field">
+                      <div class="control">
+                        <label class="checkbox">
+                          <input type="checkbox" name="include-aliases" value="True"<?{ .include-aliases }> checked</?>>
+                          include nick aliases
+                        </label>
+                      </div>
+                    </div>
+
+
+                    <div class="field">
+                      <label class="label">Mode</label>
+                      <div class="control">
+                        <div class="select">
+                          <select name="type">
+                            <@type-options : $opt>
+                              <option value="<$opt.key>"<?{ $opt.key eq .type }> selected="selected"</?>><$opt.value></option>
+                            </@>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="field">
+                      <label class="label">Channel</label>
+                      <div class="control">
+                        <div class="select">
+                          <select name="channel">
+                            <@channels : $c>
+                              <option value="<$c>"<?{ $c eq .name }> selected="selected"</?>><$c></option>
+                            </@>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <label class="label">Show</label>
+                      <div class="control">
+                        <div class="select">
+                          <select name="message-type">
+                            <@message-options : $opt>
+                              <option value="<$opt.key>"<?{ $opt.key eq .message-type }> selected="selected"</?>><$opt.value></option>
+                            </@>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="field">
+                      <label class="label">Results per page</label>
+                      <div class="control">
+                        <div class="select">
+                          <select name="entries-pp">
+                            <@entries-pp-options : $opt>
+                              <option value="<$opt>"<?{ $opt eq .entries-pp }> selected="selected"</?>><$opt></option>
+                            </@>
+                           </select>
+                        </div>
+                      </div>
+                    </div>
+
+
+
+
+                    <div class="control">
+                      <strong>From:</strong>
+                      <div class="control has-icons-left">
+                        <input class="input" type="date">
+                        <span class="icon is-small is-left">
+                          <i class="fas fa-calendar"></i>
+                        </span>
+                      </div>
+                    </div>
+
+
+                  <div class="control">
+                    <strong>Until:</strong>
+                    <div class="control has-icons-left">
+                      <input class="input" type="date">
+                      <span class="icon is-small is-left">
+                        <i class="fas fa-calendar"></i>
+                      </span>
+                    </div>
+                  </div>
+
+
+
+                  <div class="block">
+                    <div class="control mt-3">
+                      <button class="button is-primary">Submit</button>
+                    </div>
+                  </div>
+
+
+                </form>
+
+            </div>
+          </div>
+        </div>
+        <!-- search sidebar ends -->
+
+
+
+        <!-- main container -->
+        <div class="column">
+
+          <section class="section search">
+            <div id="main-container" class="container search has-sidebar">
+
+
+              <nav class="level">
+                <div class="level-left">
+
+
+
+                  <div class="level-item">
+                    <button id="search-sidebar-toggle" class="button is-primary" onclick="document.getElementById('left-column').classList.toggle('is-hidden'); document.getElementById('main-container').classList.toggle('has-sidebar')">
+                      <span class="icon-text">
+                        <span class="icon">
+                          <i class="fas fa-bars"></i>
+                        </span>
+                        <span class="toggle-text">
+                          Options
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+
+
+
+                <div class="level-item title is-size-4-mobile">
+                  Search
+                </div>
+
+                </div>
+
+
+                <div class="level-right">
+                  <div class="level-item">
+                    <div class="msg-log-date-switcher">
+                      <button class="button is-primary">
+                        <span class="icon">
+                          <i class="fas fa-chevron-left"></i>
+                          <i class="fas fa-chevron-left"></i>
+                        </span>
+                      </button>
+
+                      <button class="button is-primary">
+                        <span class="icon">
+                          <i class="fas fa-chevron-left"></i>
+                        </span>
+                      </button>
+                      <span class="title is-4">
+                        1-50/234
+
+                      </span>
+
+                      <button class="button is-primary">
+                        <span class="icon">
+                          <i class="fas fa-chevron-right"></i>
+                        </span>
+                      </button>
+
+                      <button class="button is-primary">
+                        <span class="icon">
+                          <i class="fas fa-chevron-right"></i>
+                          <i class="fas fa-chevron-right"></i>
+                        </span>
+                      </button>
+                    </div>
+
+                  </div>
+
+                </div>
+
+
+              </nav>
+              <hr>
+
+              <!-- navigation: -->
+              <nav class="level is-mobile">
+                <div class="level-item">
+                  <a href="/home.html" class="button is-text">Home</a>
+                </div>
+                <div class="level-item">
+                  <a href="#" class="button is-text">Index</a>
+                </div>
+                <div class="level-item">
+                  <a href="#" class="button is-text">Live</a>
+                </div>
+                <div class="level-item">
+                  <a href="#" class="button is-text">
+                    Today
+                  </a>
+                </div>
+                <div class="level-item">
+                  <a href="#" class="button is-text">
+                    I feel lucky
+                  </a>
+                </div>
+              </nav>
+
+              <hr>
+
+              <section id="message-log">
+
+                <!-- table -->
+                <table class="table message-table is-fullwidth">
+                  <@entries>
+                  <?{ .human-date }>
+                  <tr>
+                    <td class="search-result-date" colspan="4">
+                      <span class="icon-text">
+                        <span class="icon">
+                          <i class="fas fa-calendar-alt"></i>
+                        </span>
+                        <span>
+                          <.human-date>
+                        </span>
+                      </span>
+
+                    </td>
+                  </tr>
+                  </?>
+
+                  <tr>
+                    <td class="column-time"><?{ .hh-mm }><.hh-mm></?></td>
+                    <td class="column-author"><strong><?{ .sender && .sender ne '"'}><&HTML(.sender)></?></strong></td>
+                    <td class="column-message"><&HTML(.message)></td>
+                    <td class="column-buttons">
+
+                      <div class="dropdown is-hoverable is-hidden-tablet">
+                        <div class="dropdown-trigger">
+                          <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
+                            <span class="icon is-small">
+                              <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                            </span>
+                          </button>
+                        </div>
+                        <div class="dropdown-menu msg-mobile-dropdown" id="dropdown-menu4" role="menu">
+                          <div class="dropdown-content">
+                            <div class="dropdown-item">
+                              <div class="menu">
+                                <ul class="menu-list">
+                                  <li>
+                                    <a href="#">
+                                      <span class="icon-text filter">
+                                        <span class="icon">
+                                          <i class="fas fa-play-circle"></i>
+                                        </span>
+                                        <span>Run code</span>
+                                      </span>
+                                    </a>
+                                  </li>
+
+                                  <li>
+                                    <a href="#">
+                                      <span class="icon-text filter">
+                                        <span class="icon">
+                                          <i class="fas fa-check-circle"></i>
+                                        </span>
+                                        <span>Mark</span>
+                                      </span>
+                                    </a>
+                                  </li>
+
+                                  <li>
+                                    <a href="#">
+                                      <span class="icon-text filter">
+                                        <span class="icon">
+                                          <i class="fas fa-link"></i>
+                                        </span>
+                                        <span>Message link</span>
+                                      </span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </div>
+
+
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="is-hidden-mobile">
+                        <a href="#" title="Run code" class="msg-log-btn">
+                          <span class="icon">
+                            <i class="fas fa-play-circle"></i>
+                          </span>
+                        </a>
+
+                        <a href="#" title="Mark this message" class="msg-log-btn">
+                          <span class="icon">
+                            <i class="fas fa-check-circle"></i>
+                          </span>
+                        </a>
+
+                        <a href="#" title="Copy direct link to the message" class="msg-log-btn">
+                          <span class="icon">
+                            <i class="fas fa-link"></i>
+                          </span>
+                        </a>
+                      </div>
+                    </td>
+
+                  </tr>
+
+                </@>
+                </table>
+
+
+                <!-- table ends -->
+
+
+
+                <div class="msg-log-date-switcher centered">
+                  <button class="button is-primary">
+                    <span class="icon">
+                      <i class="fas fa-chevron-left"></i>
+                      <i class="fas fa-chevron-left"></i>
+                    </span>
+                  </button>
+
+                  <button class="button is-primary">
+                    <span class="icon">
+                      <i class="fas fa-chevron-left"></i>
+                    </span>
+                  </button>
+                  <span class="title is-4">
+                    1-50/234
+
+                  </span>
+
+                  <button class="button is-primary">
+                    <span class="icon">
+                      <i class="fas fa-chevron-right"></i>
+                    </span>
+                  </button>
+
+                  <button class="button is-primary">
+                    <span class="icon">
+                      <i class="fas fa-chevron-right"></i>
+                      <i class="fas fa-chevron-right"></i>
+                    </span>
+                  </button>
+                </div>
+
+              </section>
+
+
+            </div>
+          </section>
+        </div>
+        <!-- main container ends -->
+
+
+      </div>
+      <!-- Columns end -->
+    </div>
+
+
+    <footer class="footer">
+      <div class="container has-text-centered">
+
+        <nav class="level">
+          <!-- Left side -->
+          <div class="level-left">
+            <div class="level-item">
+              <p>
+                Powered by <a href="#">Cro</a> and the <a href="#">Raku Programming Language</a>
+              </p>
+            </div>
+          </div>
+
+          <!-- Right side -->
+          <div class="level-right">
+            <p class="level-item">
+              Please report any issues / comments / feature requests <a href="#">as an issue on App::IRC::Log.</a>
+            </p>
+          </div>
+        </nav>
+
+      </div>
+    </footer>
+
+    <!-- Include Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"></script>
+  </body>
 </html>
-
-<:sub day-pulldown($_, $prefix, $value)>&nbsp;<select
-  name="<$prefix>-day" id="<$prefix>-day">
-  <option value="">Day</option>
-  <@days>
-    <option value="<$_>"<?{ $_ eq $value }> selected</?>><$_></option>
-  </@>
-  </select></:>
-
-<:sub month-pulldown($_, $prefix, $value)>&nbsp;<select
-  name="<$prefix>-month" id="<$prefix>-month">
-    <option value="">Month</option>
-    <@months>
-      <option value="<.key>"<?{ .key eq $value }> selected</?>><.value></option>
-    </@>
-  </select></:>
-
-<:sub year-pulldown($_, $prefix, $value)>&nbsp;<select
-  name="<$prefix>-year" id="<$prefix>-year">
-  <option value="">Year</option>
-  <@years>
-    <option value="<$_>"<?{ $_ eq $value }> selected</?>><$_></option>
-  </@>
-  </select></:>
-
-<:sub links($_, $channel, $type, $message-type, $pp)>
-<p>
-<table width="100%"><tr>
-  <form action="/search.html">
-  <td>
-    <table><tr>
-      <td>Search&nbsp;<input
-            name="query"
-            placeholder="Enter query"
-            value="<.query>"
-            onkeydown="if (event.keyCode == 13) {
-                this.form.submit();
-                return false;
-            }"
-          />
-      </td>
-      <td><label for="type"/>
-        <select name="type" id="type">
-          <@type-options>
-            <option value="<.key>"<?{ .key eq $type }> selected</?>><.value></option>
-          </@>
-        </select>
-      </td>
-      <td><label for="channel">on channel</label>
-        <select name="channel" id="channel">
-        <@channels>
-          <option value="<$_>"<?{ $_ eq $channel }> selected</?>><$_></option>
-        </@>
-        </select>
-      </td>
-      <td>by&nbsp;nick(s)&nbsp;<input
-            name="nicks"
-            value="<.nicks>"
-            placeholder="Enter nick(s)"
-            onkeydown="if (event.keyCode == 13) {
-                this.form.submit();
-                return false;
-             }"
-          />
-      </td>
-      <td><input type="submit" name="submit", value="Search"/></td>
-    </tr>
-    <tr>
-      <td>From<&day-pulldown($_, 'from', .from-day)><&month-pulldown($_, 'from', .from-month)><&year-pulldown($_, 'from', .from-year)></td>
-      <td><input type="checkbox" name="all" value="True"<?{ .all }> checked</?>> all words</td>
-      <td align="right"><label for="message-type"/>
-        <select name="message-type" id="message-type">
-          <@message-options>
-            <option value="<.key>"<?{ .key eq $message-type }> selected</?>><.value></option>
-          </@>
-        </select>
-      </td>
-      <td align="right"><input type="checkbox" name="include-aliases" value="True"<?{ .include-aliases }> checked</?>> include nick aliases</td>
-      <td><label for="entries-pp"/>
-        <select name="entries-pp" id="entries-pp">
-        <@entries-pp-options>
-          <option value="<$_>"<?{ $_ eq $pp }> selected</?>><$_></option>
-        </@>
-        </select>max
-      </td>
-    </tr>
-    <tr>
-      <td>Until<&day-pulldown($_, 'to', .to-day)><&month-pulldown($_, 'to', .to-month)><&year-pulldown($_, 'to', .to-year)></td>
-      <td><input type="checkbox" name="ignorecase" value="True"<?{ .ignorecase }> checked</?>> case insensitive</td>
-      <td></td>
-      <td></td>
-      <td>
-        <input type="submit" name="first" value="|&lt;"/>
-        <?{ .first-target }>
-          <input type="hidden" name="first-target" value="<.first-target>"/>
-        </?>
-        <input type="submit" name="prev" value="&lt;"/<!{ .first-target }> disabled</!>>
-        <?{ .last-target }>
-          <input type="hidden" name="last-target" value="<.last-target>"/>
-        </?>
-        <input type="submit" name="next" value="&gt;"/<!{ .last-target }> disabled</!>>
-        <input type="submit" name="last" value="&gt;|"/>
-      </td>
-    </tr>
-    <tr>
-    </tr>
-  </table></td>
-  </form>
-  <td align="right">
-    <a href="/<.name>/live.html">Live</a>
-    <a href="/<.name>/today">Today</a>
-    <a href="/<.name>/random">I feel lucky</a>
-    <a href="/<.name>/index.html">Index</a>
-    <a href="/home.html">Home</a>
-  </td>
-</tr></table>
-</p>
-</:>

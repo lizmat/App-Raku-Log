@@ -168,6 +168,34 @@ sub merge-commit-messages(@entries) {
     @entries.grep(*.defined);
 }
 
+# Merge messages by a single nickname into batches to render
+sub compress-messages(@entries) {
+    loop (my $index = 0; $index < @entries.elems; $index++) {
+        my %entry := @entries[$index];
+        if %entry<conversation> && !%entry<commit> {
+            my $message := %entry<message>;
+            my $nick := %entry<nick>;
+            my $sender := %entry<sender>;
+            my int $i = $index;
+            my int @indices = $index;
+            while ++$i < @entries.elems && @entries[$i] -> \entry {
+                last if entry<sender> ne '"';
+                @indices.push($i);
+            }
+
+            my str @targets = @entries[@indices].map: *<relative-target>;
+            my int $first = @indices.shift;
+            with @entries[$first] -> \entry {
+                entry<messages> := %entry<message>, |@entries[@indices].map(*.<message>);
+                entry<targets> := @targets;
+            }
+            @entries[$_] := Any for @indices;
+            $index = @indices[* - 1] if @indices;
+        }
+    }
+    @entries.grep(*.defined);
+}
+
 # Merge messages of test-t report together
 sub merge-test-t-messages(@entries) {
     my constant %head = Set.new: <
@@ -244,7 +272,8 @@ sub day-plugins() is export {
       &merge-commit-messages, 
       &merge-test-t-messages, 
       &merge-control-messages,
-      &mark-camelia-invocations
+      &mark-camelia-invocations,
+      #&compress-messages
     ;
 }
 
