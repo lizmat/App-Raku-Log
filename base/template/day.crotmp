@@ -6,7 +6,6 @@
 
     <title>Log of #<.channel> on <.date-human> - Raku Programming Language Log Collection</title>
     <link rel="stylesheet" href="/main.css">
-    <link rel="stylesheet" href="/bulma-calendar.min.css">
     <script src="/bulma-calendar.min.js"></script>
 
     <script>
@@ -34,7 +33,7 @@
           }
 
           var options = {
-              displayMode: 'inline', color: 'danger', showHeader: false, showFooter: false, weekStart: 1,
+              displayMode: 'inline', showHeader: false, showFooter: false, weekStart: 1,
               dateFormat: 'yyyy-MM-dd', startDate: new Date("<.date>"), endDate: new Date("<.date>"),
               minDate: new Date("<.first-date>"), maxDate: new Date("<.last-date>")
               // TODO anyone wanting to add a working minDate: 'today' here?
