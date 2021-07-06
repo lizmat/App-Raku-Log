@@ -141,7 +141,7 @@
           <img src="https://raw.githubusercontent.com/Raku/marketing/master/LOGOs/Camelia/Alt-Variants/Perfect-Rainbow--1533512427/Camelia%20-%20Recoloured%20-%20Perfect%20Rainbow.png" width="40" height="28" alt="Home">
         </a>
 
-        
+
         <!-- Add action to open modal window with channels or the right sidebar -->
 
         <div class="navbar-item dropdown is-hoverable">
@@ -164,10 +164,8 @@
                       <li><a href="/<$c>/<.date>.html"><$c></a></li>
                     </@>
                   </ul>
-                  
+
                 </div>
-                
-                
 
               </div>
             </div>
@@ -307,7 +305,7 @@
             </div>
 
             <hr>
-            
+
             <div class="block">
               <p><strong>Calendar</strong></p>
 
@@ -317,7 +315,7 @@
         </div>
         <!-- Left sidebar ends -->
 
-        
+
 
 
 
@@ -427,11 +425,10 @@
                 </?>
                 <!.control-events>
                   <tr <?{ .commit }> class="special-commit"</?><?{ .test-t }> class="special-test"</?> id="<.relative-target>">
-	            <td class="column-time"><?{ .hh-mm }><.hh-mm></?></td>
+                    <td class="column-time"><?{ .hh-mm }><.hh-mm></?></td>
                     <td class="column-author"><strong><?{ .sender && .sender ne '"'}><&HTML(.sender)></?></strong></td>
-	            <td class="column-message"><&HTML(.message)></td>
+                    <td class="column-message"><&HTML(.message)></td>
                     <td class="column-buttons">
-                      
                       <div class="dropdown is-hoverable is-hidden-tablet">
                         <div class="dropdown-trigger">
                           <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
@@ -479,14 +476,14 @@
                                   </li>
                                 </ul>
                               </div>
-                              
-                              
+
+
 
                             </div>
                           </div>
                         </div>
                       </div>
-                      
+
 
                       <div class="is-hidden-mobile desktop-buttons">
                         <a href="#" title="Run code" class="msg-log-btn">
@@ -515,7 +512,7 @@
 
               </section>
               <!-- message log ends -->
-              
+
             </div>
           </section>
         </div>
