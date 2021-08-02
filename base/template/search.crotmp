@@ -1,3 +1,4 @@
+<:use 'base/template/common.crotmp'>
 <!DOCTYPE html>
 <html>
   <head>
@@ -22,7 +23,6 @@
 
             <div class="block">
 
-
                 <form>
 
                     <div class="field">
@@ -31,8 +31,6 @@
                         <input name="query" class="input" type="text" placeholder="Text input" onkeydown="if (event.keyCode == 13) { this.form.submit(); return false; }">
                       </div>
                     </div>
-
-
 
                   <div class="block">
 
@@ -54,7 +52,6 @@
                       </div>
                     </div>
                   </div>
-
 
                   <hr>
 
@@ -118,7 +115,6 @@
                       </div>
                     </div>
 
-
                     <div class="field">
                       <label class="label">Results per page</label>
                       <div class="control">
@@ -132,9 +128,6 @@
                       </div>
                     </div>
 
-
-
-
                     <div class="control">
                       <strong>From:</strong>
                       <div class="control has-icons-left">
@@ -145,7 +138,6 @@
                       </div>
                     </div>
 
-
                   <div class="control">
                     <strong>Until:</strong>
                     <div class="control has-icons-left">
@@ -155,8 +147,6 @@
                       </span>
                     </div>
                   </div>
-
-
 
                   <div class="block">
                     <div class="control mt-3">
@@ -172,8 +162,6 @@
         </div>
         <!-- search sidebar ends -->
 
-
-
         <!-- main container -->
         <div class="column">
 
@@ -183,8 +171,6 @@
 
               <nav class="level">
                 <div class="level-left">
-
-
 
                   <div class="level-item">
                     <button id="search-sidebar-toggle" class="button is-primary" onclick="document.getElementById('left-column').classList.toggle('is-hidden'); document.getElementById('main-container').classList.toggle('has-sidebar')">
@@ -199,14 +185,11 @@
                     </button>
                   </div>
 
-
-
                 <div class="level-item title is-size-4-mobile">
                   Search
                 </div>
 
                 </div>
-
 
                 <div class="level-right">
                   <div class="level-item">
@@ -296,98 +279,16 @@
                   </tr>
                   </?>
 
-                  <tr>
+                  <tr <?{ .commit }> class="special-commit"</?><?{ .test-t }> class="special-test"</?> id="<.relative-target>">
                     <td class="column-time"><?{ .hh-mm }><.hh-mm></?></td>
                     <td class="column-author"><strong><?{ .sender && .sender ne '"'}><&HTML(.sender)></?></strong></td>
                     <td class="column-message"><&HTML(.message)></td>
-                    <td class="column-buttons">
-
-                      <div class="dropdown is-hoverable is-hidden-tablet">
-                        <div class="dropdown-trigger">
-                          <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
-                            <span class="icon is-small">
-                              <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
-                            </span>
-                          </button>
-                        </div>
-                        <div class="dropdown-menu msg-mobile-dropdown" id="dropdown-menu4" role="menu">
-                          <div class="dropdown-content">
-                            <div class="dropdown-item">
-                              <div class="menu">
-                                <ul class="menu-list">
-                                  <li>
-                                    <a href="#">
-                                      <span class="icon-text filter">
-                                        <span class="icon">
-                                          <i class="fas fa-play-circle"></i>
-                                        </span>
-                                        <span>Run code</span>
-                                      </span>
-                                    </a>
-                                  </li>
-
-                                  <li>
-                                    <a href="#">
-                                      <span class="icon-text filter">
-                                        <span class="icon">
-                                          <i class="fas fa-check-circle"></i>
-                                        </span>
-                                        <span>Mark</span>
-                                      </span>
-                                    </a>
-                                  </li>
-
-                                  <li>
-                                    <a href="#">
-                                      <span class="icon-text filter">
-                                        <span class="icon">
-                                          <i class="fas fa-link"></i>
-                                        </span>
-                                        <span>Message link</span>
-                                      </span>
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-
-
-
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-
-                      <div class="is-hidden-mobile">
-                        <a href="#" title="Run code" class="msg-log-btn">
-                          <span class="icon">
-                            <i class="fas fa-play-circle"></i>
-                          </span>
-                        </a>
-
-                        <a href="#" title="Mark this message" class="msg-log-btn">
-                          <span class="icon">
-                            <i class="fas fa-check-circle"></i>
-                          </span>
-                        </a>
-
-                        <a href="#" title="Copy direct link to the message" class="msg-log-btn">
-                          <span class="icon">
-                            <i class="fas fa-link"></i>
-                          </span>
-                        </a>
-                      </div>
-                    </td>
-
+                    <&column-buttons($_)>
                   </tr>
 
                 </@>
                 </table>
-
-
                 <!-- table ends -->
-
-
 
                 <div class="msg-log-date-switcher centered">
                   <button class="button is-primary">
@@ -429,37 +330,10 @@
         </div>
         <!-- main container ends -->
 
-
       </div>
       <!-- Columns end -->
     </div>
 
-
-    <footer class="footer">
-      <div class="container has-text-centered">
-
-        <nav class="level">
-          <!-- Left side -->
-          <div class="level-left">
-            <div class="level-item">
-              <p>
-                Powered by <a href="#">Cro</a> and the <a href="#">Raku Programming Language</a>
-              </p>
-            </div>
-          </div>
-
-          <!-- Right side -->
-          <div class="level-right">
-            <p class="level-item">
-              Please report any issues / comments / feature requests <a href="#">as an issue on App::IRC::Log.</a>
-            </p>
-          </div>
-        </nav>
-
-      </div>
-    </footer>
-
-    <!-- Include Font Awesome -->
-    <script defer src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"></script>
+    <&footer>
   </body>
 </html>
