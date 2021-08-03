@@ -1,0 +1,25 @@
+{
+  "name": "raku-logger",
+  "version": "1.0.0",
+  "description": "Raku log site",
+  "scripts": {
+    "styles-build": "npx sass --source-map styles/main.scss main.css",
+    "styles-watch": "onchange 'styles/*.scss' -- npm run styles-build",
+    "styles-optimize": "npx postcss --config ./postcss.config.js -o main.css main.css --map",
+    "styles-release": "npm run styles-build && npm run styles-optimize"
+  },
+  "author": "",
+  "license": "Artistic-2.0",
+  "dependencies": {
+    "autoprefixer": "^10.2.6",
+    "bulma": "^0.9.2",
+    "bulma-tooltip": "^3.0.2",
+    "bulma-calendar": "^6.1.6",
+    "meow": "^10.0.1",
+    "onchange": "^7.1.0",
+    "postcss-clean": "github:leodido/postcss-clean#release/2.x",
+    "postcss-cli": "^8.3.1",
+    "postcss-csso": "^5.0.1",
+    "sass": "^1.35.1"
+  }
+}

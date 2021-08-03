@@ -1,0 +1,140 @@
+// SIDEBAR
+$sidebar-z: 25 !default;
+
+.sidebar {
+  background-color: $scheme-main;
+
+  position: fixed;
+  z-index: $sidebar-z;
+  overflow-x: hidden; // Disable horizontal scroll
+  transition: width 1s ease;
+  backface-visibility: hidden;
+
+  height: 100%;
+  width: $sidebar-width;
+  padding: 1.25rem;
+  padding-top: 1.25rem;
+
+  border-right: 1px solid $border;
+  
+
+  +mobile {
+    display: none;
+    // width: 100%;
+    // right: -100%;
+  }
+  +tablet {
+    width: 50%;
+    right: -50%;
+  }
+  +desktop {
+    width: 35%;
+    right: -35%;
+  }
+  +widescreen {
+    width: 30%;
+    right: -30%;
+  }
+  +fullhd {
+    width: 25%;
+    right: -25%;
+  }
+  &.is-right {
+    // right: 0;
+    border-right: unset;
+    border-left: 1px solid $border;
+  }
+
+  .menu-list {
+    list-style: none;
+    
+    padding-left: 0px;
+
+    a {
+      margin: 0.25rem 0;
+      // padding: 1em 0.75em;
+      border-radius: 3px;
+      // border-bottom: 1px solid grey;
+      font-weight: $weight-semibold;
+    }
+
+    li a.is-active {
+      font-weight: $weight-bold;
+    }
+  }
+
+  li {
+    position: relative;
+  }
+
+  .sidebar-extra-links {
+    width: 60px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-top: 8px;
+
+    a {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+
+      &:hover {
+        color: $primary;
+      }
+    }
+  }
+}
+
+.sidebar .menu-label,
+.sidebar .menu-label:not(:last-child) {
+  margin-bottom: 0.75em;
+}
+
+.sidebar-body .menu-label {
+  font-weight: $weight-semibold;
+}
+
+.sidebar-toggle {
+  z-index: 20;
+  position: fixed;
+  top: 125px;
+  left: 295px;
+
+  box-shadow: 1px 2px 2px 0px rgba( 0, 0, 0, 0.25 );
+}
+
+.search-sidebar {
+  .delete {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}
+
+// Search mobile sidebar
+@include mobile {
+  #left-column, #left-sidebar {
+    width: 100%;
+    
+  }
+}
+
+#search-sidebar-toggle {
+  @include until($tablet) {
+    position: fixed;
+    left: 1rem;
+    // top: 2rem;
+    z-index: 50;
+
+    top: 1rem;
+
+    .icon {
+      margin-right: -0.5em;
+
+    }
+    .toggle-text {
+      display: none;
+    }
+  }
+}
