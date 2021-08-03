@@ -107,7 +107,7 @@
         <!-- Right side -->
         <div class="level-right">
           <p class="level-item">
-            Please report any issues / comments / feature requests&nbsp;<a href="https://github.com/lizmat/App-IRC-Log/issues">as an issue on App::IRC::Log.</a> Thank you!
+            Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-Raku-Log/issues">as an issue on App::Raku::Log.</a> Thank you!
           </p>
         </div>
       </nav>
@@ -373,21 +373,6 @@
       </div>
       </div>
 
-      <div id="navbar-right-toggle" class="navbar-end has-tooltip-bottom is-hidden-touch" data-tooltip="Toggle channel list">
-        <a class="navbar-item navbar-channels navbar-sidebar-btn" onClick="toggleSidebar('right-sidebar')">
-          <span class="icon icon-sidebar-state">
-            <i class="fas fa-chevron-right"></i>
-          </span>
-
-          <span class="icon-text channel-list">
-            <span class="icon">
-              <i class="fas fa-list"></i>
-            </span>
-            <span class="sidebar-title">Channel list</span>
-          </span>
-        </a>
-      </div>
-
     </nav>
     <!-- header ends -->
 
@@ -562,55 +547,6 @@
           </section>
         </div>
         <!-- main container ends -->
-
-        <!-- Right sidebar -->
-        <div id="right-column" class="column is-narrow is-hidden-touch">
-          <div id="right-sidebar" class="sidebar is-right is-hidden-touch">
-
-            <div class="block">
-              <nav class="level">
-                <div class="level-left">
-                  <div class="level-item">
-                    <strong>Channel list</strong>
-                  </div>
-                </div>
-                <div class="level-right">
-                  <div class="level-item">
-                    <label class="checkbox">
-                      <input type="checkbox">
-                      <strong>Archived</strong>
-                    </label>
-                  </div>
-                </div>
-              </nav>
-
-              <aside class="menu">
-                <ul class="menu-list">
-                  <@channels : $c>
-                    <li><a href="/<$c>/this/<.date>"<?{ $c eq .channel }> class="is-active"</?>>#<$c></a>
-                      <div class="sidebar-extra-links">
-                        <a href="/<$c>/today" title="Show today messages from the thread" class="msg-log-btn">
-                          <span class="icon">
-                            <i class="fas fa-inbox"></i>
-                          </span>
-                        </a>
-
-                        <a href="/search.html?channel=<$c>" title="Search in the thread" class="msg-log-btn">
-                          <span class="icon">
-                            <i class="fas fa-search"></i>
-                          </span>
-                        </a>
-                      </div>
-                    </li>
-                  </@>
-                </ul>
-              </aside>
-
-
-            </div>
-          </div>
-        </div>
-        <!-- Right sidebar ends -->
 
       </div>
     </div>
