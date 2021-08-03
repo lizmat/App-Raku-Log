@@ -459,14 +459,6 @@
 
                   </div>
                 </div>
-
-                <div class="level-right">
-                  <div class="level-item">
-                    <div class="message-amount is-size-4">
-                      <strong><.entries.elems()></strong> messages
-                    </div>
-                  </div>
-                </div>
               </nav>
               </!>
 
