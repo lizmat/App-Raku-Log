@@ -203,6 +203,19 @@
       function filterMessagesByNick(nick) {
           // * Take the value, go over all the divs and when the sender contains the value, set hiding depending on the flag
           // * If empty, then show all
+          var systemMessages = document.getElementsByClassName("special-system");
+          if (nick) {
+              for (var i = 0; i != systemMessages.length; i++) {
+                  systemMessages[i].classList.add('is-hidden');
+              }
+          } else {
+              if (!document.getElementById("system-msg-hide-mobile").checked && !document.getElementById("system-msg-hide").checked) {
+                  for (var i = 0; i != systemMessages.length; i++) {
+                      systemMessages[i].classList.remove('is-hidden');
+                  }
+              }
+          }
+
           var rows = document.querySelectorAll('.column-author');
           for (var i = 0; i != rows.length; i++) {
               if (rows[i].textContent.indexOf(nick) !== -1) { // matches nick
@@ -524,7 +537,7 @@
                 <!.control-events>
                   <tr <?{ .commit }> class="special-commit"</?><?{ .test-t }> class="special-test"</?> id="<.relative-target>">
                     <td class="column-time"><?{ .hh-mm }><.hh-mm></?></td>
-                    <td class="column-author"><strong><?{ .sender && .sender ne '"'}><&HTML(.sender)></?></strong></td>
+                    <td class="column-author"><strong<?{.same-sender}> style="visibility:hidden"</?>><&HTML(.sender)></strong></td>
                     <td class="column-message"><&HTML(.message)></td>
                     <&column-buttons($_)>
                   </tr>
