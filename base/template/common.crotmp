@@ -317,7 +317,7 @@
           <div class="navbar-delimiter"></div>
           
           <!$is-live>
-            <a href="/<.date>.log" class="navbar-item has-tooltip-bottom" data-tooltip="Download the page">
+            <a href="<.date>.log" class="navbar-item has-tooltip-bottom" data-tooltip="Download raw log">
               <span class="icon-text">
                 <span class="icon"><i class="fas fa-download"></i></span>
                 <span class="navbar-item-title">Raw</span>
