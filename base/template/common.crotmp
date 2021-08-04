@@ -190,8 +190,8 @@
           }
       }
 
-      function visibility(that, visibility) {
-          if (visibility) {
+      function visibility(that, visible) {
+          if (visible) {
               that.classList.remove('is-hidden');
           } else {
               that.classList.add('is-hidden');
@@ -199,11 +199,11 @@
       }
 
       function wantSystemMessagesShown() {
-          !(document.getElementById("system-msg-hide-mobile").checked
-            || !document.getElementById("system-msg-hide").checked)
+          return document.getElementById("system-msg-show").checked
+            || document.getElementById("system-msg-show-mobile").checked
       }
 
-      function visibilitySystemMessages(show = wantSystemMessagesShown) {
+      function visibilitySystemMessages(show = wantSystemMessagesShown()) {
           var systemMessages = document.getElementsByClassName("special-system");
           for (var i = 0; i != systemMessages.length; i++) {
               visibility(systemMessages[i], show)
@@ -350,7 +350,7 @@
             <span class="title is-4">Filter settings</span>
             </div>
 
-            <input class="input" type="text" placeholder="Filter" oninput="filterMessagesByText(this.value);">
+            <input class="input" type="text" placeholder="Messages containing text" oninput="filterMessagesByText(this.value);">
 
             <div class="block">
               <p><strong>User</strong></p>
@@ -368,8 +368,8 @@
               </div>
 
               <label class="checkbox">
-                <strong>Hide system messages</strong>
-                <input id="system-msg-hide-mobile" type="checkbox" onclick="visibilitySystemMessages(!this.checked);">
+                <strong>Show system messages</strong>
+                <input id="system-msg-show-mobile" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
               </label>
 
             </div>
@@ -405,28 +405,27 @@
                   </button>
                 </div>
               </div>
-
-              <label class="checkbox">
-                <strong>Hide system messages</strong>
-                <input id="system-msg-hide" type="checkbox" onclick="visibilitySystemMessages(!this.checked);">
-              </label>
-
             </div>
 
             <div class="block">
               <p><strong>Filter</strong></p>
-              <input class="input" type="text" placeholder="Filter" oninput="filterMessagesByText(this.value);">
+              <input class="input" type="text" placeholder="Messages containing text" oninput="filterMessagesByText(this.value);">
             </div>
 
             <!$is-live>
-              <hr>
-
               <div class="block">
                 <p><strong>Calendar</strong></p>
 
                 <input id="sidebar-datepicker" type="date">
               </div>
             </!>
+
+            <div class="block">
+              <label class="checkbox">
+                <input id="system-msg-show" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
+                <strong>show system messages</strong>
+              </label>
+            </div>
           </div>
         </div>
         <!-- Left sidebar ends -->
