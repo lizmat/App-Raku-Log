@@ -420,12 +420,14 @@
               </div>
             </!>
 
-            <div class="block">
-              <label class="checkbox">
-                <input id="system-msg-show" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
-                <strong>show system messages</strong>
-              </label>
-            </div>
+            <!$is-live>
+              <div class="block">
+                <label class="checkbox">
+                  <input id="system-msg-show" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
+                  <strong>show system messages</strong>
+                </label>
+              </div>
+            </!>
           </div>
         </div>
         <!-- Left sidebar ends -->
