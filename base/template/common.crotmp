@@ -173,6 +173,7 @@
           }
 
           visibilitySystemMessages();
+          visibilityCommitMessages();
       });
 
       var leftToggled = false; // TODO get this out of cookies later
@@ -210,12 +211,25 @@
           }
       }
 
+      function wantCommitMessagesHidden() {
+          return document.getElementById("commit-msg-hide").checked
+            || document.getElementById("commit-msg-hide-mobile").checked
+      }
+
+      function visibilityCommitMessages(hidden = wantCommitMessagesHidden()) {
+          var commitMessages = document.getElementsByClassName("special-commit");
+          for (var i = 0; i != commitMessages.length; i++) {
+              visibility(commitMessages[i], !hidden)
+          }
+      }
+
       function filterMessages(rows, needle, include) {
           // if there is a needle, we don't want system messages ever
           if (needle) {
               visibilitySystemMessages(false);
           } else {
               visibilitySystemMessages();
+              visibilityCommitMessages();
           }
 
           for (var i = 0; i != rows.length; i++) {
@@ -371,6 +385,10 @@
                 <strong>Show system messages</strong>
                 <input id="system-msg-show-mobile" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
               </label>
+              <label class="checkbox">
+                <input id="commit-msg-hide-mobile" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
+                <strong>Hide commit messages</strong>
+              </label>
 
             </div>
           </div>
@@ -425,6 +443,12 @@
                 <label class="checkbox">
                   <input id="system-msg-show" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
                   <strong>show system messages</strong>
+                </label>
+              </div>
+              <div class="block">
+                <label class="checkbox">
+                  <input id="commit-msg-hide" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
+                  <strong>hide commit messages</strong>
                 </label>
               </div>
             </!>
