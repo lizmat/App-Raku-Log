@@ -531,7 +531,7 @@
                 <!.control-events>
                   <tr <?{ .commit }> class="special-commit"</?><?{ .test-t }> class="special-test"</?> id="<.relative-target>">
                     <td class="column-time"><?{ .hh-mm }><.hh-mm></?></td>
-                    <td class="column-author"><strong<?{.same-sender}> style="visibility:hidden"</?>><&HTML(.sender)></strong></td>
+                    <td class="column-author"><strong<?{.same-nick || .self-reference}> style="visibility:hidden"</?>><&HTML(.sender)></strong></td>
                     <td class="column-message"><&HTML(.message)></td>
                     <&column-buttons($_)>
                   </tr>
