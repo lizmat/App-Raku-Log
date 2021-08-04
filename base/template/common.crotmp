@@ -116,7 +116,7 @@
   </footer>
 
   <!-- Include Font Awesome -->
-  <script defer src="https://use.fontawesome.com/releases/v5.15.3/js/all.js"></script>
+  <script defer src="/fontawesome.js"></script>
 </:>
 
 <:macro log-page($_, $is-live)>
