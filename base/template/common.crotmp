@@ -172,9 +172,7 @@
               });
           }
 
-          if (document.getElementById("system-msg-hide-mobile").checked || document.getElementById("system-msg-hide").checked) {
-              toggleSystemMessages();
-          }
+          visibilitySystemMessages();
       });
 
       var leftToggled = false; // TODO get this out of cookies later
@@ -192,60 +190,56 @@
           }
       }
 
-      function toggleSystemMessages() {
-          var systemMessages = document.getElementsByClassName("special-system");
-          for (var i = 0; i != systemMessages.length; i++) {
-              systemMessages[i].classList.toggle('is-hidden');
+      function visibility(that, visibility) {
+          if (visibility) {
+              that.classList.remove('is-hidden');
+          } else {
+              that.classList.add('is-hidden');
           }
       }
 
-      var flag = true;
-      function filterMessagesByNick(nick) {
-          // * Take the value, go over all the divs and when the sender contains the value, set hiding depending on the flag
-          // * If empty, then show all
+      function wantSystemMessagesShown() {
+          !(document.getElementById("system-msg-hide-mobile").checked
+            || !document.getElementById("system-msg-hide").checked)
+      }
+
+      function visibilitySystemMessages(show = wantSystemMessagesShown) {
           var systemMessages = document.getElementsByClassName("special-system");
-          if (nick) {
-              for (var i = 0; i != systemMessages.length; i++) {
-                  systemMessages[i].classList.add('is-hidden');
-              }
+          for (var i = 0; i != systemMessages.length; i++) {
+              visibility(systemMessages[i], show)
+          }
+      }
+
+      function filterMessages(rows, needle, include) {
+          // if there is a needle, we don't want system messages ever
+          if (needle) {
+              visibilitySystemMessages(false);
           } else {
-              if (!document.getElementById("system-msg-hide-mobile").checked && !document.getElementById("system-msg-hide").checked) {
-                  for (var i = 0; i != systemMessages.length; i++) {
-                      systemMessages[i].classList.remove('is-hidden');
-                  }
-              }
+              visibilitySystemMessages();
           }
 
-          var rows = document.querySelectorAll('.column-author');
           for (var i = 0; i != rows.length; i++) {
-              if (rows[i].textContent.indexOf(nick) !== -1) { // matches nick
-                  if (flag) { // if we should show matching ones
-                      rows[i].parentElement.classList.remove('is-hidden');
-                  } else { // if we should hide matching ones
-                      rows[i].parentElement.classList.add('is-hidden');
-                  }
-              } else { // no match
-                  if (flag) { // if we should hide non-matching ones
-                      rows[i].parentElement.classList.add('is-hidden');
-                  } else { // if we should show non-matching ones
-                      rows[i].parentElement.classList.remove('is-hidden');
-                  }
-              }
+              visibility(
+                rows[i].parentElement,
+                (rows[i].textContent.indexOf(needle) != -1) == include
+              );
           }
+      }
+
+      function filterMessagesByNick(nick) {
+          filterMessages(
+            document.querySelectorAll('.column-author'),
+            nick,
+            true  // should be the exclude flag for nicks
+          );
       }
 
       function filterMessagesByText(text) {
-          // The algorithm is:
-          // * Take the value, go over all the divs and when the sender contains the value, set hiding depending on the flag
-          // * If empty, then show all
-          var rows = document.querySelectorAll('.column-message');
-          for (var i = 0; i != rows.length; i++) {
-              if (rows[i].textContent.indexOf(text) !== -1) {
-                  rows[i].parentElement.classList.remove('is-hidden');
-              } else { // no match
-                  rows[i].parentElement.classList.add('is-hidden');
-              }
-          }
+          filterMessages(
+            document.querySelectorAll('.column-message'),
+            text,
+            true  // should be the exclude flag for text
+          );
       }
     </script>
   </head>
@@ -375,7 +369,7 @@
 
               <label class="checkbox">
                 <strong>Hide system messages</strong>
-                <input id="system-msg-hide-mobile" type="checkbox" onclick="toggleSystemMessages();">
+                <input id="system-msg-hide-mobile" type="checkbox" onclick="visibilitySystemMessages(!this.checked);">
               </label>
 
             </div>
@@ -414,7 +408,7 @@
 
               <label class="checkbox">
                 <strong>Hide system messages</strong>
-                <input id="system-msg-hide" type="checkbox" onclick="toggleSystemMessages();">
+                <input id="system-msg-hide" type="checkbox" onclick="visibilitySystemMessages(!this.checked);">
               </label>
 
             </div>
