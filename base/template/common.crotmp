@@ -25,16 +25,18 @@
           <div class="dropdown-item">
             <div class="menu">
               <ul class="menu-list">
-                <li>
-                  <a href="#">
-                    <span class="icon-text filter">
-                      <span class="icon">
-                        <i class="fas fa-play-circle"></i>
+                <?{.code}>
+                  <li>
+                    <a href="/run.html?<.code>">
+                      <span class="icon-text filter">
+                        <span class="icon">
+                          <i class="fas fa-play-circle"></i>
+                        </span>
+                        <span>Run code</span>
                       </span>
-                      <span>Run code</span>
-                    </span>
-                  </a>
-                </li>
+                    </a>
+                  </li>
+                </?>
 
                 <li>
                   <a href="#">
@@ -69,11 +71,13 @@
 
 
     <div class="is-hidden-mobile desktop-buttons">
-      <a href="#" title="Run code" class="msg-log-btn">
-        <span class="icon">
-          <i class="fas fa-play-circle"></i>
-        </span>
-      </a>
+      <?{.code}>
+        <a href="/run.html?<.code>" title="Run code" class="msg-log-btn">
+          <span class="icon">
+            <i class="fas fa-play-circle"></i>
+          </span>
+        </a>
+      </?>
 
       <a href="#" title="Mark this message" class="msg-log-btn">
         <span class="icon">
