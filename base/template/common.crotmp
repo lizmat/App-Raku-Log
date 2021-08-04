@@ -39,17 +39,6 @@
                 </?>
 
                 <li>
-                  <a href="#">
-                    <span class="icon-text filter">
-                      <span class="icon">
-                        <i class="fas fa-check-circle"></i>
-                      </span>
-                      <span>Mark</span>
-                    </span>
-                  </a>
-                </li>
-
-                <li>
                   <a id="<.relative-target>" href="#<.relative-target>" title="Copy direct link to the message" class="msg-log-btn">
                     <span class="icon-text filter">
                       <span class="icon">
@@ -78,12 +67,6 @@
           </span>
         </a>
       </?>
-
-      <a href="#" title="Mark this message" class="msg-log-btn">
-        <span class="icon">
-          <i class="fas fa-check-circle"></i>
-        </span>
-      </a>
 
       <a href="#<.relative-target>" title="Copy direct link to the message" class="msg-log-btn">
         <span class="icon">
