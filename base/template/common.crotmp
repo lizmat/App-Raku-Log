@@ -298,10 +298,17 @@
 
           <div class="navbar-delimiter"></div>
 
-          <a href="/<.channel>/today" class="navbar-item has-tooltip-bottom" data-tooltip="Show today messages">
+          <a href="/<.channel>/today" class="navbar-item has-tooltip-bottom" data-tooltip="Show today's messages">
             <span class="icon-text">
               <span class="icon"><i class="fas fa-inbox"></i></span>
               <span class="navbar-item-title">Today</span>
+            </span>
+          </a>
+
+          <a href="/<.channel>/random" class="navbar-item has-tooltip-bottom" data-tooltip="I feel lucky">
+            <span class="icon-text">
+              <span class="icon"><i class="fas fa-paw"></i></span>
+              <span class="navbar-item-title">Then</span>
             </span>
           </a>
 
