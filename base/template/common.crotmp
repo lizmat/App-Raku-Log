@@ -211,7 +211,7 @@
           }
       }
 
-      function filterMessages(rows, needle, include) {
+      function filterMessages(rows, checker, needle, include) {
           // if there is a needle, we don't want system messages ever
           if (needle) {
               visibilitySystemMessages(false);
@@ -223,22 +223,32 @@
           for (var i = 0; i != rows.length; i++) {
               visibility(
                 rows[i].parentElement,
-                (rows[i].textContent.indexOf(needle) != -1) == include
+                checker(rows[i], needle) == include
               );
           }
       }
 
+      function isInNick(haystack, needle) {
+          return haystack.getAttribute("nick").indexOf(needle) != -1
+      }
+
       function filterMessagesByNick(nick) {
           filterMessages(
-            document.querySelectorAll('.column-author'),
+            document.querySelectorAll('td[nick]'),
+            isInNick,
             nick,
             true  // should be the exclude flag for nicks
           );
       }
 
+      function isInText(haystack, needle) {
+          return haystack.textContent.indexOf(needle) != -1
+      }
+
       function filterMessagesByText(text) {
           filterMessages(
             document.querySelectorAll('.column-message'),
+            isInText,
             text,
             true  // should be the exclude flag for text
           );
@@ -542,9 +552,11 @@
                   </tr>
                 </?>
                 <!.control-events>
+                  <!{.same-nick}>
+                    <tr><td colspan="2" nick="<&HTML(.nick)>"><strong><&HTML(.sender)></strong></td></tr>
+                  </!>
                   <tr <?{ .commit }> class="special-commit"</?><?{ .test-t }> class="special-test"</?> id="<.relative-target>">
-                    <td class="column-author"><strong<?{.same-nick || .self-reference}> style="visibility:hidden"</?>><&HTML(.sender)></strong></td>
-                    <td class="column-message"><&HTML(.message)></td>
+                    <td class="column-message" nick="<&HTML(.nick)>"><&HTML(.message)></td>
                     <&column-buttons($_)>
                   </tr>
                 </!>
