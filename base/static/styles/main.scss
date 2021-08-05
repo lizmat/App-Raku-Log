@@ -265,11 +265,11 @@ body {
   flex-direction: row;
 }
 
-// Message los styles
+// Message logs styles
 #message-log {
   // Table
   .table {
-    border: 1px solid $border;
+    border: 0px $border;
   }
   
   .column-time {
@@ -281,6 +281,7 @@ body {
   .column-buttons {
     width: 100px;
     padding: 0.5em 0.25em;
+    text-align: right;
 
     @include mobile {
       width: 50px;
@@ -668,8 +669,30 @@ a.thread-link {
 
 // Table with messages
 #message-log {
+  .table :not(tr.special-nick) {
+    border-top: none;
+    border-bottom: none;
+  }
+
+  .table tr.row-message {
+    background-color: #ddeeee;
+  }
+
+  .table tr.special-nick {
+    border-top: 1px solid;
+    font-size: 125%;
+    font-weight: $weight-bold;
+  }
+
+  .table tr.special-system {
+    border-left: 1px solid $text-strong;
+    border-right: 1px solid $text-strong;
+    background-color: #eeeeee;
+  }
+
   .table tr.special-system,
   .table tr.special-code {
+    border-top: 1px solid;
 
     .desktop-buttons {
       text-align: right;
@@ -679,15 +702,19 @@ a.thread-link {
 
   .table tr.special-test {
     border-left: 4px solid $primary;
+    border-top: 1px solid $text-strong;
+    border-right: 1px solid $text-strong;
     background-color: #ddffdd;
-    font-weight: $weight-bold;
+    font-weight: $weight-semibold;
     color: $text-strong;
   }
 
   .table tr.special-commit {
     border-left: 4px solid $primary;
+    border-top: 1px solid $text-strong;
+    border-right: 1px solid $text-strong;
     background-color: #ffdddd;
-    font-weight: $weight-bold;
+    font-weight: $weight-semibold;
     color: $text-strong;
   }
 
@@ -702,7 +729,7 @@ a.thread-link {
 
   .table tr.special-commit,
   .table tr.special-test,
-  .table tr.specia-code {
+  .table tr.special-code {
     .msg-mobile-dropdown {
       .button.is-text {
         background-color: $scheme-main;
@@ -716,7 +743,7 @@ a.thread-link {
       scroll-margin-top: $navbar-height-size;
     }
 
-    // Dispay table cells as blocks on mobile until 480px
+    // Display table cells as blocks on mobile until 480px
     @include until(480px) {
       td {
         width: 100%;

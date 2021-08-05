@@ -68,10 +68,7 @@
         </a>
       </?>
 
-      <a href="#<.relative-target>" title="Copy direct link to the message" class="msg-log-btn">
-        <span class="icon">
-          <i class="fas fa-link"></i>
-        </span>
+      <a href="#<.relative-target>" title="Link to message" class="msg-log-btn">
         <span class="column-time"><.hh-mm></span>
       </a>
     </div>
@@ -302,7 +299,7 @@
                 <div class="menu">
                   <ul class="menu-list">
                     <@channels : $c>
-                      <li><a href="/<$c>/<.date>.html"><$c></a></li>
+                      <li><a href="/<$c>/<.date>.html">#<$c></a></li>
                     </@>
                   </ul>
 
@@ -499,13 +496,13 @@
                 <@entries>
                 <?.control-events>
                   <tr class="special-system" id="<.relative-target>">
-                    <td colspan="3">
-                    <div class="is-size-7">
-                    <@control-events>
-                      <b><.key></b> <&HTML(.value)>
-                    </@>
-                    </div>
-                  </td>
+                    <td>
+                      <div class="is-size-7">
+                      <@control-events>
+                        <b><.key></b> <&HTML(.value)>
+                      </@>
+                      </div>
+                    </td>
                     <td class="column-buttons">
                       <div class="dropdown is-hoverable is-hidden-tablet">
                         <div class="dropdown-trigger">
@@ -539,7 +536,7 @@
 
 
                       <div class="is-hidden-mobile desktop-buttons">
-                        <a href="#<.relative-target>" title="Copy direct link to the message" class="msg-log-btn">
+                        <a href="#<.relative-target>" title="Link to message" class="msg-log-btn">
                           <span class="icon">
                             <i class="fas fa-link"></i>
                           </span>
@@ -552,11 +549,17 @@
                   </tr>
                 </?>
                 <!.control-events>
-                  <!{.same-nick}>
-                    <tr><td colspan="2" nick="<&HTML(.nick)>"><strong><&HTML(.sender)></strong></td></tr>
+                  <!{.same-nick || .commit}>
+                    <tr class="special-nick">
+                      <td colspan="2" nick="<&HTML(.nick)>"><&HTML(.sender)></td>
+                    </tr>
                   </!>
-                  <tr <?{ .commit }> class="special-commit"</?><?{ .test-t }> class="special-test"</?> id="<.relative-target>">
-                    <td class="column-message" nick="<&HTML(.nick)>"><&HTML(.message)></td>
+                  <tr id="<.relative-target>"
+                    <?{ .commit }> class="special-commit"</?>
+                    <?{ .test-t }> class="special-test"</?>
+                    <!{ .commit || .test-t}> class="row-message"</!>
+                  >
+                    <td nick="<&HTML(.nick)>"><&HTML(.message)></td>
                     <&column-buttons($_)>
                   </tr>
                 </!>
