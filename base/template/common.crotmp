@@ -179,7 +179,7 @@
           }
       }
 
-      function visibility(that, visible) {
+      function setVisibility(that, visible) {
           if (visible) {
               that.classList.remove('is-hidden');
           } else {
@@ -195,7 +195,7 @@
       function visibilitySystemMessages(show = wantSystemMessagesShown()) {
           var systemMessages = document.getElementsByClassName("special-system");
           for (var i = 0; i != systemMessages.length; i++) {
-              visibility(systemMessages[i], show)
+              setVisibility(systemMessages[i], show)
           }
       }
 
@@ -207,21 +207,21 @@
       function visibilityCommitMessages(hidden = wantCommitMessagesHidden()) {
           var commitMessages = document.getElementsByClassName("special-commit");
           for (var i = 0; i != commitMessages.length; i++) {
-              visibility(commitMessages[i], !hidden)
+              setVisibility(commitMessages[i], !hidden)
           }
       }
 
       function filterMessages(rows, checker, needle, include) {
           // if there is a needle, we don't want system messages ever
           if (needle) {
-              visibilitySystemMessages(false);
+              VisibilitySystemMessages(false);
           } else {
               visibilitySystemMessages();
               visibilityCommitMessages();
           }
 
           for (var i = 0; i != rows.length; i++) {
-              visibility(
+              setVisibility(
                 rows[i].parentElement,
                 checker(rows[i], needle) == include
               );
