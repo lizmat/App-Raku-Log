@@ -100,6 +100,26 @@
     <script src="/bulma-calendar.min.js"></script>
 
     <script>
+      function setCookie(name, value) {
+          document.cookie = name + "=" + value + ";path=/";
+          return value;
+      }
+      function getCookie(cname) {
+          let name = cname + "=";
+          let decodedCookie = decodeURIComponent(document.cookie);
+          let ca = decodedCookie.split(';');
+          for(let i = 0; i <ca.length; i++) {
+            let c = ca[i];
+            while (c.charAt(0) == ' ') {
+              c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+              return c.substring(name.length, c.length);
+            }
+          }
+          return "";
+      }
+
       document.addEventListener('DOMContentLoaded', () => {
 
           // Get all "navbar-burger" elements
@@ -139,10 +159,16 @@
                   window.location = 'this/' + date.data.datePicker.value();
               });
           }
+          document.getElementById("commit-msg-hide").checked
+            = hide_commit_messages;
 
-          visibilitySystemMessages();
-          visibilityCommitMessages();
+
+          visibilitySystemMessages(getCookie("show_system_messages"));
+          visibilityCommitMessages(getCookie("hide_commit_messages"));
       });
+
+      var show_system_messages;  // "show" if system messages should be shown
+      var hide_commit_messages;  // "hidden" if commit message should be hidden
 
       var leftToggled = false; // TODO get this out of cookies later
       var rightToggled = false;
@@ -167,25 +193,32 @@
           }
       }
 
-      function wantSystemMessagesShown() {
-          return document.getElementById("system-msg-show").checked
-            || document.getElementById("system-msg-show-mobile").checked
+      function setShowSystemMessages(show) {
+          show_system_messages =
+            setCookie('show_system_messages', show ? "show" : "");
+          document.getElementById("system-msg-show").checked = show;
+          document.getElementById("system-msg-show-mobile").checked = show;
       }
 
-      function visibilitySystemMessages(show = wantSystemMessagesShown()) {
+      function visibilitySystemMessages(show = show_system_messages) {
+          setShowSystemMessages(show);
           var systemMessages = document.getElementsByClassName("special-system");
           for (var i = 0; i != systemMessages.length; i++) {
               setVisibility(systemMessages[i], show)
           }
       }
 
-      function wantCommitMessagesHidden() {
-          return document.getElementById("commit-msg-hide").checked
-            || document.getElementById("commit-msg-hide-mobile").checked
+      function setHideCommitMessages(hidden) {
+          hide_commit_messages =
+            setCookie('hide_commit_messages', hidden ? "hidden" : "");
+          document.getElementById("commit-msg-hide").checked = hidden;
+          document.getElementById("commit-msg-hide-mobile").checked = hidden;
       }
 
-      function visibilityCommitMessages(hidden = wantCommitMessagesHidden()) {
+      function visibilityCommitMessages(hidden = hide_commit_messages) {
+          setHideCommitMessages(hidden);
           var commitMessages = document.getElementsByClassName("special-commit");
+
           for (var i = 0; i != commitMessages.length; i++) {
               setVisibility(commitMessages[i], !hidden)
           }
