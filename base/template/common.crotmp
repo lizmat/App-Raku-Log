@@ -193,30 +193,24 @@
           }
       }
 
-      function setShowSystemMessages(show) {
+      function visibilitySystemMessages(show = show_system_messages) {
           show_system_messages =
             setCookie('show_system_messages', show ? "show" : "");
           document.getElementById("system-msg-show").checked = show;
           document.getElementById("system-msg-show-mobile").checked = show;
-      }
 
-      function visibilitySystemMessages(show = show_system_messages) {
-          setShowSystemMessages(show);
           var systemMessages = document.getElementsByClassName("special-system");
           for (var i = 0; i != systemMessages.length; i++) {
               setVisibility(systemMessages[i], show)
           }
       }
 
-      function setHideCommitMessages(hidden) {
+      function visibilityCommitMessages(hidden = hide_commit_messages) {
           hide_commit_messages =
             setCookie('hide_commit_messages', hidden ? "hidden" : "");
           document.getElementById("commit-msg-hide").checked = hidden;
           document.getElementById("commit-msg-hide-mobile").checked = hidden;
-      }
 
-      function visibilityCommitMessages(hidden = hide_commit_messages) {
-          setHideCommitMessages(hidden);
           var commitMessages = document.getElementsByClassName("special-commit");
 
           for (var i = 0; i != commitMessages.length; i++) {
