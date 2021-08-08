@@ -159,14 +159,13 @@
                   window.location = 'this/' + date.data.datePicker.value();
               });
           }
-          document.getElementById("commit-msg-hide").checked
-            = hide_commit_messages;
-
 
           visibilitySystemMessages(getCookie("show_system_messages"));
           visibilityCommitMessages(getCookie("hide_commit_messages"));
       });
 
+      var filter_on_nick = "";
+      var filter_on_text = "";
       var show_system_messages;  // "show" if system messages should be shown
       var hide_commit_messages;  // "hidden" if commit message should be hidden
 
@@ -185,6 +184,7 @@
           }
       }
 
+      // Set visibility of an element
       function setVisibility(that, visible) {
           if (visible) {
               that.classList.remove('is-hidden');
@@ -193,63 +193,101 @@
           }
       }
 
-      function visibilitySystemMessages(show = show_system_messages) {
-          show_system_messages =
-            setCookie('show_system_messages', show ? "show" : "");
-          document.getElementById("system-msg-show").checked = show;
-          document.getElementById("system-msg-show-mobile").checked = show;
+      // Set visibility of system messages + checkboxes + cookie
+      function visibilitySystemMessages(
+        show = show_system_messages,
+        global = true  // by default, set checkboxes + cookie as well
+      ) {
+          if (global) {
+              show_system_messages =
+                setCookie('show_system_messages', show ? "show" : "");
+              document.getElementById("system-msg-show").checked = show;
+              document.getElementById("system-msg-show-mobile").checked = show;
+          }
 
-          var systemMessages = document.getElementsByClassName("special-system");
-          for (var i = 0; i != systemMessages.length; i++) {
-              setVisibility(systemMessages[i], show)
+          let rows = document.getElementsByClassName("special-system");
+          for (var i = 0; i != rows.length; i++) {
+              setVisibility(rows[i], show)
           }
       }
 
+      // Set visibility of commit messages + checkboxes + cookie
       function visibilityCommitMessages(hidden = hide_commit_messages) {
           hide_commit_messages =
             setCookie('hide_commit_messages', hidden ? "hidden" : "");
           document.getElementById("commit-msg-hide").checked = hidden;
           document.getElementById("commit-msg-hide-mobile").checked = hidden;
 
-          var commitMessages = document.getElementsByClassName("special-commit");
+          let rows = document.getElementsByClassName("special-commit");
 
-          for (var i = 0; i != commitMessages.length; i++) {
-              setVisibility(commitMessages[i], !hidden)
+          for (var i = 0; i != rows.length; i++) {
+              setVisibility(rows[i], !hidden)
           }
       }
 
-      function filterMessages(checker, needle, include) {
-          // if there is a needle, we don't want system messages ever
-          if (needle) {
-              visibilitySystemMessages(false);
-          } else {
+      // Helper function for filtering on nick or text
+      function FilterMessages(nick, text) {
+          let rows = document.querySelectorAll('td[nick]');
+
+          filter_on_nick = nick // "";
+          filter_on_text = text // "";
+
+          // we have something to filter on
+          if (nick || text) {
+              visibilitySystemMessages(false, false);
+
+              let lcNick = nick.toLowerCase();
+              let lcText = text.toLowerCase();
+              let lastHeader;
+
+              for (var i = 0; i != rows.length; i++) {
+                  let row = rows[i];
+
+                  // at the row with the name of the nick and hide that
+                  if (row.getAttribute("header")) {
+                      lastHeader = row;
+                      setVisibility(row.parentElement, false);
+                  }
+                  else {
+                      let nickOK = nick
+                        && row.getAttribute("nick").toLowerCase().indexOf(lcNick) != -1;
+                      let textOK = text
+                        && row.textContent.toLowerCase().indexOf(lcText) != -1;
+
+                      if (
+                        (nick && text && nickOK && textOK)
+                          || (!nick && textOK)
+                          || (!text && nickOK)
+                      ) {
+                          setVisibility(row.parentElement, true);
+                          if (lastHeader) {
+                              setVisibility(lastHeader.parentElement, true);
+                              lastHeader = undefined;
+                          }
+                      }
+                      else {
+                          setVisibility(row.parentElement, false);
+                      }
+                  }
+              }
+          }
+
+          // nothing to filter on
+          else {
               visibilitySystemMessages();
               visibilityCommitMessages();
+              for (var i = 0; i != rows.length; i++) {
+                  setVisibility(rows[i].parentElement, true)
+              }
           }
-
-          var rows = document.querySelectorAll('td[nick]');
-          for (var i = 0; i != rows.length; i++) {
-              setVisibility(
-                rows[i].parentElement,
-                checker(rows[i], needle) == include
-              );
-          }
-      }
-
-      function isInNick(haystack, needle) {
-          return haystack.getAttribute("nick").indexOf(needle) != -1
       }
 
       function filterMessagesByNick(nick) {
-          filterMessages(isInNick, nick, true);  // exclude flag for nicks
-      }
-
-      function isInText(haystack, needle) {
-          return haystack.textContent.indexOf(needle) != -1
+          FilterMessages(nick, filter_on_text);
       }
 
       function filterMessagesByText(text) {
-          filterMessages(isInText, text, true);  // exclude flag for text
+          FilterMessages(filter_on_nick, text);
       }
     </script>
   </head>
@@ -339,7 +377,7 @@
           </a>
 
           <div class="navbar-delimiter"></div>
-          
+
           <!$is-live>
             <a href="<.date>.log" class="navbar-item has-tooltip-bottom" data-tooltip="Download raw log">
               <span class="icon-text">
@@ -371,7 +409,7 @@
               <p><strong>User</strong></p>
 
               <div class="field has-addons">
-                <input class="input" type="text" placeholder="Filter by nick" oninput="filterMessagesByNick(this.value);">
+                <input id="nick-filter" class="input" type="text" placeholder="Filter by nick" oninput="filterMessagesByNick(this.value);">
 
                 <div class="control">
                   <a class="button">
@@ -386,7 +424,7 @@
             <div class="block">
               <p><strong>Text</strong></p>
               <div class="field has-addons">
-                <input class="input" type="text" placeholder="Filter on text" oninput="filterMessagesByText(this.value);">
+                <input id="text-filter" class="input" type="text" placeholder="Filter on text" oninput="filterMessagesByText(this.value);">
 
                 <div class="control">
                   <a class="button">
@@ -431,7 +469,7 @@
 
               <div class="field has-addons">
                 <div class="control">
-                  <input class="input" type="text" placeholder="Filter by nick" oninput="filterMessagesByNick(this.value);">
+                  <input id="nick-filter-mobile" class="input" type="text" placeholder="Filter by nick" oninput="filterMessagesByNick(this.value);">
                 </div>
                 <div class="control has-tooltip-bottom" data-tooltip="Exclude user">
                   <!-- Add class is-primary when active -->
@@ -448,7 +486,7 @@
               <p><strong>Text</strong></p>
               <div class="field has-addons">
                 <div class="control">
-                  <input class="input" type="text" placeholder="Filter on text" oninput="filterMessagesByText(this.value);">
+                  <input id="text-filter-mobile" class="input" type="text" placeholder="Filter on text" oninput="filterMessagesByText(this.value);">
                 </div>
                 <div class="control has-tooltip-bottom" data-tooltip="Exclude text">
                   <!-- Add class is-primary when active -->
@@ -587,7 +625,7 @@
                 <!.control-events>
                   <!{.same-nick || .commit}>
                     <tr class="special-nick">
-                      <td colspan="2" nick="<&HTML(.nick)>"><&HTML(.sender)></td>
+                      <td colspan="2" nick="<&HTML(.nick)>" header="yes"><&HTML(.sender)></td>
                     </tr>
                   </!>
                   <tr id="<.relative-target>"
