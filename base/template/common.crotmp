@@ -114,7 +114,12 @@
               c = c.substring(1);
             }
             if (c.indexOf(name) == 0) {
-              return c.substring(name.length, c.length);
+              let cookie = c.substring(name.length, c.length);
+              return cookie == "true"
+                ? true
+                : cookie == "false"
+                  ? false
+                  : cookie;
             }
           }
           return "";
@@ -160,15 +165,15 @@
               });
           }
 
-          visibilitySystemMessages(getCookie("show_system_messages"));
-          visibilityCommitMessages(getCookie("hide_commit_messages"));
-          filterMessages(getCookie("filter_on_nick"),getCookie("filter_on_text"));
+          filterMessages();
+          visibilitySystemMessages();
+          visibilityCommitMessages();
       });
 
-      var filter_on_nick;        // needle for filtering on nick
-      var filter_on_text;        // needle for filtering on text
-      var show_system_messages;  // "show" if system messages should be shown
-      var hide_commit_messages;  // "hidden" if commit message should be hidden
+      var filter_on_nick       = getCookie("filter_on_nick");
+      var filter_on_text       = getCookie("filter_on_text");
+      var show_system_messages = getCookie("show_system_messages");
+      var hide_commit_messages = getCookie("hide_commit_messages");
 
       var leftToggled = false; // TODO get this out of cookies later
       var rightToggled = false;
@@ -200,8 +205,7 @@
         global = true  // by default, set checkboxes + cookie as well
       ) {
           if (global) {
-              show_system_messages =
-                setCookie('show_system_messages', show ? "show" : "");
+              show_system_messages = setCookie('show_system_messages', !!show);
               document.getElementById("system-msg-show").checked = show;
               document.getElementById("system-msg-show-mobile").checked = show;
           }
@@ -214,29 +218,30 @@
 
       // Set visibility of commit messages + checkboxes + cookie
       function visibilityCommitMessages(hidden = hide_commit_messages) {
-          hide_commit_messages =
-            setCookie('hide_commit_messages', hidden ? "hidden" : "");
+          hide_commit_messages = setCookie('hide_commit_messages', !!hidden);
           document.getElementById("commit-msg-hide").checked = hidden;
           document.getElementById("commit-msg-hide-mobile").checked = hidden;
 
           let rows = document.getElementsByClassName("special-commit");
 
           for (var i = 0; i != rows.length; i++) {
-              setVisibility(rows[i], !hidden)
+              setVisibility(rows[i], !hide_commit_messages)
           }
       }
 
+      // Helper function to update cookie + input fields
+      function updateFilter(type, value) {
+          document.getElementById(type + "-filter").value = value;
+          document.getElementById(type + "-filter-mobile").value = value;
+          return setCookie("filter_on_" + type, value);
+      }
+
       // Helper function for filtering on nick or text
-      function filterMessages(nick, text) {
+      function filterMessages(nick = filter_on_nick, text = filter_on_text) {
           let rows = document.querySelectorAll('td[nick]');
 
-          filter_on_nick = setCookie("filter_on_nick", nick);
-          document.getElementById("nick-filter").value = nick;
-          document.getElementById("nick-filter-mobile").value = nick;
-
-          filter_on_text = setCookie("filter_on_text", text);
-          document.getElementById("text-filter").value = text;
-          document.getElementById("text-filter-mobile").value = text;
+          filter_on_nick = updateFilter("nick", nick);
+          filter_on_text = updateFilter("text", text);
 
           // we have something to filter on
           if (nick || text) {
@@ -280,11 +285,11 @@
 
           // nothing to filter on
           else {
-              visibilitySystemMessages();
-              visibilityCommitMessages();
               for (var i = 0; i != rows.length; i++) {
                   setVisibility(rows[i].parentElement, true)
               }
+              visibilitySystemMessages();
+              visibilityCommitMessages();
           }
       }
 
