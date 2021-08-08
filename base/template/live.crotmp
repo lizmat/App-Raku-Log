@@ -1,4 +1,4 @@
 <:use 'base/template/common.crotmp'>
 <|log-page($_, True)>
-  #<.channel> live - Raku Programming Language Log Collection
+  #<.channel> live - Raku Programming Language Log
 </|>
