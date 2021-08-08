@@ -162,10 +162,11 @@
 
           visibilitySystemMessages(getCookie("show_system_messages"));
           visibilityCommitMessages(getCookie("hide_commit_messages"));
+          filterMessages(getCookie("filter_on_nick"),getCookie("filter_on_text"));
       });
 
-      var filter_on_nick = "";
-      var filter_on_text = "";
+      var filter_on_nick;        // needle for filtering on nick
+      var filter_on_text;        // needle for filtering on text
       var show_system_messages;  // "show" if system messages should be shown
       var hide_commit_messages;  // "hidden" if commit message should be hidden
 
@@ -226,11 +227,16 @@
       }
 
       // Helper function for filtering on nick or text
-      function FilterMessages(nick, text) {
+      function filterMessages(nick, text) {
           let rows = document.querySelectorAll('td[nick]');
 
-          filter_on_nick = nick // "";
-          filter_on_text = text // "";
+          filter_on_nick = setCookie("filter_on_nick", nick);
+          document.getElementById("nick-filter").value = nick;
+          document.getElementById("nick-filter-mobile").value = nick;
+
+          filter_on_text = setCookie("filter_on_text", text);
+          document.getElementById("text-filter").value = text;
+          document.getElementById("text-filter-mobile").value = text;
 
           // we have something to filter on
           if (nick || text) {
@@ -283,11 +289,11 @@
       }
 
       function filterMessagesByNick(nick) {
-          FilterMessages(nick, filter_on_text);
+          filterMessages(nick, filter_on_text);
       }
 
       function filterMessagesByText(text) {
-          FilterMessages(filter_on_nick, text);
+          filterMessages(filter_on_nick, text);
       }
     </script>
   </head>
