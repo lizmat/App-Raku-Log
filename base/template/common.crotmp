@@ -349,7 +349,7 @@
                 <div class="menu">
                   <ul class="menu-list">
                     <@channels : $c>
-                      <li><a href="/<$c>/<.date>.html">#<$c></a></li>
+                      <li><a href="/<$c>/<?$is-live>live</?><!$is-live><.date></!>.html">#<$c></a></li>
                     </@>
                   </ul>
 
@@ -372,6 +372,15 @@
         <div class="navbar-start">
 
           <div class="navbar-delimiter"></div>
+
+          <!$is-live>
+            <a href="/<.channel>/live.html" class="navbar-item has-tooltip-bottom" data-tooltip="Follow the channel live">
+              <span class="icon-text">
+                <span class="icon"><i class="fas fa-signal"></i></span>
+                <span class="navbar-item-title">Live</span>
+              </span>
+            </a>
+          </!>
 
           <a href="/<.channel>/today" class="navbar-item has-tooltip-bottom" data-tooltip="Show today's messages">
             <span class="icon-text">
@@ -446,12 +455,15 @@
                 </div>
             </div>
 
-            <div>
-              <label class="checkbox">
-                <input id="system-msg-show-mobile" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
-                <strong>show system messages</strong>
-              </label>
-            </div>
+            <!$is-live>
+              <div>
+                <label class="checkbox">
+                  <input id="system-msg-show-mobile" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
+                  <strong>show system messages</strong>
+                </label>
+              </div>
+            </!>
+
             <div>
               <label class="checkbox">
                 <input id="commit-msg-hide-mobile" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
@@ -525,13 +537,14 @@
                   <strong>show system messages</strong>
                 </label>
               </div>
-              <div class="block">
-                <label class="checkbox">
-                  <input id="commit-msg-hide" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
-                  <strong>hide commit messages</strong>
-                </label>
-              </div>
             </!>
+
+            <div class="block">
+              <label class="checkbox">
+                <input id="commit-msg-hide" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
+                <strong>hide commit messages</strong>
+              </label>
+            </div>
           </div>
         </div>
         <!-- Left sidebar ends -->
