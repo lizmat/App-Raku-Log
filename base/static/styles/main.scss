@@ -678,6 +678,13 @@ a.thread-link {
     background-color: #ddeeee;
   }
 
+  .table tr.special-date {
+    border-top: 1px solid;
+    font-size: 125%;
+    font-weight: $weight-bold;
+    background-color: #ffdddd;
+  }
+
   .table tr.special-nick {
     border-top: 1px solid;
     font-size: 125%;

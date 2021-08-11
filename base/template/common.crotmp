@@ -647,6 +647,13 @@
                   </tr>
                 </?>
                 <!.control-events>
+                  <?$is-live>
+                    <?.human-date>
+                      <tr class="special-date">
+                        <td colspan="2"><.human-date></td>
+                      </tr>
+                    </?>
+                  </?>
                   <!{.same-nick || .commit}>
                     <tr class="special-nick">
                       <td colspan="2" nick="<&HTML(.nick)>" header="yes"><&HTML(.sender)></td>
