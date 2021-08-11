@@ -188,12 +188,27 @@
           }
       }
 
-      // Set visibility of an element
-      function setVisibility(that, visible) {
+      // Set visibility of a class
+      function setVisibility(name, visible) {
+          let rows = document.getElementsByClassName(name);
           if (visible) {
-              that.classList.remove('is-hidden');
+              for (var i = 0; i != rows.length; i++) {
+                  rows[i].classList.remove('is-hidden');
+              }
           } else {
-              that.classList.add('is-hidden');
+              for (var i = 0; i != rows.length; i++) {
+                  rows[i].classList.add('is-hidden');
+              }
+          }
+      }
+
+      // helper function to set checkboxes of selector
+      function setCheckboxes(name, state) {
+          let boxes = document.querySelectorAll(
+            'input[id=' + name + ']'
+          );
+          for (var i = 0; i != boxes.length; i++) {
+              boxes[i].checked = state;
           }
       }
 
@@ -205,28 +220,17 @@
 <!$is-live>
           if (global) {
               show_system_messages = setCookie('show_system_messages', !!show);
-              document.getElementById("system-msg-show").checked = show;
-              document.getElementById("system-msg-show-mobile").checked = show;
+              setCheckboxes('system-msg-show', show_system_messages);
           }
-
-          let rows = document.getElementsByClassName("special-system");
-          for (var i = 0; i != rows.length; i++) {
-              setVisibility(rows[i], show)
-          }
+          setVisibility("special-system", show_system_messages)
 </!>
       }
 
       // Set visibility of commit messages + checkboxes + cookie
       function visibilityCommitMessages(hidden = hide_commit_messages) {
           hide_commit_messages = setCookie('hide_commit_messages', !!hidden);
-          document.getElementById("commit-msg-hide").checked = hidden;
-          document.getElementById("commit-msg-hide-mobile").checked = hidden;
-
-          let rows = document.getElementsByClassName("special-commit");
-
-          for (var i = 0; i != rows.length; i++) {
-              setVisibility(rows[i], !hide_commit_messages)
-          }
+          setCheckboxes('commit-msg-hide', hide_commit_messages);
+          setVisibility("special-commit", !hide_commit_messages)
       }
 
       // Helper function to update cookie + input fields
@@ -458,7 +462,7 @@
             <!$is-live>
               <div>
                 <label class="checkbox">
-                  <input id="system-msg-show-mobile" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
+                  <input id="system-msg-show" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
                   <strong>show system messages</strong>
                 </label>
               </div>
@@ -466,7 +470,7 @@
 
             <div>
               <label class="checkbox">
-                <input id="commit-msg-hide-mobile" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
+                <input id="commit-msg-hide" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
                 <strong>hide commit messages</strong>
               </label>
 
