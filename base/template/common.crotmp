@@ -166,8 +166,6 @@
           }
 
           filterMessages();
-          visibilitySystemMessages();
-          visibilityCommitMessages();
       });
 
       var filter_on_nick       = getCookie("filter_on_nick");
