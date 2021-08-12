@@ -127,21 +127,13 @@
 
       document.addEventListener('DOMContentLoaded', () => {
 
-          // Get all "navbar-burger" elements
           const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
-          // Check if there are any navbar burgers
           if ($navbarBurgers.length > 0) {
-
-              // Add a click event on each of them
               $navbarBurgers.forEach( el => {
                   el.addEventListener('click', () => {
-
-                      // Get the target from the "data-target" attribute
                       const target = el.dataset.target;
                       const $target = document.getElementById(target);
-
-                      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
                       el.classList.toggle('is-active');
                       $target.classList.toggle('is-active');
                   });
@@ -154,10 +146,7 @@
               minDate: new Date("<.first-date>"), maxDate: new Date("<.last-date>")
               // TODO anyone wanting to add a working minDate: 'today' here?
           };
-          // Initialize all input of type date
           var calendars = bulmaCalendar.attach('[type="date"]', options);
-
-          // Loop on each calendar initialized
           for (var i = 0; i < calendars.length; i++) {
               // Add listener to select event
               calendars[i].on('select', date => {
@@ -188,7 +177,6 @@
           }
       }
 
-      // Set visibility of a class
       function setVisibility(name, visible) {
           let rows = document.getElementsByClassName(name);
           if (visible) {
@@ -202,7 +190,6 @@
           }
       }
 
-      // helper function to set checkboxes of selector
       function setCheckboxes(name, state) {
           let boxes = document.querySelectorAll(
             'input[id=' + name + ']'
@@ -212,7 +199,6 @@
           }
       }
 
-      // Set visibility of system messages + checkboxes + cookie
       function visibilitySystemMessages(
         show = show_system_messages,
         global = true  // by default, set checkboxes + cookie as well
@@ -226,28 +212,24 @@
 </!>
       }
 
-      // Set visibility of commit messages + checkboxes + cookie
       function visibilityCommitMessages(hidden = hide_commit_messages) {
           hide_commit_messages = setCookie('hide_commit_messages', !!hidden);
           setCheckboxes('commit-msg-hide', hide_commit_messages);
           setVisibility("special-commit", !hide_commit_messages)
       }
 
-      // Helper function to update cookie + input fields
       function updateFilter(type, value) {
           document.getElementById(type + "-filter").value = value;
           document.getElementById(type + "-filter-mobile").value = value;
           return setCookie("filter_on_" + type, value);
       }
 
-      // Helper function for filtering on nick or text
       function filterMessages(nick = filter_on_nick, text = filter_on_text) {
           let rows = document.querySelectorAll('td[nick]');
 
           filter_on_nick = updateFilter("nick", nick);
           filter_on_text = updateFilter("text", text);
 
-          // we have something to filter on
           if (nick || text) {
               visibilitySystemMessages(false, false);
 
@@ -287,7 +269,6 @@
               }
           }
 
-          // nothing to filter on
           else {
               for (var i = 0; i != rows.length; i++) {
                   setVisibility(rows[i].parentElement, true)
