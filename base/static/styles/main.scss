@@ -290,6 +290,10 @@ body {
     font-family: monospace;
   }
 
+  .column-camelia {
+    font-family: monospace;
+  }
+
   .column-message {
     /* These are technically the same, but use both */
     overflow-wrap: break-word;
@@ -711,6 +715,14 @@ a.thread-link {
     border-right: 1px solid $text-strong;
     background-color: #ddffdd;
     font-weight: $weight-semibold;
+    color: $text-strong;
+  }
+
+  .table tr.special-camelia {
+    border-left: 1px solid $text-strong;
+    border-top: 1px solid $text-strong;
+    border-bottom: 1px solid $text-strong;
+    border-right: 1px solid $text-strong;
     color: $text-strong;
   }
 

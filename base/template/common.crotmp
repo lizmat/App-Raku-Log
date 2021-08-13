@@ -571,6 +571,7 @@
                   <tr id="<.relative-target>"
                     <?.control-events> class="special-system"</?>
                     <?.commit> class="special-commit"</?>
+                    <?.camelia> class="special-camelia"</?>
                     <?.test-t> class="special-test"</?>
                     <?.same-nick> class="special-same-nick"</?>
                   >
@@ -585,7 +586,10 @@
                     </?>
                     <!.control-events>
                       <td nick="<&HTML(.nick)>"><!.same-nick><span style="font-style: italic"><&HTML(.sender)></span></!></td>
-                      <td<?.code> class="column-code"</?>><&HTML(.message)></td>
+                      <td
+                        <?.code> class="column-code"</?>
+                        <?.commit> class="column-commit"</?>
+                      ><&HTML(.message)></td>
                       <td class="column-time"><.hh-mm></td>
                     </!>
                     <&column-buttons($_)>

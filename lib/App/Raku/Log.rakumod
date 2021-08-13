@@ -168,34 +168,6 @@ sub merge-commit-messages(@entries) {
     @entries.grep(*.defined);
 }
 
-# Merge messages by a single nickname into batches to render
-sub compress-messages(@entries) {
-    loop (my $index = 0; $index < @entries.elems; $index++) {
-        my %entry := @entries[$index];
-        if %entry<conversation> && !%entry<commit> {
-            my $message := %entry<message>;
-            my $nick := %entry<nick>;
-            my $sender := %entry<sender>;
-            my int $i = $index;
-            my int @indices = $index;
-            while ++$i < @entries.elems && @entries[$i] -> \entry {
-                last if entry<sender> ne '"';
-                @indices.push($i);
-            }
-
-            my str @targets = @entries[@indices].map: *<relative-target>;
-            my int $first = @indices.shift;
-            with @entries[$first] -> \entry {
-                entry<messages> := %entry<message>, |@entries[@indices].map(*.<message>);
-                entry<targets> := @targets;
-            }
-            @entries[$_] := Any for @indices;
-            $index = @indices[* - 1] if @indices;
-        }
-    }
-    @entries.grep(*.defined);
-}
-
 # Merge messages of test-t report together
 sub merge-test-t-messages(@entries) {
     my constant %head = Set.new: <
@@ -266,11 +238,56 @@ sub merge-test-t-messages(@entries) {
     @entries.grep(*.defined);
 }
 
+my str @colors = <<
+  white black "dark blue" green brown red purple orange yellow "bright green"
+>>;
+
+# Simple color control code to span handler
+sub control2span($text) {
+    my str @parts;
+    my int $from;  # will never be at 0
+    my $in-span := False;
+    while (my $index = $text.index("\x[3]", $from)).defined {
+        @parts.push($text.substr($from,$index - $from));
+        if $in-span {
+            @parts.push('</span>');
+            $in-span := False;
+        }
+        my str $color = $text.substr($index + 1, 1);
+        if "0" le $color le "9" {
+            @parts.push(qq/<span style="color: @colors[$color.ord - "0".ord]">/);
+            $in-span := True;
+            $from = $index + 2;
+        }
+        else {
+            $from = $index + 1;
+        }
+    }
+    @parts.push($text.substr($from));
+    @parts.push('</span>') if $in-span;
+    @parts.join
+}
+
 # Check for invocations of Camelia, assume it's code
 sub mark-camelia-invocations(@entries --> Nil) {
     for @entries -> \entry {
         if entry<conversation> && entry<message> -> \message {
-            entry<code> := True if message.starts-with('m: ');
+            if message.starts-with('m: ') {
+                entry<code> := True
+            }
+            else {
+                with message.index(': OUTPUT: «') -> $index {
+                    entry<camelia> := message.substr(0,$index);
+                    my str $output  = message.substr($index + 11, *-1);
+                    $output = $output.chop if $output.ends-with("␤");
+                    $output = control2span($output);
+                    entry<message> := $output.subst("␤", "<br/>", :global);
+                }
+                orwith message.index(': ( no output )') -> $index {
+                    entry<camelia> := message.substr(0,$index);
+                    entry<message> := message.substr($index + 2);
+                }
+            }
         }
     }
 }
@@ -281,7 +298,6 @@ sub day-plugins() is export {
       &merge-test-t-messages, 
       &merge-control-messages,
       &mark-camelia-invocations,
-      #&compress-messages
     ;
 }
 
