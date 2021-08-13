@@ -12,7 +12,7 @@
 <:sub column-buttons($_)>
   <td class="column-buttons">
 
-    <div class="dropdown is-hoverable is-hidden-tablet">
+    <div class="dropdown is-hoverable">
       <div class="dropdown-trigger">
         <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
           <span class="icon is-small">
@@ -25,18 +25,6 @@
           <div class="dropdown-item">
             <div class="menu">
               <ul class="menu-list">
-                <?{.code}>
-                  <li>
-                    <a href="/run.html?<.code>">
-                      <span class="icon-text filter">
-                        <span class="icon">
-                          <i class="fas fa-play-circle"></i>
-                        </span>
-                        <span>Run code</span>
-                      </span>
-                    </a>
-                  </li>
-                </?>
 
                 <li>
                   <a id="<.relative-target>" href="#<.relative-target>" title="Link to message" class="msg-log-btn">
@@ -48,6 +36,19 @@
                     </span>
                   </a>
                 </li>
+
+                <?{.code}>
+                  <li>
+                    <a href="/<.channel>/run.html?<.target>">
+                      <span class="icon-text filter">
+                        <span class="icon">
+                          <i class="fas fa-play-circle"></i>
+                        </span>
+                        <span>Run code</span>
+                      </span>
+                    </a>
+                  </li>
+                </?>
               </ul>
             </div>
 
@@ -56,21 +57,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-
-    <div class="is-hidden-mobile desktop-buttons">
-      <?{.code}>
-        <a href="/run.html?<.code>" title="Run code" class="msg-log-btn">
-          <span class="icon">
-            <i class="fas fa-play-circle"></i>
-          </span>
-        </a>
-      </?>
-
-      <a href="#<.relative-target>" title="Link to message" class="msg-log-btn">
-        <span class="column-time"><.hh-mm></span>
-      </a>
     </div>
   </td>
 </:>
@@ -513,9 +499,7 @@
 
                 <input id="sidebar-datepicker" type="date">
               </div>
-            </!>
 
-            <!$is-live>
               <div class="block">
                 <label class="checkbox">
                   <input id="system-msg-show" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
@@ -577,82 +561,35 @@
               <section id="message-log">
                 <table class="table message-table is-fullwidth">
                 <@entries>
-                <?.control-events>
-                  <tr class="special-system" id="<.relative-target>">
-                    <td>
-                      <div class="is-size-7">
-                      <@control-events>
-                        <b><.key></b> <&HTML(.value)>
-                      </@>
-                      </div>
-                    </td>
-                    <td class="column-buttons">
-                      <div class="dropdown is-hoverable is-hidden-tablet">
-                        <div class="dropdown-trigger">
-                          <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
-                            <span class="icon is-small">
-                              <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
-                            </span>
-                          </button>
-                        </div>
-                        <div class="dropdown-menu msg-mobile-dropdown" id="dropdown-menu4" role="menu">
-                          <div class="dropdown-content">
-                            <div class="dropdown-item">
-                              <div class="menu">
-                                <ul class="menu-list">
-                                  <li>
-                                    <a id="<.relative-target>" href="#<.relative-target>" title="Copy direct link to the message" class="msg-log-btn">
-                                      <span class="icon-text filter">
-                                        <span class="icon">
-                                          <i class="fas fa-link"></i>
-                                        </span>
-                                        <span>Message link</span>
-                                      </span>
-                                    </a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-
-                      <div class="is-hidden-mobile desktop-buttons">
-                        <a href="#<.relative-target>" title="Link to message" class="msg-log-btn">
-                          <span class="icon">
-                            <i class="fas fa-link"></i>
-                          </span>
-                        </a>
-                      </div>
-                    </td>
-                  </tr>
-
-
-                  </tr>
-                </?>
-                <!.control-events>
                   <?$is-live>
                     <?.human-date>
                       <tr class="special-date">
-                        <td colspan="2"><.human-date></td>
+                        <td colspan="3"><.human-date></td>
                       </tr>
                     </?>
                   </?>
-                  <!{.same-nick || .commit}>
-                    <tr class="special-nick">
-                      <td colspan="2" nick="<&HTML(.nick)>" header="yes"><&HTML(.sender)></td>
-                    </tr>
-                  </!>
                   <tr id="<.relative-target>"
-                    <?{ .commit }> class="special-commit"</?>
-                    <?{ .test-t }> class="special-test"</?>
-                    <!{ .commit || .test-t}> class="row-message"</!>
+                    <?.control-events> class="special-system"</?>
+                    <?.commit> class="special-commit"</?>
+                    <?.test-t> class="special-test"</?>
+                    <?.same-nick> class="special-same-nick"</?>
                   >
-                    <td nick="<&HTML(.nick)>"><&HTML(.message)></td>
+                    <?.control-events>
+                      <td colspan="3">
+                        <div class="is-size-7">
+                        <@control-events>
+                          <b><.key></b> <&HTML(.value)>
+                        </@>
+                        </div>
+                      </td>
+                    </?>
+                    <!.control-events>
+                      <td nick="<&HTML(.nick)>"><!.same-nick><span style="font-style: italic"><&HTML(.sender)></span></!></td>
+                      <td<?.code> class="column-code"</?>><&HTML(.message)></td>
+                      <td class="column-time"><.hh-mm></td>
+                    </!>
                     <&column-buttons($_)>
                   </tr>
-                </!>
                 </@>
                 </table>
 

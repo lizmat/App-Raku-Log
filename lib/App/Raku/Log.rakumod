@@ -270,14 +270,7 @@ sub merge-test-t-messages(@entries) {
 sub mark-camelia-invocations(@entries --> Nil) {
     for @entries -> \entry {
         if entry<conversation> && entry<message> -> \message {
-            if message.starts-with('m: ') {
-                my \code := message.substr(3);
-                entry<message> := message.substr(0,3)
-                  ~ '<div id="code">'
-                  ~ code
-                  ~ '</div>';
-                entry<code> := code;
-            }
+            entry<code> := True if message.starts-with('m: ');
         }
     }
 }

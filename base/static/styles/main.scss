@@ -273,23 +273,21 @@ body {
   }
   
   .column-time {
-    width: 50px;
-
-    padding: 0.5em 0.5em;
+    text-align: right;
+    padding: 0em 0em;
   }
 
   .column-buttons {
-    width: 100px;
-    padding: 0.5em 0.25em;
+    padding: 0em 0em;
     text-align: right;
-
-    @include mobile {
-      width: 50px;
-    }
   }
 
   .column-author {
-    min-width: 130px;
+    max-width: 15vw;
+  }
+
+  .column-code {
+    font-family: monospace;
   }
 
   .column-message {
@@ -688,8 +686,6 @@ a.thread-link {
   }
 
   .table tr.special-nick {
-    border-top: 1px solid;
-    font-size: 125%;
     font-weight: $weight-bold;
   }
 
@@ -700,8 +696,7 @@ a.thread-link {
     background-color: #eeeeee;
   }
 
-  .table tr.special-system,
-  .table tr.special-code {
+  .table tr.special-system {
     border-top: 1px solid;
 
     .desktop-buttons {
@@ -722,6 +717,7 @@ a.thread-link {
   .table tr.special-commit {
     border-left: 4px solid $primary;
     border-top: 1px solid $text-strong;
+    border-bottom: 1px solid $text-strong;
     border-right: 1px solid $text-strong;
     background-color: #ffdddd;
     font-weight: $weight-semibold;
@@ -759,8 +755,16 @@ a.thread-link {
         width: 100%;
         display: block;
 
-        &.column-time, &.column-author {
-          text-align: center;
+        &.column-time {
+          text-align: right;
+        }
+        
+        &.column-author {
+          text-align: left;
+        }
+        
+        &.column-code {
+          font-family: monospace;
         }
       }
 
