@@ -147,6 +147,7 @@
       var filter_on_text       = getCookie("filter_on_text");
       var show_system_messages = getCookie("show_system_messages");
       var hide_commit_messages = getCookie("hide_commit_messages");
+      var hide_camelia_output  = getCookie("hide_camelia_output");
 
       var leftToggled = false; // TODO get this out of cookies later
       var rightToggled = false;
@@ -196,6 +197,12 @@
           }
           setVisibility("special-system", show_system_messages)
 </!>
+      }
+
+      function visibilityCameliaOutput(hidden = hide_camelia_output) {
+          hide_camelia_output = setCookie('hide_camelia_output', !!hidden);
+          setCheckboxes('camelia-out-hide', hide_camelia_output);
+          setVisibility("special-camelia", !hide_camelia_output)
       }
 
       function visibilityCommitMessages(hidden = hide_commit_messages) {
@@ -261,6 +268,7 @@
               }
               visibilitySystemMessages();
               visibilityCommitMessages();
+              visibilityCameliaOutput();
           }
       }
 
@@ -440,7 +448,13 @@
                 <input id="commit-msg-hide" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
                 <strong>hide commit messages</strong>
               </label>
+            </div>
 
+            <div>
+              <label class="checkbox">
+                <input id="camelia-out-hide" type="checkbox" onclick="visibilityCameliaOutput(this.checked);">
+                <strong>hide Camelia output</strong>
+              </label>
             </div>
           </div>
           <!-- Mobile only forms in header ends -->
@@ -512,6 +526,13 @@
               <label class="checkbox">
                 <input id="commit-msg-hide" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
                 <strong>hide commit messages</strong>
+              </label>
+            </div>
+
+            <div class="block">
+              <label class="checkbox">
+                <input id="camelia-out-hide" type="checkbox" onclick="visibilityCameliaOutput(this.checked);">
+                <strong>hide Camelia output</strong>
               </label>
             </div>
           </div>

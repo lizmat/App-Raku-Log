@@ -239,7 +239,8 @@ sub merge-test-t-messages(@entries) {
 }
 
 my str @colors = <<
-  white black "dark blue" green brown red purple orange yellow "bright green"
+  white black blue green red brown purple orange yellow
+  "bright green" teal "bright cyan" "bright blue" pink grey "bright gray"
 >>;
 
 # Simple color control code to span handler
@@ -253,15 +254,32 @@ sub control2span($text) {
             @parts.push('</span>');
             $in-span := False;
         }
-        my str $color = $text.substr($index + 1, 1);
-        if "0" le $color le "9" {
-            @parts.push(qq/<span style="color: @colors[$color.ord - "0".ord]">/);
-            $in-span := True;
-            $from = $index + 2;
+
+        my int $advance = 1;
+        my $color = $text.substr($index + 1, 1);
+        if "0" le $color le "1" {
+            with try $text.substr($index + 1, 2).Int {
+                $color = @colors[$_] if 0 <= $_ <= 15;
+                ++$advance;
+            }
+            else {
+                $color = @colors[$color.ord - "0".ord];
+            }
+            ++$advance;
+        }
+        elsif "2" le $color le "9" {
+            $color = @colors[$color.ord - "0".ord];
+            ++$advance;
         }
         else {
-            $from = $index + 1;
+            $color = "";
         }
+
+        if $color {
+            @parts.push(qq/<span style="color: $color">/);
+            $in-span := True;
+        }
+        $from = $index + $advance;
     }
     @parts.push($text.substr($from));
     @parts.push('</span>') if $in-span;
