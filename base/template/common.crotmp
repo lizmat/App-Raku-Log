@@ -564,7 +564,7 @@
                   <?$is-live>
                     <?.human-date>
                       <tr class="special-date">
-                        <td colspan="3"><.human-date></td>
+                        <td colspan="4"><.human-date></td>
                       </tr>
                     </?>
                   </?>
