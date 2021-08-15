@@ -178,23 +178,24 @@
           }
       }
 
-      function setVisibility(name, visible) {
-          let rows = document.getElementsByClassName(name);
+      function setVisibilityByElement(element, visible) {
           if (visible) {
-              for (var i = 0; i != rows.length; i++) {
-                  rows[i].classList.remove('is-hidden');
-              }
-          } else {
-              for (var i = 0; i != rows.length; i++) {
-                  rows[i].classList.add('is-hidden');
-              }
+              element.classList.remove('is-hidden');
+          }
+          else {
+              element.classList.add('is-hidden');
+          }
+      }
+
+      function setVisibilityByName(name, visible) {
+          let rows = document.getElementsByClassName(name);
+          for (var i = 0; i != rows.length; i++) {
+              setVisibilityByElement(rows[i], visible);
           }
       }
 
       function setCheckboxes(name, state) {
-          let boxes = document.querySelectorAll(
-            'input[id=' + name + ']'
-          );
+          let boxes = document.querySelectorAll('input[id=' + name + ']');
           for (var i = 0; i != boxes.length; i++) {
               boxes[i].checked = state;
           }
@@ -209,20 +210,20 @@
               show_system_messages = setCookie('show_system_messages', !!show);
               setCheckboxes('system-msg-show', show_system_messages);
           }
-          setVisibility("special-system", show_system_messages)
+          setVisibilityByName("special-system", show_system_messages)
 </!>
       }
 
       function visibilityCameliaOutput(hidden = hide_camelia_output) {
           hide_camelia_output = setCookie('hide_camelia_output', !!hidden);
           setCheckboxes('camelia-out-hide', hide_camelia_output);
-          setVisibility("special-camelia", !hide_camelia_output)
+          setVisibilityByName("special-camelia", !hide_camelia_output)
       }
 
       function visibilityCommitMessages(hidden = hide_commit_messages) {
           hide_commit_messages = setCookie('hide_commit_messages', !!hidden);
           setCheckboxes('commit-msg-hide', hide_commit_messages);
-          setVisibility("special-commit", !hide_commit_messages)
+          setVisibilityByName("special-commit", !hide_commit_messages)
       }
 
       function updateFilter(type, value) {
@@ -232,7 +233,7 @@
       }
 
       function filterMessages(nick = filter_on_nick, text = filter_on_text) {
-          let rows = document.querySelectorAll('td[nick]');
+          let columns = document.querySelectorAll('td[nick]');
 
           filter_on_nick = updateFilter("nick", nick);
           filter_on_text = updateFilter("text", text);
@@ -242,43 +243,28 @@
 
               let lcNick = nick.toLowerCase();
               let lcText = text.toLowerCase();
-              let lastHeader;
 
-              for (var i = 0; i != rows.length; i++) {
-                  let row = rows[i];
+              for (var i = 0; i != columns.length; i++) {
+                  let column = columns[i];
+                  let parent = column.parentElement;
 
-                  // at the row with the name of the nick and hide that
-                  if (row.getAttribute("header")) {
-                      lastHeader = row;
-                      setVisibility(row.parentElement, false);
-                  }
-                  else {
-                      let nickOK = nick
-                        && row.getAttribute("nick").toLowerCase().indexOf(lcNick) != -1;
-                      let textOK = text
-                        && row.textContent.toLowerCase().indexOf(lcText) != -1;
+                  let nickOK = nick
+                    && column.getAttribute("nick").toLowerCase().indexOf(lcNick) != -1;
+                  let textOK = text
+                    && parent.cells[1].textContent.toLowerCase().indexOf(lcText) != -1;
 
-                      if (
-                        (nick && text && nickOK && textOK)
-                          || (!nick && textOK)
-                          || (!text && nickOK)
-                      ) {
-                          setVisibility(row.parentElement, true);
-                          if (lastHeader) {
-                              setVisibility(lastHeader.parentElement, true);
-                              lastHeader = undefined;
-                          }
-                      }
-                      else {
-                          setVisibility(row.parentElement, false);
-                      }
-                  }
+                  setVisibilityByElement(
+                    parent,
+                    (nick && text && nickOK && textOK)
+                      || (!nick && textOK)
+                      || (!text && nickOK)
+                  )
               }
           }
 
           else {
-              for (var i = 0; i != rows.length; i++) {
-                  setVisibility(rows[i].parentElement, true)
+              for (var i = 0; i != columns.length; i++) {
+                  setVisibilityByElement(columns[i].parentElement, true)
               }
               visibilitySystemMessages();
               visibilityCommitMessages();
