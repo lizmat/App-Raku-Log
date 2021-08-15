@@ -64,9 +64,23 @@
 <:sub footer>
   <footer class="footer">
     <div class="container has-text-centered">
-      <div>Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a></div>
-      <div>Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-Raku-Log/issues">as an issue on App::Raku::Log.</a></div>
-      <div>Thank you!</div>
+      <nav class="level">
+        <!-- Left side -->
+        <div class="level-left">
+          <div class="level-item">
+            <p>
+              Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Right side -->
+        <div class="level-right">
+          <p class="level-item">
+            Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-Raku-Log/issues">as an issue on App::Raku::Log.</a> Thank you!
+          </p>
+        </div>
+      </nav>
     </div>
   </footer>
 
@@ -623,13 +637,20 @@
 
             </div>
           </section>
-      <&footer>
+
         </div>
         <!-- main container ends -->
+
+        <!-- Right sidebar -->
+        <div id="right-column" class="column is-narrow is-hidden-touch">
+          <!-- We have an empty sidebar here so the content would be nicely centered -->
+        </div>
+        <!-- Right sidebar ends -->
 
       </div>
     </div>
     <!-- Columns end -->
+    <&footer>
 
   </body>
 </html>
