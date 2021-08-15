@@ -681,12 +681,11 @@ a.thread-link {
   }
 
   .table tr.special-date {
-    text-align: right;
+    text-align: center;
     border-top: 2px solid;
     border-bottom: 2px solid;
     font-size: 125%;
     font-weight: $weight-bold;
-    background-color: #ffdddd;
   }
 
   .table tr.special-nick {
