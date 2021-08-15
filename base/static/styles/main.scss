@@ -274,7 +274,7 @@ body {
   
   .column-time {
     text-align: right;
-    padding: 0em 0em;
+    padding-right: 0;
   }
 
   .column-buttons {
@@ -681,12 +681,11 @@ a.thread-link {
   }
 
   .table tr.special-date {
-    text-align: right;
+    text-align: center;
     border-top: 2px solid;
     border-bottom: 2px solid;
     font-size: 125%;
     font-weight: $weight-bold;
-    background-color: #ffdddd;
   }
 
   .table tr.special-nick {
@@ -694,15 +693,6 @@ a.thread-link {
   }
 
   .table tr.special-system {
-    border-left: 1px solid $text-strong;
-    border-right: 1px solid $text-strong;
-    border-bottom: 1px solid $text-strong;
-    background-color: #eeeeee;
-  }
-
-  .table tr.special-system {
-    border-top: 1px solid;
-
     .desktop-buttons {
       text-align: right;
       padding-right: 0.75rem;
