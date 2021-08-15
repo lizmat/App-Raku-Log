@@ -620,7 +620,7 @@
                       </td>
                     </?>
                     <!.control-events>
-                      <td nick="<&HTML(.nick)>"><!.same-nick><span style="font-style: italic"><&HTML(.sender)></span></!></td>
+                      <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
                       <td
                         <?.code> class="column-code"</?>
                         <?.commit> class="column-commit"</?>
