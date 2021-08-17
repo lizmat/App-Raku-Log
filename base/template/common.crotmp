@@ -7,36 +7,28 @@
   </span>
 </:>
 
+<:sub messages-box($id, $text)>
+  <label class="checkbox"> <input id="<$id>" type="checkbox"
+      onclick="visibility<$id>(this.checked);">
+    <strong><$text></strong>
+  </label>
+</:>
+
 <:sub system-messages-box($class = '')>
   <div<?$class> class="<$class>"</?>>
-    <label class="checkbox">
-      <input id="system-msg-show"
-        type="checkbox"
-        onclick="visibilitySystemMessages(this.checked);">
-      <strong>show system messages</strong>
-    </label>
+    <&messages-box('SystemMessages', 'show system messages')>
   </div>
 </:>
 
 <:sub commit-messages-box($class = '')>
   <div<?$class> class="<$class>"</?>>
-    <label class="checkbox">
-      <input id="commit-msg-hide"
-        type="checkbox"
-        onclick="visibilityCommitMessages(this.checked);">
-      <strong>hide commit messages</strong>
-    </label>
+    <&messages-box('CommitMessages', 'hide commit messages')>
   </div>
 </:>
 
 <:sub camelia-messages-box($class = '')>
   <div<?$class> class="<$class>"</?>>
-    <label class="checkbox">
-      <input id="camelia-out-hide"
-        type="checkbox"
-        onclick="visibilityCameliaOutput(this.checked);">
-      <strong>hide Camelia output</strong>
-    </label>
+    <&messages-box('CameliaOutput', 'hide Camelia output')>
   </div>
 </:>
 
@@ -236,7 +228,7 @@
 <!$is-live>
           if (global) {
               show_system_messages = setCookie('show_system_messages', !!show);
-              setCheckboxes('system-msg-show', show_system_messages);
+              setCheckboxes('SystemMessages', show_system_messages);
           }
           setVisibilityByName("special-system", show_system_messages)
 </!>
@@ -244,13 +236,13 @@
 
       function visibilityCameliaOutput(hidden = hide_camelia_output) {
           hide_camelia_output = setCookie('hide_camelia_output', !!hidden);
-          setCheckboxes('camelia-out-hide', hide_camelia_output);
+          setCheckboxes('CameliaOutput', hide_camelia_output);
           setVisibilityByName("special-camelia", !hide_camelia_output)
       }
 
       function visibilityCommitMessages(hidden = hide_commit_messages) {
           hide_commit_messages = setCookie('hide_commit_messages', !!hidden);
-          setCheckboxes('commit-msg-hide', hide_commit_messages);
+          setCheckboxes('CommitMessages', hide_commit_messages);
           setVisibilityByName("special-commit", !hide_commit_messages)
       }
 
