@@ -7,6 +7,39 @@
   </span>
 </:>
 
+<:sub system-messages-box($class = '')>
+  <div<?$class> class="<$class>"</?>>
+    <label class="checkbox">
+      <input id="system-msg-show"
+        type="checkbox"
+        onclick="visibilitySystemMessages(this.checked);">
+      <strong>show system messages</strong>
+    </label>
+  </div>
+</:>
+
+<:sub commit-messages-box($class = '')>
+  <div<?$class> class="<$class>"</?>>
+    <label class="checkbox">
+      <input id="commit-msg-hide"
+        type="checkbox"
+        onclick="visibilityCommitMessages(this.checked);">
+      <strong>hide commit messages</strong>
+    </label>
+  </div>
+</:>
+
+<:sub camelia-messages-box($class = '')>
+  <div<?$class> class="<$class>"</?>>
+    <label class="checkbox">
+      <input id="camelia-out-hide"
+        type="checkbox"
+        onclick="visibilityCameliaOutput(this.checked);">
+      <strong>hide Camelia output</strong>
+    </label>
+  </div>
+</:>
+
 <:sub column-buttons($_)>
   <td class="column-buttons">
 
@@ -421,10 +454,11 @@
 
             <div class="block">
               <p><strong>User</strong></p>
-
               <div class="field has-addons">
-                <input id="nick-filter" class="input" type="text" placeholder="Filter by nick" oninput="filterMessagesByNick(this.value);">
-
+                <input id="nick-filter"
+                  class="input" type="text"
+                  placeholder="Filter by nick"
+                  oninput="filterMessagesByNick(this.value);">
                 <div class="control">
                   <a class="button">
                     <span class="icon">
@@ -438,8 +472,10 @@
             <div class="block">
               <p><strong>Filter</strong></p>
               <div class="field has-addons">
-                <input id="text-filter" class="input" type="text" placeholder="Filter on text" oninput="filterMessagesByText(this.value);">
-
+                <input id="text-filter"
+                  class="input" type="text"
+                  placeholder="Filter on text"
+                  oninput="filterMessagesByText(this.value);">
                 <div class="control">
                   <a class="button">
                     <span class="icon">
@@ -449,28 +485,9 @@
                 </div>
             </div>
 
-            <!$is-live>
-              <div>
-                <label class="checkbox">
-                  <input id="system-msg-show" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
-                  <strong>show system messages</strong>
-                </label>
-              </div>
-            </!>
-
-            <div>
-              <label class="checkbox">
-                <input id="commit-msg-hide" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
-                <strong>hide commit messages</strong>
-              </label>
-            </div>
-
-            <div>
-              <label class="checkbox">
-                <input id="camelia-out-hide" type="checkbox" onclick="visibilityCameliaOutput(this.checked);">
-                <strong>hide Camelia output</strong>
-              </label>
-            </div>
+            <!$is-live><&system-messages-box></!>
+            <&commit-messages-box>
+            <&camelia-messages-box>
           </div>
           <!-- Mobile only forms in header ends -->
 
@@ -529,27 +546,10 @@
                 <input id="sidebar-datepicker" type="date">
               </div>
 
-              <div class="block">
-                <label class="checkbox">
-                  <input id="system-msg-show" type="checkbox" onclick="visibilitySystemMessages(this.checked);">
-                  <strong>show system messages</strong>
-                </label>
-              </div>
+              <&system-messages-box('block')>
             </!>
-
-            <div class="block">
-              <label class="checkbox">
-                <input id="commit-msg-hide" type="checkbox" onclick="visibilityCommitMessages(this.checked);">
-                <strong>hide commit messages</strong>
-              </label>
-            </div>
-
-            <div class="block">
-              <label class="checkbox">
-                <input id="camelia-out-hide" type="checkbox" onclick="visibilityCameliaOutput(this.checked);">
-                <strong>hide Camelia output</strong>
-              </label>
-            </div>
+            <&commit-messages-box('block')>
+            <&camelia-messages-box('block')>
           </div>
         </div>
         <!-- Left sidebar ends -->
