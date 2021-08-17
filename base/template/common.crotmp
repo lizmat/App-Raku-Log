@@ -39,7 +39,6 @@
       </div>
       <div class="control has-tooltip-bottom"
         data-tooltip="<$tooltip>">
-        <!-- Add class is-primary when active -->
         <button id="Exclude<$id>" class="button"
           onclick="filterExclude<$id>(this)">
           <span class="icon">
@@ -206,9 +205,11 @@ the resulting output would be now"
 
       var $filterMessagesByNick = getCookie("MessagesByNick");
       var $filterMessagesByText = getCookie("MessagesByText");
-      var $showSystemMessages   = getCookie("SystemMessages");
-      var $hideCommitMessages   = getCookie("CommitMessages");
-      var $hideCameliaOutput    = getCookie("CameliaOutput");
+      var $filterExcludeByNick  = getCookie("ExcludeByNick")  // false;
+      var $filterExcludeByText  = getCookie("ExcludeByText")  // false;
+      var $showSystemMessages   = getCookie("SystemMessages") // false;
+      var $hideCommitMessages   = getCookie("CommitMessages") // false;
+      var $hideCameliaOutput    = getCookie("CameliaOutput")  // false;
 
       var leftToggled = false; // TODO get this out of cookies later
       var rightToggled = false;
@@ -222,6 +223,22 @@ the resulting output would be now"
               leftToggled = !leftToggled;
           } else {
               rightToggled = !rightToggled;
+          }
+      }
+
+      function setPrimaryByElement(element, primary) {
+          if (primary) {
+              element.classList.remove('is-primary');
+          }
+          else {
+              element.classList.add('is-primary');
+          }
+      }
+
+      function setButtons(name, state) {
+          let buttons = document.querySelectorAll('button[id=' + name + ']');
+          for (var i = 0; i != buttons.length; i++) {
+              setPrimaryByElement(buttons[i], state);
           }
       }
 
@@ -274,18 +291,23 @@ the resulting output would be now"
       }
 
       function updateFilter(name, value) {
-          let inputs = document.querySelectorAll('input[id=name]');
+          let inputs = document.querySelectorAll('input[id=' + name + ']');
           for (var i = 0; i != inputs.length; i++) {
               inputs[i].value = value;
           }
           return setCookie(name, value);
       }
 
-      function filterMessages(nick = $filterMessagesByNick, text = $filterMessagesByText) {
+      function filterMessages(
+        nick = $filterMessagesByNick,
+        text = $filterMessagesByText
+      ) {
           let columns = document.querySelectorAll('td[nick]');
 
           $filterMessagesByNick = updateFilter("MessagesByNick", nick);
           $filterMessagesByText = updateFilter("MessagesByText", text);
+          setButtons('ExcludeByNick', $filterExcludeByNick);
+          setButtons('ExcludeByText', $filterExcludeByText);
 
           if (nick || text) {
               visibilitySystemMessages(false, false);
@@ -298,9 +320,9 @@ the resulting output would be now"
                   let parent = column.parentElement;
 
                   let nickOK = nick
-                    && column.getAttribute("nick").toLowerCase().indexOf(lcNick) != -1;
+                    && (column.getAttribute("nick").toLowerCase().indexOf(lcNick) != -1) == $filterExcludeByNick;
                   let textOK = text
-                    && parent.cells[1].textContent.toLowerCase().indexOf(lcText) != -1;
+                    && (parent.cells[1].textContent.toLowerCase().indexOf(lcText) != -1) == $filterExcludeByText;
 
                   setVisibilityByElement(
                     parent,
@@ -324,9 +346,23 @@ the resulting output would be now"
       function filterMessagesByNick(nick) {
           filterMessages(nick, $filterMessagesByText);
       }
-
       function filterMessagesByText(text) {
           filterMessages($filterMessagesByNick, text);
+      }
+
+      function filterExcludeByNick(button) {
+          $filterExcludeByNick = setCookie(
+            'ExcludeByNick',
+            !!button.classList.contains('is-primary')
+          );
+          filterMessages();
+      }
+      function filterExcludeByText(button) {
+          $filterExcludeByText = setCookie(
+            'ExcludeByText',
+            !!button.classList.contains('is-primary')
+          );
+          filterMessages();
       }
     </script>
   </head>
