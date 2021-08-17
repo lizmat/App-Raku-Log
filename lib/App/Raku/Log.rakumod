@@ -55,11 +55,17 @@ sub htmlize($entry, %colors) is export {
         $text .= subst('>', '&gt;',  :global);
 
         # URL linking
-        $text .= subst(
-          / https? '://' \S+ /,
-          { '<a href="' ~ $/~ '">' ~ $/ ~ '</a>' },
-          :global
-        );
+        $text .= subst( / https? '://' \S+ /, {
+            my $link   := $/.Str;
+            '<a href="'
+              ~ $link
+              ~ '">'
+              ~ ($link.chars > 55
+                  ?? "$link.substr(0,42)...$link.substr(*-10)"
+                  !! $link
+                )
+              ~ '</a>'
+        }, :global);
 
         # Nick highlighting
         if $entry.^name.ends-with("Topic") {
