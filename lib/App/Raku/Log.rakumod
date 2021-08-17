@@ -297,7 +297,8 @@ sub mark-camelia-invocations(@entries --> Nil) {
     for @entries -> \entry {
         if entry<conversation> && entry<message> -> \message {
             if message.starts-with('m: ') {
-                entry<code> := True
+                entry<runcode-link> :=
+                  "/" ~ entry<channel> ~ "/run.html?" ~ entry<target>;
             }
             else {
                 with message.index(': OUTPUT: «') -> $index {
