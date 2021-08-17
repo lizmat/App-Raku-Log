@@ -207,11 +207,11 @@ the resulting output would be now"
           filterMessages();
       });
 
-      var filter_on_nick       = getCookie("MessagesByNick");
-      var filter_on_text       = getCookie("MessagesByText");
-      var show_system_messages = getCookie("show_system_messages");
-      var hide_commit_messages = getCookie("hide_commit_messages");
-      var hide_camelia_output  = getCookie("hide_camelia_output");
+      var $filterMessagesByNick = getCookie("MessagesByNick");
+      var $filterMessagesByText = getCookie("MessagesByText");
+      var $showSystemMessages   = getCookie("SystemMessages");
+      var $hideCommitMessages   = getCookie("CommitMessages");
+      var $hideCameliaOutput    = getCookie("CameliaOutput");
 
       var leftToggled = false; // TODO get this out of cookies later
       var rightToggled = false;
@@ -252,28 +252,28 @@ the resulting output would be now"
       }
 
       function visibilitySystemMessages(
-        show = show_system_messages,
+        show = $showSystemMessages,
         global = true  // by default, set checkboxes + cookie as well
       ) {
 <!$is-live>
           if (global) {
-              show_system_messages = setCookie('show_system_messages', !!show);
-              setCheckboxes('SystemMessages', show_system_messages);
+              $showSystemMessages = setCookie('SystemMessages', !!show);
+              setCheckboxes('SystemMessages', $showSystemMessages);
           }
-          setVisibilityByName("special-system", show_system_messages)
+          setVisibilityByName("special-system", $showSystemMessages)
 </!>
       }
 
-      function visibilityCameliaOutput(hidden = hide_camelia_output) {
-          hide_camelia_output = setCookie('hide_camelia_output', !!hidden);
-          setCheckboxes('CameliaOutput', hide_camelia_output);
-          setVisibilityByName("special-camelia", !hide_camelia_output)
+      function visibilityCommitMessages(hidden = $hideCommitMessages) {
+          $hideCommitMessages = setCookie('CommitMessages', !!hidden);
+          setCheckboxes('CommitMessages', $hideCommitMessages);
+          setVisibilityByName("special-commit", !$hideCommitMessages)
       }
 
-      function visibilityCommitMessages(hidden = hide_commit_messages) {
-          hide_commit_messages = setCookie('hide_commit_messages', !!hidden);
-          setCheckboxes('CommitMessages', hide_commit_messages);
-          setVisibilityByName("special-commit", !hide_commit_messages)
+      function visibilityCameliaOutput(hidden = $hideCameliaOutput) {
+          $hideCameliaOutput = setCookie('CameliaOutput', !!hidden);
+          setCheckboxes('CameliaOutput', $hideCameliaOutput);
+          setVisibilityByName("special-camelia", !$hideCameliaOutput)
       }
 
       function updateFilter(name, value) {
@@ -284,11 +284,11 @@ the resulting output would be now"
           return setCookie(name, value);
       }
 
-      function filterMessages(nick = filter_on_nick, text = filter_on_text) {
+      function filterMessages(nick = $filterMessagesByNick, text = $filterMessagesByText) {
           let columns = document.querySelectorAll('td[nick]');
 
-          filter_on_nick = updateFilter("MessagesByNick", nick);
-          filter_on_text = updateFilter("MessagesByText", text);
+          $filterMessagesByNick = updateFilter("MessagesByNick", nick);
+          $filterMessagesByText = updateFilter("MessagesByText", text);
 
           if (nick || text) {
               visibilitySystemMessages(false, false);
@@ -325,11 +325,11 @@ the resulting output would be now"
       }
 
       function filterMessagesByNick(nick) {
-          filterMessages(nick, filter_on_text);
+          filterMessages(nick, $filterMessagesByText);
       }
 
       function filterMessagesByText(text) {
-          filterMessages(filter_on_nick, text);
+          filterMessages($filterMessagesByNick, text);
       }
     </script>
   </head>
