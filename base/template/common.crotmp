@@ -84,7 +84,7 @@ move to the top of the page"
                   ><&column-button('fa-link', 'Message link')></a>
                 </li>
                 <li>
-                  <a onClick=""
+                  <a onclick="addTargetToGist('<.target>')"
                     class="msg-log-btn"
                     title="Allows you to collect messages relevant to a
 discussion and create a link for others to refer
@@ -200,6 +200,7 @@ the resulting output would be now"
               });
           }
 
+          setGistTargets();
           filterMessages();
       });
 
@@ -210,6 +211,7 @@ the resulting output would be now"
       var $showSystemMessages   = getCookie("SystemMessages") // false;
       var $hideCommitMessages   = getCookie("CommitMessages") // false;
       var $hideCameliaOutput    = getCookie("CameliaOutput")  // false;
+      var $gistTargets          = getCookie("Targets");
 
       var leftToggled = false; // TODO get this out of cookies later
       var rightToggled = false;
@@ -378,6 +380,24 @@ the resulting output would be now"
           );
           filterMessages();
       }
+
+      function setGistTargets(targets = $gistTargets) {
+          $gistTargets = setCookie('Targets', targets);
+          document.getElementById('gistTargets').href = 'gist.html?' + targets;
+      }
+
+      function addTargetToGist(target) {
+          let currentTargets = $gistTargets.split(',');
+          let newTargets = [];
+          for (var i = 0; i != currentTargets.length; i++) {
+              let current = currentTargets[i];
+              if (current && current != target) {
+                  newTargets.push(current);
+              }
+          }
+          newTargets.push(target);
+          setGistTargets(newTargets.sort().join(','));
+      }
     </script>
   </head>
   <body class="has-navbar-fixed-top">
@@ -495,7 +515,7 @@ the resulting output would be now"
             <div class="navbar-delimiter"></div>
           </!>
 
-          <a href="#"
+          <a id="gistTargets" href="#"
             class="navbar-item has-tooltip-bottom"
             data-tooltip="Show collected messages as a gist">
             <span id="go-gist" class="icon-text">
