@@ -1,7 +1,7 @@
 <:sub column-button($icon, $text)>
   <span class="icon-text filter">
     <span class="icon">
-      <i class="fas <$icon>"></i>
+      <i class="fas fa-<$icon>"></i>
     </span>
     <span><$text></span>
   </span>
@@ -94,7 +94,7 @@
                     title="Reference to this message to be used in other
 places, or just click on it to make this message
 move to the top of the page"
-                  ><&column-button('fa-link', 'Message link')></a>
+                  ><&column-button('link', 'Message link')></a>
                 </li>
                 <li>
                   <a onclick="addTargetToGist('<.target>')"
@@ -102,14 +102,14 @@ move to the top of the page"
                     title="Allows you to collect messages relevant to a
 discussion and create a link for others to refer
 to that discussion"
-                  ><&column-button('fa-cart-plus', 'Add to gist')></a>
+                  ><&column-button('cart-plus', 'Add to gist')></a>
                 </li>
                 <?.runcode-link><li>
                   <a href="<.runcode-link>"
                     class="msg-log-btn"
                     title="Allows you to run this Raku code to see what
 the resulting output would be now"
-                  ><&column-button('fa-play-circle', 'Run code')></a>
+                  ><&column-button('play-circle', 'Run code')></a>
                 </li></?>
               </ul>
             </div>
@@ -402,13 +402,21 @@ the resulting output would be now"
       function addTargetToGist(target) {
           let currentTargets = $gistTargets.split(',');
           let newTargets = [];
+          let add = true;
           for (var i = 0; i != currentTargets.length; i++) {
               let current = currentTargets[i];
-              if (current && current != target) {
-                  newTargets.push(current);
+              if (current) {
+                  if (current == target) {
+                      add = false;
+                  }
+                  else {
+                      newTargets.push(current);
+                  }
               }
           }
-          newTargets.push(target);
+          if (add) {
+              newTargets.push(target);
+          }
           setGistTargets(newTargets.sort().join(','));
       }
     </script>
@@ -497,7 +505,7 @@ the resulting output would be now"
               'Download raw log of #' ~ .channel ~ ' on ' ~ .date-human)>
           </!>
 
-          <&menu-item('cart-arrow-down', 'Gist', .channel, 'gist.html',
+          <&menu-item('shopping-cart', 'Gist', .channel, 'gist.html',
             'Show collected messages as a gist')>
 
           <&menu-item('search', 'Search', .channel, 'search.html',
