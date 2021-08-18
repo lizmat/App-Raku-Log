@@ -1,4 +1,4 @@
 <:use 'base/template/common.crotmp'>
-<|log-page($_, False)>
+<|log-page($_, :is-day)>
   #<.channel> on <.date-human> - Raku Programming Language Log
 </|>
