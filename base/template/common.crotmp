@@ -155,7 +155,7 @@ the resulting output would be now"
   <script defer src="/fontawesome.js"></script>
 </:>
 
-<:macro log-page($_, :$is-live, :$is-gist, :$is-day)>
+<:macro log-page($_, :$is-live, :$is-gist, :$is-day, :$icon = 'question')>
 <!DOCTYPE html>
 <html>
   <head>
@@ -479,9 +479,7 @@ the resulting output would be now"
             <a class="is-text navbar-current-channel-name" aria-haspopup="true" aria-controls="dropdown-menu4">
 
               <span class="icon-text">
-                <?$is-live><&icon('signal')></?>
-                <?$is-day><&icon('inbox')></?>
-                <?$is-gist><&icon('shopping-cart')></?>
+                <&icon($icon)>
                 <span><.channel></span>
                 <span class="icon">
                   <i class="fas fa-chevron-down" aria-hidden="true"></i>

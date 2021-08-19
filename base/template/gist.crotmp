@@ -1,4 +1,4 @@
 <:use 'base/template/common.crotmp'>
-<|log-page($_, :is-gist)>
+<|log-page($_, :is-gist, :icon('shopping-cart'))>
   Selected entries on #<.channel> IRC Channel
 </|>
