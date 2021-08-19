@@ -67,11 +67,16 @@
   <a id="<$title>"
     href="/<$channel>/<$href>"
     class="navbar-item has-tooltip-bottom"
-    data-tooltip="<$tooltip>"
-  ><span class="icon-text"
-  ><span class="icon"><i class="fas fa-<$icon>"></i></span
-  ><span class="navbar-item-title"><$title></span
-  ></span></a>
+    data-tooltip="<$tooltip>">
+    <?{ $icon eq 'camelia' }>
+      <img src="/camelia.png" width="40" height="28">
+    </?>
+    <?{ $icon ne 'camelia' }>
+      <span class="icon-text"><&icon($icon)></span>
+      &nbsp;
+      <span class="navbar-item-title"><$title></span>
+    </?>
+  </a>
 </:>
 
 <:sub column-buttons($_)>
@@ -468,11 +473,6 @@ the resulting output would be now"
 
 
       <div class="navbar-brand">
-        <a class="navbar-item" href="/">
-          <img src="https://raw.githubusercontent.com/Raku/marketing/master/LOGOs/Camelia/Alt-Variants/Perfect-Rainbow--1533512427/Camelia%20-%20Recoloured%20-%20Perfect%20Rainbow.png" width="40" height="28" alt="Home">
-        </a>
-
-
         <!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
@@ -537,6 +537,9 @@ the resulting output would be now"
 
           <&menu-item('search', 'Search', .channel, 'search.html',
             'Search the #' ~ .channel ~ ' channel')>
+
+          <&menu-item('camelia', '', .channel, '/',
+            'Go to the home page of the Raku IRC log browser')>
 
           <!-- Mobile only forms in header -->
           <div id="mobile-forms" class="is-hidden-tablet">
