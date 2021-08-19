@@ -58,6 +58,10 @@
   <&messages-input('Text', 'ByText', 'Filter by text', 'Exclude text')>
 </:>
 
+<:sub icon($icon)>
+  <span class="icon"><i class="fas fa-<$icon>"></i></span>
+</:>
+
 <:sub menu-item($icon, $title, $channel, $href, $tooltip)>
   <div class="navbar-delimiter"></div>
   <a id="<$title>"
@@ -435,7 +439,7 @@ the resulting output would be now"
             ? 'Show collected messages as a gist'
             : 'Remove all messages from the gist');
           let list = item.childNodes[0].childNodes[0].childNodes[0].classList;
-          list.remove(gist ? 'fa-timews' : 'fa-shopping-cart');
+          list.remove(gist ? 'fa-times' : 'fa-shopping-cart');
           list.add(   gist ? 'fa-shopping-cart' : 'fa-times');
       }
 </?>
@@ -470,12 +474,15 @@ the resulting output would be now"
 
 
         <!-- Add action to open modal window with channels or the right sidebar -->
-
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
             <a class="is-text navbar-current-channel-name" aria-haspopup="true" aria-controls="dropdown-menu4">
+
               <span class="icon-text">
-                <span>#<.channel></span>
+                <?$is-live><&icon('signal')></?>
+                <?$is-day><&icon('inbox')></?>
+                <?$is-gist><&icon('shopping-cart')></?>
+                <span><.channel></span>
                 <span class="icon">
                   <i class="fas fa-chevron-down" aria-hidden="true"></i>
                 </span>
@@ -488,7 +495,7 @@ the resulting output would be now"
                 <div class="menu">
                   <ul class="menu-list">
                     <@channels : $c>
-                      <li><a href="/<$c>/<?$is-live>live</?><!$is-live><.date></!>.html">#<$c></a></li>
+                      <li><a href="/<$c>/<?$is-live>live</?><?$is-day><.date></?><?$is-gist>gist</?>.html"><$c></a></li>
                     </@>
                   </ul>
 
@@ -509,15 +516,15 @@ the resulting output would be now"
 
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
-          <?$is-day>
-            <&menu-item('signal', 'Live', .channel, 'live.html',
+          <!$is-live>
+            <&menu-item('signal', 'Now', .channel, 'live.html',
               'Follow the #' ~ .channel ~ ' channel live')>
-          </?>
+          </!>
 
           <&menu-item('inbox', 'Today', .channel, 'today',
             'Show messages of today')>
 
-          <&menu-item('paw', 'Then', .channel, 'random',
+          <&menu-item('random', 'Then', .channel, 'random',
             'See the messages of a randomly selected date')>
 
           <?$is-day>
