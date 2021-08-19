@@ -222,7 +222,6 @@ the resulting output would be now"
           }
 
           setGistTargets();
-          <?$is-gist>setupGistMenuItem();</?>
           filterMessages();
       });
 
@@ -428,26 +427,6 @@ the resulting output would be now"
           }
           setGistTargets(newTargets.sort().join(','));
       }
-
-<?$is-gist>
-      function clearGistTargets() {
-          setGistTargets("");
-          setupGistMenuItem(true);
-      }
-
-      function setupGistMenuItem(gist = false) {
-          let item = document.getElementById('Gist');
-          item.href = gist
-            ? 'gist.html'
-            : 'javascript:clearGistTargets()';
-          item.setAttribute('data-tooltip', gist
-            ? 'Show collected messages as a gist'
-            : 'Remove all messages from the gist');
-          let list = item.childNodes[0].childNodes[0].childNodes[0].classList;
-          list.remove(gist ? 'fa-times' : 'fa-shopping-cart');
-          list.add(   gist ? 'fa-shopping-cart' : 'fa-times');
-      }
-</?>
     </script>
   </head>
   <body class="has-navbar-fixed-top">
