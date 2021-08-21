@@ -45,7 +45,9 @@ my constant @delimiters = ' ', '<', '>', |< : ; , + >;
 
 # Create HTML version of a given entry
 sub htmlize($entry, %colors) is export {
-    my $text = $entry.message;
+    my $text = $entry.^name.ends-with('::Topic')
+      ?? $entry.text
+      !! $entry.message;
 
     # Something with a text
     if $entry.conversation {

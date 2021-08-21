@@ -547,16 +547,12 @@ the resulting output would be now"
             <&nick-messages-input>
             <&text-messages-input>
 
-            <?$is-day>
-              <div class="block">
-                <p><strong>Calendar</strong></p>
+            <div class="block">
+              <p><strong>Calendar</strong></p>
+              <input id="sidebar-datepicker" type="date">
+            </div>
 
-                <input id="sidebar-datepicker" type="date">
-              </div>
-
-              <&system-messages-box('block')>
-            </?>
-
+            <?$is-day><&system-messages-box('block')></?>
             <&commit-messages-box('block')>
             <&camelia-messages-box('block')>
           </div>
@@ -605,6 +601,15 @@ the resulting output would be now"
               <!-- message log -->
               <section id="message-log">
                 <table class="table message-table is-fullwidth">
+                <?.initial-topic-text>
+                  <tr class="special-topic">
+                    <td colspan="4">
+                      <&HTML(.initial-topic-text)><br/>
+                      Set by <&HTML(.initial-topic-nick)> on
+                      <a href="/<.channel>/<.initial-topic-date>.html#<.initial-topic-relative-target>"><.initial-topic-human-date></a>.
+                    </td>
+                  </tr>
+                </?>
                 <@entries>
                   <?{ $is-live || $is-gist }>
                     <?.human-date>
