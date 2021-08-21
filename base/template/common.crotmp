@@ -225,6 +225,16 @@ the resulting output would be now"
           filterMessages();
       });
 
+      var $gistTargets = getTargets();
+      <?$is-gist>
+        <!.entries>
+          // no entries, but targets in cookie, so go show those
+          if ($gistTargets) {
+              window.location.href = 'gist.html?' + $gistTargets;
+          }
+        </!>
+      </?>
+
       var $filterMessagesByNick = getCookie("MessagesByNick");
       var $filterMessagesByText = getCookie("MessagesByText");
       var $filterExcludeByNick  = getCookie("ExcludeByNick")  // false;
@@ -232,7 +242,6 @@ the resulting output would be now"
       var $showSystemMessages   = getCookie("SystemMessages") // false;
       var $hideCommitMessages   = getCookie("CommitMessages") // false;
       var $hideCameliaOutput    = getCookie("CameliaOutput")  // false;
-      var $gistTargets          = getCookie("<.channel>Targets");
 
       var leftToggled = false; // TODO get this out of cookies later
       var rightToggled = false;
@@ -247,6 +256,10 @@ the resulting output would be now"
           } else {
               rightToggled = !rightToggled;
           }
+      }
+
+      function getTargets(channel = '<.channel>') {
+          return getCookie(channel + "Targets");
       }
 
       function setPrimaryByElement(element, primary) {
@@ -547,10 +560,12 @@ the resulting output would be now"
             <&nick-messages-input>
             <&text-messages-input>
 
-            <div class="block">
-              <p><strong>Calendar</strong></p>
-              <input id="sidebar-datepicker" type="date">
-            </div>
+            <?$is-day>
+              <div class="block">
+                <p><strong>Calendar</strong></p>
+                <input id="sidebar-datepicker" type="date">
+              </div>
+            </?>
 
             <?$is-day><&system-messages-box('block')></?>
             <&commit-messages-box('block')>
