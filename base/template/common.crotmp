@@ -232,7 +232,7 @@ the resulting output would be now"
       var $showSystemMessages   = getCookie("SystemMessages") // false;
       var $hideCommitMessages   = getCookie("CommitMessages") // false;
       var $hideCameliaOutput    = getCookie("CameliaOutput")  // false;
-      var $gistTargets          = getCookie("Targets");
+      var $gistTargets          = getCookie("<.channel>Targets");
 
       var leftToggled = false; // TODO get this out of cookies later
       var rightToggled = false;
@@ -403,8 +403,8 @@ the resulting output would be now"
       }
 
       function setGistTargets(targets = $gistTargets) {
-          $gistTargets = setCookie('Targets', targets);
-          document.getElementById('Gist').href = 'gist.html?' + targets;
+          $gistTargets = setCookie('<.channel>Targets', targets);
+          document.getElementById('Gist').href = '/<.channel>/gist.html?' + targets;
       }
 
       function addTargetToGist(target) {
