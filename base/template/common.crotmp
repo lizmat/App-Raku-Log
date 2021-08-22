@@ -179,6 +179,7 @@
           }
 
           setGistTargets();
+          markSelected();
           filterMessages();
       });
 
@@ -377,7 +378,56 @@
           document.getElementById('Gist').href = '/<.channel>/gist.html?' + targets;
       }
 
-      function addTargetToGist(target) {
+      function trOfTarget(target) {
+          let rows = document.querySelectorAll('tr[target="' + target + '"]');
+          return rows.length ? rows[0] : undefined
+      }
+
+      function markSelected() {
+          let links = document.querySelectorAll('a[target]');
+          let haystack = $gistTargets + ',';
+          for (var i = 0; i != links.length; i++) {
+              let link = links[i];
+              let target = link.getAttribute('target');
+              if (haystack.includes(target + ',')) {
+                  trOfTarget(target).classList.add('special-selected');
+                  link.classList.add('is-hidden');
+                  link.nextSibling.classList.remove('is-hidden');
+              }
+              else {
+                  trOfTarget(target).classList.remove('special-selected');
+                  link.classList.remove('is-hidden');
+                  link.nextSibling.classList.add('is-hidden');
+              }
+          }
+      }
+
+      function removeTargetFromGist(link) {
+          let target = link.previousSibling.getAttribute('target');
+          let currentTargets = $gistTargets.split(',');
+          let newTargets = [];
+          let remove = false;
+          for (var i = 0; i != currentTargets.length; i++) {
+              let current = currentTargets[i];
+              if (current) {
+                  if (current == target) {
+                      remove = true;
+                  }
+                  else {
+                      newTargets.push(current);
+                  }
+              }
+          }
+          if (remove) {
+              trOfTarget(target).classList.remove('special-selected');
+              link.previousSibling.classList.remove('is-hidden');
+              link.classList.add('is-hidden');
+          }
+          setGistTargets(newTargets.sort().join(','));
+      }
+
+      function addTargetToGist(link) {
+          let target = link.getAttribute('target');
           let currentTargets = $gistTargets.split(',');
           let newTargets = [];
           let add = true;
@@ -393,6 +443,9 @@
               }
           }
           if (add) {
+              trOfTarget(target).classList.add('special-selected');
+              link.nextSibling.classList.remove('is-hidden');
+              link.classList.add('is-hidden');
               newTargets.push(target);
           }
           setGistTargets(newTargets.sort().join(','));
@@ -587,11 +640,13 @@
                     </?>
                   </?>
                   <tr id="<.relative-target>"
+                    target="<.target>"
                     <?.control-events> class="special-system"</?>
                     <?.commit> class="special-commit"</?>
                     <?.camelia> class="special-camelia"</?>
                     <?.test-t> class="special-test"</?>
                     <?.same-nick> class="special-same-nick"</?>
+                    <?$is-gist> class="special-selected"</?>
                   >
                     <?.control-events>
                       <td/>
@@ -636,28 +691,35 @@ move to the top of the page"
   ><&column-button('link', 'Message link')></a>
 </?>
 <!$is-day>
-  <a id="<.relative-target>"
-    class="msg-log-btn"
+  <a class="msg-log-btn"
     href="/<.channel>/<.date>.html#<.relative-target>"
     title="Show this message in the daily overview"
   ><&column-button('link', 'Show on day')></a>
 </!>
                                   </li>
                                   <li>
-                                    <a onclick="addTargetToGist('<.target>')"
-                                      class="msg-log-btn"
-                                      title="Allows you to collect messages relevant to a
+  <a
+    class="msg-log-btn"
+    target="<.target>"
+    onclick="addTargetToGist(this)"
+    title="Allows you to collect messages relevant to a
 discussion and create a link for others to refer
 to that discussion"
-                                    ><&column-button('cart-plus', 'Add to gist')></a>
+  ><&column-button('cart-plus', 'Add to gist')></a><a
+    class="msg-log-btn is-hidden"
+    onclick="removeTargetFromGist(this)"
+    title="Remove this message from the current selection"
+  ><&column-button('times', 'Remove')></a>
                                   </li>
-                                  <?.runcode-link><li>
-                                    <a href="<.runcode-link>"
-                                      class="msg-log-btn"
-                                      title="Allows you to run this Raku code to see what
+<?.runcode-link>
+  <li>
+    <a href="<.runcode-link>"
+      class="msg-log-btn"
+      title="Allows you to run this Raku code to see what
 the resulting output would be now"
-                                    ><&column-button('play-circle', 'Run code')></a>
-                                  </li></?>
+    ><&column-button('play-circle', 'Run code')></a>
+  </li>
+</?>
                                 </ul>
                               </div>
                             </div>
