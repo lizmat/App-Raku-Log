@@ -64,8 +64,8 @@
 
 <:sub menu-item($icon, $title, $channel, $href, $tooltip)>
   <div class="navbar-delimiter"></div>
-  <a id="<$title>"
-    href="/<$channel>/<$href>"
+  <a <?$title>id="<$title>"</?>
+    <?$href>href="/<$channel>/<$href>"</?>
     class="navbar-item has-tooltip-bottom"
     data-tooltip="<$tooltip>">
     <?{ $icon eq 'camelia' }>
@@ -73,8 +73,7 @@
     </?>
     <?{ $icon ne 'camelia' }>
       <span class="icon-text"><&icon($icon)></span>
-      &nbsp;
-      <span class="navbar-item-title"><$title></span>
+      <?$title>&nbsp;<span class="navbar-item-title"><$title></span></?>
     </?>
   </a>
 </:>
@@ -106,7 +105,13 @@
   <script defer src="/fontawesome.js"></script>
 </:>
 
-<:macro log-page($_, :$is-live, :$is-gist, :$is-day, :$icon = 'question')>
+<:macro log-page($_,
+  :$is-live,
+  :$is-gist,
+  :$is-day, 
+  :$icon = 'question',
+  :$tooltip = 'Unknown'
+)>
 <!DOCTYPE html>
 <html>
   <head>
@@ -387,7 +392,7 @@
           let links = document.querySelectorAll('a[target]');
           let haystack = $gistTargets + ',';
           for (var i = 0; i != links.length; i++) {
-              let link = links[i];
+              let link   = links[i];
               let target = link.getAttribute('target');
               if (haystack.includes(target + ',')) {
                   trOfTarget(target).classList.add('special-selected');
@@ -474,6 +479,7 @@
       </div>
 
 
+      <&menu-item($icon, '', .channel, '', $tooltip)>
       <div class="navbar-brand">
         <!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
@@ -481,7 +487,6 @@
             <a class="is-text navbar-current-channel-name" aria-haspopup="true" aria-controls="dropdown-menu4">
 
               <span class="icon-text">
-                <&icon($icon)>
                 <span><.channel></span>
                 <span class="icon">
                   <i class="fas fa-chevron-down" aria-hidden="true"></i>

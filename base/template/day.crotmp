@@ -1,4 +1,5 @@
 <:use 'base/template/common.crotmp'>
-<|log-page($_, :is-day, :icon('inbox'))>
-  #<.channel> on <.date-human> - Raku Programming Language Log
+<|log-page($_, :is-day, :icon('inbox'),
+  :tooltip('This page shows the messages of a given date')
+)>#<.channel> on <.date-human> - Raku Programming Language Log
 </|>
