@@ -125,20 +125,20 @@
       function getCookie(cname) {
           let name = cname + "=";
           let decodedCookie = decodeURIComponent(document.cookie);
-          let ca = decodedCookie.split(';');
-          for(let i = 0; i <ca.length; i++) {
-            let c = ca[i];
-            while (c.charAt(0) == ' ') {
-              c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-              let cookie = c.substring(name.length, c.length);
-              return cookie == "true"
-                ? true
-                : cookie == "false"
-                  ? false
-                  : cookie;
-            }
+          let cookies = decodedCookie.split(';');
+          for(let i = 0; i <cookies.length; i++) {
+              let c = cookies[i];
+              while (c.charAt(0) == ' ') {
+                  c = c.substring(1);
+              }
+              if (c.indexOf(name) == 0) {
+                  let cookie = c.substring(name.length, c.length);
+                  return cookie == "true"
+                    ? true
+                    : cookie == "false"
+                      ? false
+                      : cookie;
+              }
           }
           return "";
       }
@@ -171,7 +171,7 @@
               // TODO anyone wanting to add a working minDate: 'today' here?
           };
           var calendars = bulmaCalendar.attach('[type="date"]', options);
-          for (var i = 0; i < calendars.length; i++) {
+          for (let i = 0; i < calendars.length; i++) {
               // Add listener to select event
               calendars[i].on('select', date => {
                   window.location = 'this/' + date.data.datePicker.value();
@@ -231,7 +231,7 @@
 
       function setButtons(name, state) {
           let buttons = document.querySelectorAll('button[id=' + name + ']');
-          for (var i = 0; i != buttons.length; i++) {
+          for (let i = 0; i != buttons.length; i++) {
               setPrimaryByElement(buttons[i], state);
           }
       }
@@ -247,14 +247,14 @@
 
       function setVisibilityByName(name, visible) {
           let rows = document.getElementsByClassName(name);
-          for (var i = 0; i != rows.length; i++) {
+          for (let i = 0; i != rows.length; i++) {
               setVisibilityByElement(rows[i], visible);
           }
       }
 
       function setCheckboxes(name, state) {
           let boxes = document.querySelectorAll('input[id=' + name + ']');
-          for (var i = 0; i != boxes.length; i++) {
+          for (let i = 0; i != boxes.length; i++) {
               boxes[i].checked = state;
           }
       }
@@ -286,14 +286,14 @@
 
       function updateFilter(name, value) {
           let inputs = document.querySelectorAll('input[id=' + name + ']');
-          for (var i = 0; i != inputs.length; i++) {
+          for (let i = 0; i != inputs.length; i++) {
               inputs[i].value = value;
           }
           return setCookie(name, value);
       }
 
       function containsAnyTexts(haystack, needles) {
-          for (var i = 0; i != needles.length; i++) {
+          for (let i = 0; i != needles.length; i++) {
               let needle = needles[i];
               if (needle && haystack.toLowerCase().indexOf(needle) != -1) {
                   return true;
@@ -323,7 +323,7 @@
               let lcNicks = nick.toLowerCase().split(',');
               let lcText  = text.toLowerCase();
 
-              for (var i = 0; i != columns.length; i++) {
+              for (let i = 0; i != columns.length; i++) {
                   let column = columns[i];
                   let parent = column.parentElement;
 
@@ -342,7 +342,7 @@
           }
 
           else {
-              for (var i = 0; i != columns.length; i++) {
+              for (let i = 0; i != columns.length; i++) {
                   setVisibilityByElement(columns[i].parentElement, true)
               }
               visibilitySystemMessages();
@@ -386,7 +386,7 @@
       function markSelected() {
           let links = document.querySelectorAll('a[target]');
           let haystack = $gistTargets + ',';
-          for (var i = 0; i != links.length; i++) {
+          for (let i = 0; i != links.length; i++) {
               let link = links[i];
               let target = link.getAttribute('target');
               if (haystack.includes(target + ',')) {
@@ -407,7 +407,7 @@
           let currentTargets = $gistTargets.split(',');
           let newTargets = [];
           let remove = false;
-          for (var i = 0; i != currentTargets.length; i++) {
+          for (let i = 0; i != currentTargets.length; i++) {
               let current = currentTargets[i];
               if (current) {
                   if (current == target) {
@@ -431,7 +431,7 @@
           let currentTargets = $gistTargets.split(',');
           let newTargets = [];
           let add = true;
-          for (var i = 0; i != currentTargets.length; i++) {
+          for (let i = 0; i != currentTargets.length; i++) {
               let current = currentTargets[i];
               if (current) {
                   if (current == target) {
