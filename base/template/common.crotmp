@@ -478,8 +478,10 @@
         <!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
-            <a class="is-text navbar-current-channel-name" aria-haspopup="true" aria-controls="dropdown-menu4">
-
+            <a href="/<.channel>/index.html"
+              class="is-text navbar-current-channel-name"
+              aria-haspopup="true"
+              aria-controls="dropdown-menu4">
               <span class="icon-text">
                 <&icon($icon)>
                 <span><.channel></span>
