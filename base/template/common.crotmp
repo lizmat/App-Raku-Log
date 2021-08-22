@@ -178,6 +178,7 @@
               });
           }
 
+          <?$is-gist>hideChannelsWithoutTargets()</?>
           setGistTargets();
           markSelected();
           filterMessages();
@@ -215,6 +216,18 @@
               rightToggled = !rightToggled;
           }
       }
+
+<?$is-gist>
+      function hideChannelsWithoutTargets() {
+          let items = document.querySelectorAll('li[id]');
+          for (let i = 0; i != items.length; i++) {
+              let item = items[i];
+              if (!getTargets(item.getAttribute('id'))) {
+                  item.classList.add('is-hidden');
+              }
+          }
+      }
+</?>
 
       function getTargets(channel = '<.channel>') {
           return getCookie(channel + "Targets");
@@ -497,7 +510,9 @@
                 <div class="menu">
                   <ul class="menu-list">
                     <@channels : $c>
-                      <li><a href="/<$c>/<?$is-live>live</?><?$is-day><.date></?><?$is-gist>gist</?>.html"><$c></a></li>
+                      <li id="<$c>">
+                        <a href="/<$c>/<?$is-live>live</?><?$is-day><.date></?><?$is-gist>gist</?>.html"><$c></a>
+                      </li>
                     </@>
                   </ul>
 
