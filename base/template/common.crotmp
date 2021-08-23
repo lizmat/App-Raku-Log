@@ -518,9 +518,11 @@
                 <div class="menu">
                   <ul class="menu-list">
                     <@channels : $c>
-                      <li id="<$c>">
-                        <a href="/<$c>/<?$is-live>live</?><?$is-day><.date></?><?$is-gist>gist</?>.html"><$c></a>
-                      </li>
+                      <?{ .channel ne $c }>
+                        <li id="<$c>">
+                          <a href="/<$c>/<?$is-live>live</?><?$is-day><.date></?><?$is-gist>gist</?>.html"><$c></a>
+                        </li>
+                      </?>
                     </@>
                   </ul>
 
