@@ -217,6 +217,14 @@
           }
       }
 
+<?$is-live>
+      function scrollToBottom() {
+          window.scrollTo(0, document.body.scrollHeight);
+      }
+      history.scrollRestoration = "manual";
+      window.onload = scrollToBottom;
+</?>
+
 <?$is-gist>
       function hideChannelsWithoutTargets() {
           let items = document.querySelectorAll('li[id]');
