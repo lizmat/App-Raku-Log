@@ -331,7 +331,7 @@
       function containsText(haystack, text) {
           let needle = text.trim();
           return needle
-            ? haystack.toLowerCase().indexOf(needle.trim()) != -1
+            ? haystack.toLowerCase().indexOf(needle) != -1
             : true;
       }
 
