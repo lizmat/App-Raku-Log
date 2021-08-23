@@ -315,7 +315,7 @@
 
       function containsAnyTexts(haystack, needles) {
           for (let i = 0; i != needles.length; i++) {
-              let needle = needles[i];
+              let needle = needles[i].trim();
               if (needle && haystack.toLowerCase().indexOf(needle) != -1) {
                   return true;
               }
@@ -324,7 +324,7 @@
       }
 
       function containsText(haystack, needle) {
-          return haystack.toLowerCase().indexOf(needle) != -1
+          return haystack.toLowerCase().indexOf(needle.trim()) != -1
       }
 
       function filterMessages(
