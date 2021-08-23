@@ -316,15 +316,23 @@
       function containsAnyTexts(haystack, needles) {
           for (let i = 0; i != needles.length; i++) {
               let needle = needles[i].trim();
-              if (needle && haystack.toLowerCase().indexOf(needle) != -1) {
+              if (needle) {
+                  if (haystack.toLowerCase().indexOf(needle) != -1) {
+                      return true;
+                  }
+              }
+              else {
                   return true;
               }
           }
           return false;
       }
 
-      function containsText(haystack, needle) {
-          return haystack.toLowerCase().indexOf(needle.trim()) != -1
+      function containsText(haystack, text) {
+          let needle = text.trim();
+          return needle
+            ? haystack.toLowerCase().indexOf(needle.trim()) != -1
+            : true;
       }
 
       function filterMessages(
