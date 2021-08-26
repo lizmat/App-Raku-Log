@@ -404,30 +404,83 @@
 
       function setGistTargets(targets = $gistTargets) {
           $gistTargets = setCookie('<.channel>Targets', targets);
-          document.getElementById('Gist').href = '/<.channel>/gist.html?' + targets;
+          document.getElementById('Gist').href =
+            '/<.channel>/gist.html?' + targets;
       }
 
-      function trOfTarget(target) {
-          let rows = document.querySelectorAll('tr[target="' + target + '"]');
-          return rows.length ? rows[0] : undefined
+      function elementOfTarget(element, target) {
+          return document.querySelector(element + '[target="' + target + '"]');
+      }
+
+      function clearGistTargets() {
+          setGistTargets("");
+          markSelected();
+      }
+
+      function addVisibleTargets() {
+          let newTargets = $gistTargets.split(',');;
+          let haystack   = $gistTargets + ',';
+          let trs = document.querySelectorAll('tr[target]');
+          for (let i = 0; i != trs.length; i++) {
+              let tr = trs[i];
+              if (!tr.classList.contains('is-hidden')) {
+                  let target = tr.getAttribute('target');
+                  if (!haystack.includes(target + ',')) {
+                      setTargetSelectionState(target, true);
+                      newTargets.push(target);
+                  }
+              }
+          }
+          setGistTargets(newTargets.sort().join(','));
+      }
+
+      function removeVisibleTargets() {
+          let currentTargets = $gistTargets.split(",");
+          let newTargets = [];
+          for (let i = 0; i != currentTargets.length; i++) {
+              let target = currentTargets[i];
+              let tr     = elementOfTarget('tr', target);
+              if (tr) {
+                  if (tr.classList.contains('is-hidden')) {
+                      newTargets.push(target);
+                  }
+                  else {
+                      setTargetSelectionState(target, false);
+                  }
+              }
+          }
+          setGistTargets(newTargets.sort().join(','));
+      }
+
+      function setTargetSelectionState(target, on) {
+          let tr = elementOfTarget('tr', target);
+          if (tr) {
+              if (on) {
+                  tr.classList.add('special-selected');
+              }
+              else {
+                  tr.classList.remove('special-selected');
+              }
+          }
+          let option = elementOfTarget('a', target);
+          if (option) {
+              if (on) {
+                  option.classList.add('is-hidden');
+                  option.nextSibling.classList.remove('is-hidden');
+              }
+              else {
+                  option.classList.remove('is-hidden');
+                  option.nextSibling.classList.add('is-hidden');
+              }
+          }
       }
 
       function markSelected() {
           let links = document.querySelectorAll('a[target]');
           let haystack = $gistTargets + ',';
           for (let i = 0; i != links.length; i++) {
-              let link = links[i];
-              let target = link.getAttribute('target');
-              if (haystack.includes(target + ',')) {
-                  trOfTarget(target).classList.add('special-selected');
-                  link.classList.add('is-hidden');
-                  link.nextSibling.classList.remove('is-hidden');
-              }
-              else {
-                  trOfTarget(target).classList.remove('special-selected');
-                  link.classList.remove('is-hidden');
-                  link.nextSibling.classList.add('is-hidden');
-              }
+              let target = links[i].getAttribute('target');
+              setTargetSelectionState(target, haystack.includes(target + ','));
           }
       }
 
@@ -448,9 +501,7 @@
               }
           }
           if (remove) {
-              trOfTarget(target).classList.remove('special-selected');
-              link.previousSibling.classList.remove('is-hidden');
-              link.classList.add('is-hidden');
+              setTargetSelectionState(target, false);
           }
           setGistTargets(newTargets.sort().join(','));
       }
@@ -472,9 +523,7 @@
               }
           }
           if (add) {
-              trOfTarget(target).classList.add('special-selected');
-              link.nextSibling.classList.remove('is-hidden');
-              link.classList.add('is-hidden');
+              setTargetSelectionState(target, true);
               newTargets.push(target);
           }
           setGistTargets(newTargets.sort().join(','));
@@ -625,17 +674,17 @@
                 <div class="menu">
                   <ul class="menu-list">
                     <li>
-                      <a onclick="">
+                      <a onclick="clearGistTargets()">
                         <span>Clear&nbsp;selected&nbsp;messages</span>
                       </a>
                     </li>
                     <li>
-                      <a onclick="">
+                      <a onclick="addVisibleTargets()">
                         <span>Select&nbsp;all&nbsp;visible&nbsp;messages</span>
                       </a>
                     </li>
                     <li>
-                      <a onclick="">
+                      <a onclick="removeVisibleTargets()">
                         <span>Remove&nbsp;all&nbsp;visible&nbsp;messages</span>
                       </a>
                     </li>
