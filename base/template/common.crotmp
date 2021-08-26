@@ -605,7 +605,7 @@
         </div>
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
-            <a href="/<.channel>/gist.html"
+            <a id="Gist" href="/<.channel>/gist.html"
               class="is-text navbar-current-channel-name"
               aria-haspopup="true"
               aria-controls="dropdown-menu4">
