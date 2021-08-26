@@ -8,7 +8,7 @@
   "depends": [
     "App::IRC::Log:ver<0.0.17>:auth<cpan:ELIZABETH>",
     "Cro::HTTP::Server:ver<0.8.6>",
-    "IRC::Log::Colabti:ver<0.0.32>:auth<cpan:ELIZABETH>"
+    "IRC::Log::Colabti:ver<0.0.33>:auth<cpan:ELIZABETH>"
   ],
   "description": "Cro application for presenting Raku IRC logs",
   "license": "Artistic-2.0",
