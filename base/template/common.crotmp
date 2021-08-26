@@ -549,6 +549,7 @@
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
         <div class="navbar-item dropdown is-hoverable">
+          <div class="navbar-delimiter"></div>
           <div class="dropdown-trigger">
             <a href="/<.channel>/index.html"
               class="is-text navbar-current-channel-name"
@@ -563,7 +564,6 @@
               </span>
             </a>
           </div>
-          <div class="navbar-delimiter"></div>
           <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
             <div class="dropdown-content">
               <div class="dropdown-item">
@@ -604,6 +604,7 @@
           </div>
         </div>
         <div class="navbar-item dropdown is-hoverable">
+          <div class="navbar-delimiter"></div>
           <div class="dropdown-trigger">
             <a id="Gist" href="/<.channel>/gist.html"
               class="is-text navbar-current-channel-name"
@@ -618,7 +619,6 @@
               </span>
             </a>
           </div>
-          <div class="navbar-delimiter"></div>
           <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
             <div class="dropdown-content">
               <div class="dropdown-item">
@@ -626,20 +626,17 @@
                   <ul class="menu-list">
                     <li>
                       <a onclick="">
-                        <&icon('times')>
-                        <span>Clear selected messages</span>
+                        <span>Clear&nbsp;selected&nbsp;messages</span>
                       </a>
                     </li>
                     <li>
                       <a onclick="">
-                        <&icon('plus')>
-                        <span>Select all visible messages</span>
+                        <span>Select&nbsp;all&nbsp;visible&nbsp;messages</span>
                       </a>
                     </li>
                     <li>
                       <a onclick="">
-                        <&icon('minus')>
-                        <span>Remove all visible messages</span>
+                        <span>Remove&nbsp;all&nbsp;visible&nbsp;messages</span>
                       </a>
                     </li>
                   </ul>
