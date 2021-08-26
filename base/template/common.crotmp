@@ -533,14 +533,11 @@
                       </?>
                     </@>
                   </ul>
-
                 </div>
-
               </div>
             </div>
           </div>
         </div>
-
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
           <span aria-hidden="true"></span>
@@ -551,24 +548,106 @@
 
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
-          <!$is-live>
-            <&menu-item('signal', 'Now', .channel, 'live.html',
-              'Follow the #' ~ .channel ~ ' channel live')>
-          </!>
-
-          <&menu-item('inbox', 'Today', .channel, 'today',
-            'Show messages of today')>
-
-          <&menu-item('random', 'Then', .channel, 'random',
-            'See the messages of a randomly selected date')>
-
-          <?$is-day>
-            <&menu-item('download', 'Raw', .channel, .date ~ '.log',
-              'Download raw log of #' ~ .channel ~ ' on ' ~ .date-human)>
-          </?>
-
-          <&menu-item('shopping-cart', 'Gist', .channel, 'gist.html',
-            'Show collected messages as a gist')>
+        <div class="navbar-item dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <a href="/<.channel>/index.html"
+              class="is-text navbar-current-channel-name"
+              aria-haspopup="true"
+              aria-controls="dropdown-menu4">
+              <span class="icon-text">
+                <&icon('book')>
+                <span>Browse</span>
+                <span class="icon">
+                  <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </span>
+              </span>
+            </a>
+          </div>
+          <div class="navbar-delimiter"></div>
+          <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item">
+                <div class="menu">
+                  <ul class="menu-list">
+                    <!$is-live>
+                      <li>
+                        <a href="/<.channel>/live.html">
+                          <&icon('signal')>
+                          <span>Live</span>
+                        </a>
+                      </li>
+                    </!>
+                    <li>
+                      <a href="/<.channel>/today">
+                        <&icon('inbox')>
+                        <span>Today</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/<.channel>/random">
+                        <&icon('random')>
+                        <span>I Feel Lucky</span>
+                      </a>
+                    </li>
+                    <?$is-day>
+                      <li>
+                        <a href="/<.channel>/<.date>.log">
+                          <&icon('download')>
+                          <span>Raw</span>
+                        </a>
+                      </li>
+                    </?>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="navbar-item dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <a href="/<.channel>/gist.html"
+              class="is-text navbar-current-channel-name"
+              aria-haspopup="true"
+              aria-controls="dropdown-menu4">
+              <span class="icon-text">
+                <&icon('shopping-cart')>
+                <span>Gist</span>
+                <span class="icon">
+                  <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                </span>
+              </span>
+            </a>
+          </div>
+          <div class="navbar-delimiter"></div>
+          <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item">
+                <div class="menu">
+                  <ul class="menu-list">
+                    <li>
+                      <a onclick="">
+                        <&icon('times')>
+                        <span>Clear selected messages</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a onclick="">
+                        <&icon('plus')>
+                        <span>Select all visible messages</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a onclick="">
+                        <&icon('minus')>
+                        <span>Remove all visible messages</span>
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
           <&menu-item('search', 'Search', .channel, 'search.html',
             'Search the #' ~ .channel ~ ' channel')>
