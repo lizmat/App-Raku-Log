@@ -556,7 +556,7 @@ for it to be shown.'
           <span class="icon-text filter">
             <&icon('cogs')>
             <span class="sidebar-title">
-              <?$is-search>Search Options</?><!$is-search>Filter Settings</!>
+              <?$is-search>Search</?><!$is-search>Filter</!>
             </span>
           </span>
           <&icon('chevron-left')>
@@ -765,12 +765,12 @@ in the selection.">
   <!-- TODO: center text here -->
 <?$is-search>
   <div class="block has-text-centered">
-    <span class="title is-4">Search Options</span>
+    <span class="title is-4">Search</span>
   </div>
 </?>
 <!$is-search>
   <div class="block has-text-centered">
-    <span class="title is-4">Filter Settings</span>
+    <span class="title is-4">Filter</span>
   </div>
   <&nick-messages-input>
   <&text-messages-input>
