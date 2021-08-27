@@ -547,15 +547,9 @@ for it to be shown.'
         <a class="navbar-item navbar-sidebar-btn " onclick="toggleSidebar('left-sidebar')">
 
           <span class="icon-text filter">
-            <span class="icon">
-              <i class="fas fa-cogs"></i>
-            </span>
-            <span class="sidebar-title">Filter</span>
+            <&icon('cogs')><span class="sidebar-title">Filter</span>
           </span>
-
-          <span class="icon icon-sidebar-state">
-            <i class="fas fa-chevron-left"></i>
-          </span>
+          <&icon('chevron-left')>
         </a>
       </div>
 
@@ -806,28 +800,19 @@ in the selection.">
                 <!-- Left side -->
                 <div class="level-left">
                   <div class="level-item">
-
                     <div class="msg-log-date-switcher">
-
                       <a href="/<.channel>/prev/<.date>">
                         <button class="button is-primary">
-                          <span class="icon">
-                            <i class="fas fa-chevron-left"></i>
-                          </span>
+                          <&icon('chevron-left')>
                         </button>
                       </a>
-
                       <span class="title is-4 today-date"><.date-human></span>
-
                       <a href="/<.channel>/next/<.date>">
                         <button class="button is-primary">
-                          <span class="icon">
-                            <i class="fas fa-chevron-right"></i>
-                          </span>
+                          <&icon('chevron-right')>
                         </button>
                       </a>
                     </div>
-
                   </div>
                 </div>
               </nav>
