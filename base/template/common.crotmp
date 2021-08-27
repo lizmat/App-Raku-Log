@@ -7,38 +7,53 @@
   </span>
 </:>
 
-<:sub messages-box($id, $text, $class)>
+<:sub messages-box($id, $text, $class, $title = '')>
   <div<?$class> class="<$class>"</?>>
-    <label class="checkbox"> <input id="<$id>" type="checkbox"
-      onclick="visibility<$id>(this.checked);">
+    <label class="checkbox" title="<$title>">
+      <input id="<$id>" type="checkbox"
+        onclick="visibility<$id>(this.checked);">
       <strong><$text></strong>
     </label>
   </div>
 </:>
 
 <:sub system-messages-box($class = '')>
-  <&messages-box('SystemMessages', 'show system messages', $class)>
+  <&messages-box(
+    'SystemMessages', 'show system messages', $class,
+    'Show server control messages,
+such as people joining and leaving.'
+  )>
 </:>
 
 <:sub commit-messages-box($class = '')>
-  <&messages-box('CommitMessages', 'hide commit messages', $class)>
+  <&messages-box(
+    'CommitMessages', 'hide commit messages', $class,
+    'Hide any messages about commits
+to any of the repositories that
+are being reported on this channel.'
+  )>
 </:>
 
 <:sub camelia-messages-box($class = '')>
-  <&messages-box('CameliaOutput', 'hide Camelia output', $class)>
+  <&messages-box(
+    'CameliaOutput', 'hide Camelia output', $class,
+    'Hide any messages from the bot that
+shows the result of execution of
+code snippets.'
+  )>
 </:>
 
-<:sub messages-input($title, $id, $placeholder, $tooltip)>
+<:sub messages-input($name, $id, $placeholder, $tooltip, $title)>
   <div class="block">
-    <p><strong><$title></strong></p>
+    <p><strong><$name></strong></p>
     <div class="field has-addons">
       <div class="control">
         <input id="Messages<$id>" class="input" type="text"
           placeholder="<$placeholder>"
+          title="<$title>"
           oninput="filterMessages<$id>(this.value);">
       </div>
-      <div class="control has-tooltip-bottom"
-        data-tooltip="<$tooltip>">
+      <div title="<$tooltip>" class="control has-tooltip-bottom">
         <button id="Exclude<$id>" class="button"
           onclick="filterExclude<$id>(this)">
           <span class="icon">
@@ -51,32 +66,26 @@
 </:>
 
 <:sub nick-messages-input()>
-  <&messages-input('User', 'ByNick', 'Filter on nick', 'Exclude user')>
+  <&messages-input('User', 'ByNick', 'Filter on nick',
+  'Only show messages that are NOT written
+by the user(s) of which you specified
+the name.',
+  'One or more (partial) names of users,
+separated by comma.'
+  )>
 </:>
 
 <:sub text-messages-input()>
-  <&messages-input('Text', 'ByText', 'Filter by text', 'Exclude text')>
+  <&messages-input('Text', 'ByText', 'Filter by text',
+  'Only show messages that do NOT contain
+the text that you entered.',
+  'Text that should appear in a message in order
+for it to be shown.'
+  )>
 </:>
 
 <:sub icon($icon)>
   <span class="icon"><i class="fas fa-<$icon>"></i></span>
-</:>
-
-<:sub menu-item($icon, $title, $channel, $href, $tooltip)>
-  <div class="navbar-delimiter"></div>
-  <a id="<$title>"
-    href="/<$channel>/<$href>"
-    class="navbar-item has-tooltip-bottom"
-    data-tooltip="<$tooltip>">
-    <?{ $icon eq 'camelia' }>
-      <img src="/camelia.png" width="40" height="28">
-    </?>
-    <?{ $icon ne 'camelia' }>
-      <span class="icon-text"><&icon($icon)></span>
-      &nbsp;
-      <span class="navbar-item-title"><$title></span>
-    </?>
-  </a>
 </:>
 
 <:sub footer>
@@ -106,7 +115,9 @@
   <script defer src="/fontawesome.js"></script>
 </:>
 
-<:macro log-page($_, :$is-live, :$is-gist, :$is-day, :$icon = 'question')>
+<:macro log-page($_, :$icon = 'question',
+  :$is-live, :$is-gist, :$is-day, :$is-search
+)>
 <!DOCTYPE html>
 <html>
   <head>
@@ -618,34 +629,53 @@
               <div class="dropdown-item">
                 <div class="menu">
                   <ul class="menu-list">
-                    <!$is-live>
-                      <li>
-                        <a href="/<.channel>/live.html">
-                          <&icon('signal')>
-                          <span>Live</span>
-                        </a>
-                      </li>
-                    </!>
-                    <li>
+<!$is-live>
+  <li title="Follow the messages on the #<.channel>
+channel as they are happening.  Allows
+scrolling-back in time.">
+    <a href="/<.channel>/live.html">
+      <&icon('signal')>
+      <span>Live</span>
+    </a>
+  </li>
+</!>
+                    <li title="Look at messages of the last date
+for which messages have been seen
+on the #<.channel> channel.">
                       <a href="/<.channel>/today">
                         <&icon('inbox')>
                         <span>Today</span>
                       </a>
                     </li>
-                    <li>
+                    <li title="Look at the messages of a
+randomly selected date on the
+#<.channel> channel for that special
+serendipitous experience.">
                       <a href="/<.channel>/random">
                         <&icon('random')>
                         <span>I Feel Lucky</span>
                       </a>
                     </li>
-                    <?$is-day>
-                      <li>
-                        <a href="/<.channel>/<.date>.log">
-                          <&icon('download')>
-                          <span>Raw</span>
-                        </a>
-                      </li>
-                    </?>
+<!$is-search>
+  <li title="Search the messages of the #<.channel>
+channel for a specific text, and/or
+by a specific author, and/or for a
+limited period.">
+    <a href="/<.channel>/search.html">
+      <&icon('search')>
+      <span>Search</span>
+    </a>
+  </li>
+</!>
+<?$is-day>
+  <li title="Download the raw log of the #<.channel>
+channel on <.date-human>.">
+    <a href="/<.channel>/<.date>.log">
+      <&icon('download')>
+      <span>Raw</span>
+    </a>
+  </li>
+</?>
                   </ul>
                 </div>
               </div>
@@ -673,17 +703,25 @@
               <div class="dropdown-item">
                 <div class="menu">
                   <ul class="menu-list">
-                    <li>
+                    <li title="Reset the current selection
+of messages to be shown in
+a gist.">
                       <a onclick="clearGistTargets()">
                         <span>Clear&nbsp;selected&nbsp;messages</span>
                       </a>
                     </li>
-                    <li>
+                    <li title="Add the currently visible
+messages to the selection of
+messages to be shown in a gist.">
                       <a onclick="addVisibleTargets()">
                         <span>Select&nbsp;all&nbsp;visible&nbsp;messages</span>
                       </a>
                     </li>
-                    <li>
+                    <li title="Remove all currently visible
+messages from the selection
+(if they were selected), while
+keeping any non-visible messages
+in the selection.">
                       <a onclick="removeVisibleTargets()">
                         <span>Remove&nbsp;all&nbsp;visible&nbsp;messages</span>
                       </a>
@@ -695,11 +733,11 @@
           </div>
         </div>
 
-          <&menu-item('search', 'Search', .channel, 'search.html',
-            'Search the #' ~ .channel ~ ' channel')>
-
-          <&menu-item('camelia', '', .channel, '/',
-            'Go to the home page of the Raku IRC log browser')>
+        <div class="navbar-delimiter"></div>
+        <a title="Go to the home page of the Raku IRC log browser"
+          href="/" class="navbar-item has-tooltip-bottom"><img
+          src="/camelia.png" width="40" height="28"
+        ></a>
 
           <!-- Mobile only forms in header -->
           <div id="mobile-forms" class="is-hidden-tablet">
