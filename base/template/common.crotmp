@@ -543,11 +543,21 @@ for it to be shown.'
     <!-- Header -->
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
 
-      <div id="navbar-left-toggle" class="navbar-filter-settings has-tooltip-bottom" title="Toggle filter sidebar">
+      <div id="navbar-left-toggle"
+<?$is-search>
+  title="Toggle search options sidebar"
+</?>
+<!$is-search>
+  title="Toggle filter sidebar"
+</!>
+        class="navbar-filter-settings has-tooltip-bottom">
         <a class="navbar-item navbar-sidebar-btn " onclick="toggleSidebar('left-sidebar')">
 
           <span class="icon-text filter">
-            <&icon('cogs')><span class="sidebar-title">Filter</span>
+            <&icon('cogs')>
+            <span class="sidebar-title">
+              <?$is-search>Search Options</?><!$is-search>Filter Settings</!>
+            </span>
           </span>
           <&icon('chevron-left')>
         </a>
@@ -752,15 +762,22 @@ in the selection.">
 
           <!-- Mobile only forms in header -->
           <div id="mobile-forms" class="is-hidden-tablet">
-            <!-- TODO: center text here -->
-            <div class="block has-text-centered">
-            <span class="title is-4">Filter settings</span>
-            </div>
-            <&nick-messages-input>
-            <&text-messages-input>
-            <!$is-live><&system-messages-box></!>
-            <&commit-messages-box>
-            <&camelia-messages-box>
+  <!-- TODO: center text here -->
+<?$is-search>
+  <div class="block has-text-centered">
+    <span class="title is-4">Search Options</span>
+  </div>
+</?>
+<!$is-search>
+  <div class="block has-text-centered">
+    <span class="title is-4">Filter Settings</span>
+  </div>
+  <&nick-messages-input>
+  <&text-messages-input>
+  <!$is-live><&system-messages-box></!>
+  <&commit-messages-box>
+  <&camelia-messages-box>
+</!>
           </div>
           <!-- Mobile only forms in header ends -->
 
@@ -775,17 +792,19 @@ in the selection.">
     <div id="wrapper">
       <div class="columns">
         <div id="left-column" class="column is-narrow is-hidden-mobile">
-          <div id="left-sidebar" class="sidebar is-hidden-mobile">
-            <&nick-messages-input>
-            <&text-messages-input>
-            <div class="block">
-              <p><strong>Calendar</strong></p>
-              <input id="sidebar-datepicker" type="date">
-            </div>
-            <?$is-day><&system-messages-box('block')></?>
-            <&commit-messages-box('block')>
-            <&camelia-messages-box('block')>
-          </div>
+<!$is-search>
+  <div id="left-sidebar" class="sidebar is-hidden-mobile">
+    <&nick-messages-input>
+    <&text-messages-input>
+    <div class="block">
+      <p><strong>Calendar</strong></p>
+      <input id="sidebar-datepicker" type="date">
+    </div>
+    <?$is-day><&system-messages-box('block')></?>
+    <&commit-messages-box('block')>
+    <&camelia-messages-box('block')>
+  </div>
+</!>
         </div>
         <!-- Left sidebar ends -->
 
