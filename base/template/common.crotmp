@@ -1,9 +1,12 @@
+<:sub icon($icon)>
+  <span class="icon" aria-hidden="true">
+    <i class="fas fa-<$icon>"></i>
+  </span>
+</:>
+
 <:sub column-button($icon, $text)>
   <span class="icon-text filter">
-    <span class="icon">
-      <i class="fas fa-<$icon>"></i>
-    </span>
-    <span><$text></span>
+    <&icon($icon)><span><$text></span>
   </span>
 </:>
 
@@ -70,8 +73,9 @@ code snippets.'
   'Only show messages that are NOT written
 by the user(s) of which you specified
 the name.',
-  'One or more (partial) names of users,
-separated by comma.'
+  'Enter one or more (partial) names of
+users, separated by comma, to see only
+messages of those users.'
   )>
 </:>
 
@@ -82,10 +86,6 @@ the text that you entered.',
   'Text that should appear in a message in order
 for it to be shown.'
   )>
-</:>
-
-<:sub icon($icon)>
-  <span class="icon"><i class="fas fa-<$icon>"></i></span>
 </:>
 
 <:sub footer>
@@ -110,9 +110,6 @@ for it to be shown.'
       </nav>
     </div>
   </footer>
-
-  <!-- Include Font Awesome -->
-  <script defer src="/fontawesome.js"></script>
 </:>
 
 <:macro log-page($_, :$icon = 'question',
@@ -546,7 +543,7 @@ for it to be shown.'
     <!-- Header -->
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
 
-      <div id="navbar-left-toggle" class="navbar-filter-settings has-tooltip-bottom" data-tooltip="Toggle filter sidebar">
+      <div id="navbar-left-toggle" class="navbar-filter-settings has-tooltip-bottom" title="Toggle filter sidebar">
         <a class="navbar-item navbar-sidebar-btn " onclick="toggleSidebar('left-sidebar')">
 
           <span class="icon-text filter">
@@ -567,18 +564,26 @@ for it to be shown.'
         <!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
-            <a href="/<.channel>/index.html"
+            <span
+<?$is-search>
+title="Select the channel on which to
+repeat the current search."
+</?>
+<?$is-day>
+title="Select the channel of which to show
+the messages of <.date-human>."
+</?>
+<?$is-live>
+title="Select the channel of which to see the
+messages as they come in."
+</?>
               class="is-text navbar-current-channel-name"
               aria-haspopup="true"
               aria-controls="dropdown-menu4">
               <span class="icon-text">
-                <&icon($icon)>
-                <span><.channel></span>
-                <span class="icon">
-                  <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                </span>
+                <&icon($icon)><span><.channel></span><&icon('chevron-down')>
               </span>
-            </a>
+            </span>
           </div>
           <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
             <div class="dropdown-content">
@@ -611,18 +616,15 @@ for it to be shown.'
         <div class="navbar-item dropdown is-hoverable">
           <div class="navbar-delimiter"></div>
           <div class="dropdown-trigger">
-            <a href="/<.channel>/index.html"
-              class="is-text navbar-current-channel-name"
+            <span class="is-text navbar-current-channel-name"
+              title="Select the way you would like to
+browse the messages on the #<.channel> channel."
               aria-haspopup="true"
               aria-controls="dropdown-menu4">
               <span class="icon-text">
-                <&icon('book')>
-                <span>Browse</span>
-                <span class="icon">
-                  <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                </span>
+                <&icon('book')><span>Browse</span><&icon('chevron-down')>
               </span>
-            </a>
+            </span>
           </div>
           <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
             <div class="dropdown-content">
@@ -676,6 +678,13 @@ channel on <.date-human>.">
     </a>
   </li>
 </?>
+                    <li title="Look at an overview of the
+#<.channel> channel and some background information.">
+                      <a href="/<.channel>/index.html">
+                        <&icon('star')>
+                        <span>Overview</span>
+                      </a>
+                    </li>
                   </ul>
                 </div>
               </div>
@@ -685,24 +694,32 @@ channel on <.date-human>.">
         <div class="navbar-item dropdown is-hoverable">
           <div class="navbar-delimiter"></div>
           <div class="dropdown-trigger">
-            <a id="Gist" href="/<.channel>/gist.html"
-              class="is-text navbar-current-channel-name"
+            <span class="is-text navbar-current-channel-name"
+              title="A message can be added or removed from
+your collection of messages for the #<.channel>
+channel from the ... pulldown with each message.
+Here you can select on what to do with that
+selection."
               aria-haspopup="true"
               aria-controls="dropdown-menu4">
               <span class="icon-text">
-                <&icon('shopping-cart')>
-                <span>Gist</span>
-                <span class="icon">
-                  <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                </span>
+                <&icon('shopping-cart')><span>Gist</span><&icon('chevron-down')>
               </span>
-            </a>
+            </span>
           </div>
           <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
             <div class="dropdown-content">
               <div class="dropdown-item">
                 <div class="menu">
                   <ul class="menu-list">
+                    <li title="Show the messages of the #<.channel>
+channel that have been collected by
+you so far, or save the link for other
+uses.">
+                      <a id="Gist" href="/<.channel>/gist.html">
+                        <span>Show&nbsp;collected&nbsp;messages</span>
+                      </a>
+                    </li>
                     <li title="Reset the current selection
 of messages to be shown in
 a gist.">
@@ -947,7 +964,9 @@ the resulting output would be now"
       </div>
     </div>
     <!-- Columns end -->
-    <&footer>
+
+    <!-- Include Font Awesome -->
+    <script defer src="/fontawesome.js"></script>
 
   </body>
 </html>
