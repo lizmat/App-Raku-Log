@@ -997,7 +997,6 @@ text that you enter here."
                     </?>
                   </?>
                   <tr<?.relative-target> id="<.relative-target>"</?>
-                    <@control-events> id="<.id>"</@>
                     <?.target>target="<.target>"</?>
                     <?.control-events> class="special-system"</?>
                     <?.commit> class="special-commit"</?>
@@ -1007,10 +1006,11 @@ text that you enter here."
                     <?$is-gist> class="special-selected"</?>
                   >
                     <?.control-events>
+                      <td/>
                       <td colspan="2">
                         <div class="is-size-7">
                           <@control-events>
-                            <?.hh-mm><b><.hh-mm></b></?>
+                            <b id="<.id>"><.hh-mm></b>
                             <&HTML(.message)>
                           </@>
                         </div>
