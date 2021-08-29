@@ -113,21 +113,27 @@ sub merge-control-messages(@entries) {
     for @entries.kv -> $index, %entry {
         if !%entry<conversation> {
             if $merging {
-                my @events := $merging<control-events>;
-                if %entry<hh-mm> -> $hh-mm {
-                    @events.push: $hh-mm => [%entry<message>];
+                my %params =
+                  message => %entry<message>,
+                  id      => %entry<relative-target>,
+                ;
+                with %entry<hh-mm> {
+                    %params<hh-mm> = $_;
                 }
                 else {
-                    @events.tail.value ~= ", %entry<message>";
+                    $merging<control-events>.tail<message> ~= ',';
                 }
-                $merging<targets>.push: %entry<relative-target>;
+
+                $merging<control-events>.push(%params);
                 @entries[$index] = Any;
             }
             else {
                 $merging := @entries[$index] := Map.new((
-                  control-events  => [ %entry<hh-mm> => %entry<message> ],
-                  relative-target => %entry<relative-target>,
-                  targets         => (my str @targets),
+                  control-events  => [{
+                    hh-mm   => %entry<hh-mm>,
+                    message => %entry<message>,
+                    id      => %entry<relative-target>,
+                  }, ],
                 ));
             }
         }
