@@ -225,6 +225,15 @@ for it to be shown.'
           }
       }
 
+<?$is-search>
+      function submitIfEnter(id) {
+          if (event.keyCode == 13) {
+              document.getElementById(id).submit();
+              return false;
+          }
+      }
+</?>
+
 <?$is-live>
       function scrollToBottom() {
           window.scrollTo(0, document.body.scrollHeight);
@@ -563,7 +572,6 @@ for it to be shown.'
         </a>
       </div>
 
-
       <div class="navbar-brand">
         <!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
@@ -792,6 +800,136 @@ in the selection.">
     <div id="wrapper">
       <div class="columns">
         <div id="left-column" class="column is-narrow is-hidden-mobile">
+<?$is-search>
+  <div id="left-sidebar" class="sidebar is-hidden-mobile">
+    <form id="Search">
+      <div class="field">
+        <label class="label">Query</label>
+        <div class="control">
+          <input name="query" type="text"
+            value="<.query>"
+            class="input"
+            placeholder="Look for this string"
+            title="Show the messages that contain the
+text that you enter here."
+            onkeydown="submitIfEnter('Search')">
+        </div>
+      </div>
+      <div class="field">
+        <div class="control">
+          <div class="select">
+            <select name="type">
+              <@type-options : $opt>
+                <option
+                  value="<$opt.key>"
+                  <?{ $opt.key eq .type }> selected="selected"</?>>
+                  <$opt.value>
+                </option>
+              </@>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="block">
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input name="all" type="checkbox"
+                value="True"<?.all> checked</?>>
+              must contain all words
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input name="ignorecase" type="checkbox"
+                value="True"<?.ignorecase> checked</?>>
+              case insensitive
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Username(s)</label>
+          <div class="control">
+            <input name="nicks" type="text"
+              value="<.nicks>"
+              class="input"
+              placeholder="Limit search to these nick(s)"
+              onkeydown="submitIfEnter('Search')">
+          </div>
+        </div>
+        <div class="field">
+          <div class="control">
+            <label class="checkbox">
+              <input type="checkbox" name="include-aliases"
+                value="True"<?.include-aliases> checked</?>>
+              include nick aliases
+            </label>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Channel</label>
+          <div class="control">
+            <div class="select">
+              <select name="channel">
+                <@channels : $c>
+                  <option value="<$c>"
+                    <?{ $c eq .name }> selected="selected"</?>>
+                    <$c>
+                  </option>
+                </@>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Show</label>
+          <div class="control">
+            <div class="select">
+              <select name="message-type">
+                <@message-options : $opt>
+                  <option value="<$opt.key>"
+                    <?{ $opt.key eq .message-type }> selected="selected"</?>>
+                    <$opt.value>
+                  </option>
+                </@>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Results per page</label>
+          <div class="control">
+            <div class="select">
+              <select name="entries-pp">
+                <@entries-pp-options : $opt>
+                  <option value="<$opt>"
+                    <?{ $opt eq .entries-pp }> selected="selected"</?>>
+                    <$opt>
+                  </option>
+                </@>
+               </select>
+            </div>
+          </div>
+        </div>
+        <div class="control">
+          <strong>From:</strong>
+          <input class="input" type="date">
+        </div>
+        <div class="control">
+          <strong>Until:</strong>
+          <input class="input" type="date">
+        </div>
+        <div class="block">
+          <div class="control mt-3">
+            <button class="button is-primary">Submit</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</?>
 <!$is-search>
   <div id="left-sidebar" class="sidebar is-hidden-mobile">
     <&nick-messages-input>
