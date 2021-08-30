@@ -617,6 +617,18 @@ messages as they come in."
         </div>
       </div>
 
+      <div class="navbar-menu">
+        <div class="navbar-item">
+          <span class="is-text" style="font-size:125%">
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<?$is-live>Live View</?>
+<?$is-day><.date-human></?>
+<?$is-gist>Contents of Gist</?>
+<?$is-search>Search Result</?>
+          </span>
+        </div>
+      </div>
+
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
         <div class="navbar-item dropdown is-hoverable">
