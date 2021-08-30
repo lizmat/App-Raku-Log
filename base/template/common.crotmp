@@ -1015,7 +1015,7 @@ text that you enter here."
                       <td
                         <?.code> class="column-code"</?>
                         <?.commit> class="column-commit"</?>
-                      ><@targets><span id="<$_>"/></@><&HTML(.message)></td>
+                      ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
                       <td class="column-time"><.hh-mm></td>
                     </!>
                     <td class="column-buttons">
