@@ -676,6 +676,11 @@ a.thread-link {
     border-bottom: none;
   }
 
+  .table tr.special-same-nick {
+    margin-top: 0;
+    padding-top: 0;
+  }
+
   .table tr.special-selected {
     background-color: #eeeeee;
   }
