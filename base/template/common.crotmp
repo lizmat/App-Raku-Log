@@ -1022,13 +1022,13 @@ text that you enter here."
                   </tr>
                 </?>
                 <@entries>
-                  <?{ $is-live || $is-gist }>
+                  <!$is-day>
                     <?.human-date>
                       <tr class="special-date">
                         <td colspan="4"><.human-date></td>
                       </tr>
                     </?>
-                  </?>
+                  </!>
                   <tr<?.relative-target> id="<.relative-target>"</?>
                     <?.target>target="<.target>"</?>
                     <?.control-events> class="special-system"</?>
