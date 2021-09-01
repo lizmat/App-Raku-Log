@@ -226,15 +226,24 @@ for it to be shown.'
       }
 
 <?$is-search>
-      function submitIfEnter(id) {
-          if (event.keyCode == 13) {
-              document.getElementById(id).submit();
-              return false;
+      function submitSearchIfEnter() {
+          if (event.keyCode == 13 && okToSubmitSearch()) {
+              document.getElementById('Search').submit();
           }
       }
       function submitSearchOnChannel(channel) {
           document.getElementById('SearchChannel').value = channel;
           document.getElementById('Search').submit();
+      }
+      function okToSubmitSearch() {
+          return document.getElementById('SearchChannel').value;
+      }
+      function checkChannel() {
+          if (okToSubmitSearch()) {
+              return true;
+          }
+          document.getElementById('SearchChannel').focus();
+          return false;
       }
 </?>
 
@@ -825,7 +834,7 @@ in the selection.">
         <div id="left-column" class="column is-narrow is-hidden-mobile">
 <?$is-search>
   <div id="left-sidebar" class="sidebar is-hidden-mobile">
-    <form id="Search" action="/search.html">
+    <form id="Search" action="/search.html" onsubmit="return checkChannel()">
       <div class="field">
         <label class="label">Query</label>
         <div class="control">
@@ -835,7 +844,7 @@ in the selection.">
             placeholder="Look for this string"
             title="Show the messages that contain the
 text that you enter here."
-            onkeydown="submitIfEnter('Search')">
+            onkeydown="submitSearchIfEnter()">
         </div>
       </div>
       <div class="field">
@@ -879,7 +888,7 @@ text that you enter here."
               value="<.nicks>"
               class="input"
               placeholder="Limit search to these nick(s)"
-              onkeydown="submitIfEnter('Search')">
+              onkeydown="submitSearchIfEnter()">
           </div>
         </div>
         <div class="field">
