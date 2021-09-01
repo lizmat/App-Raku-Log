@@ -896,6 +896,7 @@ text that you enter here."
           <div class="control">
             <div class="select">
               <select name="channel" id="SearchChannel">
+                <option value="">Select a channel</option>
                 <@channels : $c>
                   <option value="<$c>"
                     <?{ $c eq .name }> selected="selected"</?>>
