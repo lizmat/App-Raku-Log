@@ -1,4 +1,4 @@
-<:sub icon($icon)>
+ id="SearchChannel"<:sub icon($icon)>
   <span class="icon" aria-hidden="true">
     <i class="fas fa-<$icon>"></i>
   </span>
@@ -231,6 +231,10 @@ for it to be shown.'
               document.getElementById(id).submit();
               return false;
           }
+      }
+      function submitSearchOnChannel(channel) {
+          document.getElementById('SearchChannel').value = channel;
+          document.getElementById('Search').submit();
       }
 </?>
 
@@ -605,7 +609,20 @@ messages as they come in."
                     <@channels : $c>
                       <?{ .channel ne $c }>
                         <li id="<$c>">
-                          <a href="/<$c>/<?$is-live>live</?><?$is-day><.date></?><?$is-gist>gist</?>.html"><$c></a>
+                          <a
+<?$is-live>
+  href="/<$c>/live.html"
+</?>
+<?$is-day>
+  href="/<$c>/<.date>.html"
+</?>
+<?$is-gist>
+  href="/<$c>/gist.html"
+</?>
+<?$is-search>
+  onClick="submitSearchOnChannel('<$c>')"
+</?>
+                          ><$c></a>
                         </li>
                       </?>
                     </@>
@@ -808,7 +825,7 @@ in the selection.">
         <div id="left-column" class="column is-narrow is-hidden-mobile">
 <?$is-search>
   <div id="left-sidebar" class="sidebar is-hidden-mobile">
-    <form id="Search">
+    <form id="Search" action="/search.html">
       <div class="field">
         <label class="label">Query</label>
         <div class="control">
@@ -878,7 +895,7 @@ text that you enter here."
           <label class="label">Channel</label>
           <div class="control">
             <div class="select">
-              <select name="channel">
+              <select name="channel" id="SearchChannel">
                 <@channels : $c>
                   <option value="<$c>"
                     <?{ $c eq .name }> selected="selected"</?>>
