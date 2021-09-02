@@ -1,4 +1,4 @@
- id="SearchChannel"<:sub icon($icon)>
+<:sub icon($icon)>
   <span class="icon" aria-hidden="true">
     <i class="fas fa-<$icon>"></i>
   </span>
@@ -586,6 +586,11 @@ for it to be shown.'
       </div>
 
       <div class="navbar-brand">
+
+        <a href="/" class="navbar-item" 
+          title="Go to the home page of the Raku IRC log browser"
+        ><img src="/camelia.png" width="40" height="28"></a>
+
         <!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
@@ -652,11 +657,10 @@ messages as they come in."
       <div class="navbar-menu">
         <div class="navbar-item">
           <span class="is-text" style="font-size:125%">
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<?$is-live>Live View</?>
-<?$is-day><.date-human></?>
-<?$is-gist>Contents of Gist</?>
-<?$is-search>Search Result</?>
+<?$is-live>Live</?>
+<?$is-day>Date</?>
+<?$is-gist>Gist</?>
+<?$is-search>Search</?>
           </span>
         </div>
       </div>
@@ -799,12 +803,6 @@ in the selection.">
             </div>
           </div>
         </div>
-
-        <div class="navbar-delimiter"></div>
-        <a title="Go to the home page of the Raku IRC log browser"
-          href="/" class="navbar-item has-tooltip-bottom"><img
-          src="/camelia.png" width="40" height="28"
-        ></a>
 
           <!-- Mobile only forms in header -->
           <div id="mobile-forms" class="is-hidden-tablet">
