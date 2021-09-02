@@ -69,7 +69,7 @@ code snippets.'
 </:>
 
 <:sub nick-messages-input()>
-  <&messages-input('User', 'ByNick', 'Filter on nick',
+  <&messages-input('Nick', 'ByNick', 'Filter on nick',
   'Only show messages that are NOT written
 by the user(s) of which you specified
 the name.',
@@ -794,7 +794,7 @@ messages from the selection
 keeping any non-visible messages
 in the selection.">
                       <a onclick="removeVisibleTargets()">
-                        <span>Remove&nbsp;all&nbsp;visible&nbsp;messages</span>
+                        <span>De-select&nbsp;all&nbsp;visible&nbsp;messages</span>
                       </a>
                     </li>
                   </ul>
@@ -813,14 +813,19 @@ in the selection.">
   </div>
 </?>
 <!$is-search>
-  <div class="block has-text-centered">
-    <span class="title is-4">Filter</span>
-  </div>
-  <&nick-messages-input>
-  <&text-messages-input>
-  <!$is-live><&system-messages-box></!>
-  <&commit-messages-box>
-  <&camelia-messages-box>
+  <table width="100%">
+    <tr>
+      <td><&nick-messages-input></td>
+      <td><&text-messages-input></td>
+    </tr>
+  </table>
+  <table width="100%">
+<!$is-live><tr><td colspan="2"><&system-messages-box></td></tr></!>
+    <tr>
+      <td><&commit-messages-box></td>
+      <td><&camelia-messages-box></td>
+    </tr>
+  </table>
 </!>
           </div>
           <!-- Mobile only forms in header ends -->
