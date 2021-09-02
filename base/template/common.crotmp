@@ -829,6 +829,19 @@ in the selection.">
       </div>
       </div>
 
+      <div id="navbar-right-toggle"
+        class="navbar-end has-tooltip-bottom is-hidden-touch"
+        title="Toggle filter sidebar">
+        <a class="navbar-item navbar-channels navbar-sidebar-btn"
+          onClick="toggleSidebar('right-sidebar')">
+          <&icon('chevron-right')>
+          <span class="icon-text">
+            <&icon('cogs')>
+            <span class="sidebar-title">Filter</span>
+          </span>
+        </a>
+      </div>
+
     </nav>
     <!-- header ends -->
 
@@ -1138,6 +1151,9 @@ the resulting output would be now"
         <!-- Right sidebar -->
         <div id="right-column" class="column is-narrow is-hidden-touch">
           <!-- We have an empty sidebar here so the content would be nicely centered -->
+          <div id="right-sidebar" class="sidebar is-right is-hidden-touch">
+            Foo bar
+          </div>
         </div>
         <!-- Right sidebar ends -->
 
