@@ -566,20 +566,13 @@ for it to be shown.'
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
 
       <div id="navbar-left-toggle"
-<?$is-search>
-  title="Toggle search options sidebar"
-</?>
-<!$is-search>
-  title="Toggle filter sidebar"
-</!>
+        title="Toggle search sidebar"
         class="navbar-filter-settings has-tooltip-bottom">
         <a class="navbar-item navbar-sidebar-btn " onclick="toggleSidebar('left-sidebar')">
 
           <span class="icon-text filter">
             <&icon('cogs')>
-            <span class="sidebar-title">
-              <?$is-search>Search</?><!$is-search>Filter</!>
-            </span>
+            <span class="sidebar-title">Search</span>
           </span>
           <&icon('chevron-left')>
         </a>
@@ -658,7 +651,7 @@ messages as they come in."
         <div class="navbar-item">
           <span class="is-text" style="font-size:125%">
 <?$is-live>Live</?>
-<?$is-day>Date</?>
+<?$is-day>Day</?>
 <?$is-gist>Gist</?>
 <?$is-search>Search</?>
           </span>
@@ -807,26 +800,19 @@ in the selection.">
           <!-- Mobile only forms in header -->
           <div id="mobile-forms" class="is-hidden-tablet">
   <!-- TODO: center text here -->
-<?$is-search>
-  <div class="block has-text-centered">
-    <span class="title is-4">Search</span>
-  </div>
-</?>
-<!$is-search>
-  <table width="100%">
-    <tr>
-      <td><&nick-messages-input></td>
-      <td><&text-messages-input></td>
-    </tr>
-  </table>
-  <table width="100%">
+            <table width="100%">
+              <tr>
+                <td><&nick-messages-input></td>
+                <td><&text-messages-input></td>
+              </tr>
+            </table>
+            <table width="100%">
 <!$is-live><tr><td colspan="2"><&system-messages-box></td></tr></!>
-    <tr>
-      <td><&commit-messages-box></td>
-      <td><&camelia-messages-box></td>
-    </tr>
-  </table>
-</!>
+              <tr>
+                <td><&commit-messages-box></td>
+                <td><&camelia-messages-box></td>
+              </tr>
+            </table>
           </div>
           <!-- Mobile only forms in header ends -->
 
@@ -854,7 +840,6 @@ in the selection.">
     <div id="wrapper">
       <div class="columns">
         <div id="left-column" class="column is-narrow is-hidden-mobile">
-<?$is-search>
   <div id="left-sidebar" class="sidebar is-hidden-mobile">
     <form id="Search" action="/search.html" onsubmit="return checkChannel()">
       <div class="field">
@@ -904,7 +889,7 @@ text that you enter here."
           </div>
         </div>
         <div class="field">
-          <label class="label">Username(s)</label>
+          <label class="label">Nick(s)</label>
           <div class="control">
             <input name="nicks" type="text"
               value="<.nicks>"
@@ -984,20 +969,6 @@ text that you enter here."
       </div>
     </form>
   </div>
-</?>
-<!$is-search>
-  <div id="left-sidebar" class="sidebar is-hidden-mobile">
-    <&nick-messages-input>
-    <&text-messages-input>
-    <div class="block">
-      <p><strong>Calendar</strong></p>
-      <input id="sidebar-datepicker" type="date">
-    </div>
-    <?$is-day><&system-messages-box('block')></?>
-    <&commit-messages-box('block')>
-    <&camelia-messages-box('block')>
-  </div>
-</!>
         </div>
         <!-- Left sidebar ends -->
 
@@ -1156,8 +1127,15 @@ the resulting output would be now"
         <!-- Right sidebar -->
         <div id="right-column" class="column is-narrow is-hidden-touch">
           <!-- We have an empty sidebar here so the content would be nicely centered -->
-          <div id="right-sidebar" class="sidebar is-right is-hidden-touch">
-            Foo bar
+          <div id="right-sidebar" class="sidebar is-hidden-mobile">
+<?$is-day>
+  <div class="block"><input id="sidebar-datepicker" type="date"></div>
+</?>
+            <&nick-messages-input>
+            <&text-messages-input>
+            <?$is-day><&system-messages-box('block')></?>
+            <&commit-messages-box('block')>
+            <&camelia-messages-box('block')>
           </div>
         </div>
         <!-- Right sidebar ends -->
