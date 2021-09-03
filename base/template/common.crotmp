@@ -186,6 +186,8 @@ for it to be shown.'
               });
           }
 
+          setDisplay('left-sidebar',  $showLeftSide);
+          setDisplay('right-sidebar', $showRightSide);
           <?$is-gist>hideChannelsWithoutTargets()</?>
           setGistTargets();
           markSelected();
@@ -210,19 +212,21 @@ for it to be shown.'
       var $hideCommitMessages   = getCookie("CommitMessages") // false;
       var $hideCameliaOutput    = getCookie("CameliaOutput")  // false;
 
-      var leftToggled = false; // TODO get this out of cookies later
-      var rightToggled = false;
+      var $showLeftSide  = getCookie("showLeftSide")  // false;
+      var $showRightSide = getCookie("showRightSide") // false;
+
       /* Set the width of the sidebar to 300px and the left margin of the page content to 300px */
-      function toggleSidebar(id) {
-          var sidebar = document.getElementById(id);
-          var isLeft = id === 'left-sidebar';
-          var toggleState = isLeft ? leftToggled : rightToggled;
-          sidebar.style.display = toggleState ? "block" : "none";
-          if (isLeft) {
-              leftToggled = !leftToggled;
-          } else {
-              rightToggled = !rightToggled;
-          }
+
+      function setDisplay(id, state) {
+          document.getElementById(id).style.display = state ? "block" : "none";
+      }
+      function toggleLeftSide() {
+          $showLeftSide = setCookie('showLeftSide', !$showLeftSide);
+          setDisplay('left-sidebar', $showLeftSide);
+      }
+      function toggleRightSide() {
+          $showRightSide = setCookie('showRightSide', !$showRightSide);
+          setDisplay('right-sidebar', $showRightSide);
       }
 
 <?$is-search>
@@ -566,10 +570,10 @@ for it to be shown.'
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
 
       <div id="navbar-left-toggle"
-        title="Toggle search sidebar"
-        class="navbar-filter-settings has-tooltip-bottom">
-        <a class="navbar-item navbar-sidebar-btn " onclick="toggleSidebar('left-sidebar')">
-
+        class="navbar-filter-settings has-tooltip-bottom"
+        title="Toggle search sidebar">
+        <a class="navbar-item navbar-sidebar-btn"
+          onclick="toggleLeftSide()">
           <span class="icon-text filter">
             <&icon('cogs')>
             <span class="sidebar-title">Search</span>
@@ -824,7 +828,7 @@ in the selection.">
         class="navbar-end has-tooltip-bottom is-hidden-touch"
         title="Toggle filter sidebar">
         <a class="navbar-item navbar-channels navbar-sidebar-btn"
-          onClick="toggleSidebar('right-sidebar')">
+          onClick="toggleRightSide()">
           <&icon('chevron-right')>
           <span class="icon-text">
             <&icon('cogs')>
@@ -840,7 +844,8 @@ in the selection.">
     <div id="wrapper">
       <div class="columns">
         <div id="left-column" class="column is-narrow is-hidden-mobile">
-  <div id="left-sidebar" class="sidebar is-hidden-mobile">
+  <div id="left-sidebar" class="sidebar is-hidden-mobile"
+    style="display: none">
     <form id="Search" action="/search.html" onsubmit="return checkChannel()">
       <div class="field">
         <label class="label"
@@ -1152,7 +1157,8 @@ the resulting output would be now"
         <!-- Right sidebar -->
         <div id="right-column" class="column is-narrow is-hidden-touch">
           <!-- We have an empty sidebar here so the content would be nicely centered -->
-          <div id="right-sidebar" class="sidebar is-hidden-mobile">
+          <div id="right-sidebar" class="sidebar is-hidden-mobile"
+            style="display: none">
 <?$is-day>
   <div class="block"><input id="sidebar-datepicker" type="date"></div>
 </?>
