@@ -843,21 +843,24 @@ in the selection.">
   <div id="left-sidebar" class="sidebar is-hidden-mobile">
     <form id="Search" action="/search.html" onsubmit="return checkChannel()">
       <div class="field">
-        <label class="label">Query</label>
+        <label class="label"
+          title="Show the messages that contain the
+text that you enter here.">
+          Query
+        </label>
         <div class="control">
           <input name="query" type="text"
             value="<.query>"
             class="input"
             placeholder="Look for this string"
-            title="Show the messages that contain the
-text that you enter here."
             onkeydown="submitSearchIfEnter()">
         </div>
       </div>
       <div class="field">
         <div class="control">
           <div class="select">
-            <select name="type">
+            <select name="type"
+              title="Determines how your query should be interpreted">
               <@type-options : $opt>
                 <option
                   value="<$opt.key>"
@@ -872,16 +875,20 @@ text that you enter here."
       <div class="block">
         <div class="field">
           <div class="control">
-            <label class="checkbox">
-              <input name="all" type="checkbox"
-                value="True"<?.all> checked</?>>
+            <label class="checkbox"
+              title="Determines whether all words specified
+should occur in a message">
+              <input name="all-words" type="checkbox"
+                value="True"<?.all-words> checked</?>>
               must contain all words
             </label>
           </div>
         </div>
         <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox"
+              title="Determines whether uppercase / lowercase
+should be considered identical">
               <input name="ignorecase" type="checkbox"
                 value="True"<?.ignorecase> checked</?>>
               case insensitive
@@ -889,7 +896,11 @@ text that you enter here."
           </div>
         </div>
         <div class="field">
-          <label class="label">Nick(s)</label>
+          <label class="label"
+            title="Specify the nick(s) of the author
+of messages you would like to see">
+            Nick(s)
+          </label>
           <div class="control">
             <input name="nicks" type="text"
               value="<.nicks>"
@@ -900,7 +911,9 @@ text that you enter here."
         </div>
         <div class="field">
           <div class="control">
-            <label class="checkbox">
+            <label class="checkbox"
+              title="Determines whether aliases of nick(s)
+should also be considered">
               <input type="checkbox" name="include-aliases"
                 value="True"<?.include-aliases> checked</?>>
               include nick aliases
@@ -908,14 +921,18 @@ text that you enter here."
           </div>
         </div>
         <div class="field">
-          <label class="label">Channel</label>
+          <label class="label"
+            title="Determines the channel on which you
+want to search for messages">
+            Channel
+          </label>
           <div class="control">
             <div class="select">
               <select name="channel" id="SearchChannel">
                 <option value="">Select a channel</option>
                 <@channels : $c>
                   <option value="<$c>"
-                    <?{ $c eq .name }> selected="selected"</?>>
+                    <?{ $c eq .channel }> selected="selected"</?>>
                     <$c>
                   </option>
                 </@>
@@ -924,7 +941,11 @@ text that you enter here."
           </div>
         </div>
         <div class="field">
-          <label class="label">Show</label>
+          <label class="label"
+            title="Determines the type(s) of messages to be
+searched for">
+            Show
+          </label>
           <div class="control">
             <div class="select">
               <select name="message-type">
@@ -939,7 +960,11 @@ text that you enter here."
           </div>
         </div>
         <div class="field">
-          <label class="label">Results per page</label>
+          <label class="label"
+            title="Determines the maximum number of messages
+that will be returned at a time">
+            Results per page
+          </label>
           <div class="control">
             <div class="select">
               <select name="entries-pp">
