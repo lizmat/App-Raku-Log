@@ -113,12 +113,10 @@ for it to be shown.'
 </:>
 
 <:sub search-query($_)>
-  <div class="field">
-    <label class="label"
-      title="Show the messages that contain the
+  <div class="field"
+    title="Show the messages that contain the
 text that you enter here.">
-      Query
-    </label>
+    <p><strong>Query</strong></p>
     <div class="control">
       <input name="query" type="text"
         value="<.query>"
@@ -130,14 +128,13 @@ text that you enter here.">
 </:>
 
 <:sub search-type($_)>
-  <div class="field">
+  <div class="field"
+    title="Determines how your query should be interpreted">
     <div class="control">
       <div class="select">
-        <select name="type"
-          title="Determines how your query should be interpreted">
+        <select name="type">
           <@type-options : $opt>
-            <option
-              value="<$opt.key>"
+            <option value="<$opt.key>"
               <?{ $opt.key eq .type }> selected="selected"</?>>
               <$opt.value>
             </option>
@@ -149,40 +146,34 @@ text that you enter here.">
 </:>
 
 <:sub search-all-words($_)>
-  <div class="field">
-    <div class="control">
-      <label class="checkbox"
-        title="Determines whether all words specified
+  <div class="field"
+    title="Determines whether all words specified
 should occur in a message">
-        <input name="all-words" type="checkbox"
+    <div class="control">
+      <input name="all-words" type="checkbox"
           value="True"<?.all-words> checked</?>>
-        must contain all words
-      </label>
+        <strong>must contain all words</strong>
     </div>
   </div>
 </:>
 
 <:sub search-ignorecase($_)>
-  <div class="field">
-    <div class="control">
-      <label class="checkbox"
-        title="Determines whether uppercase / lowercase
+  <div class="field"
+    title="Determines whether uppercase / lowercase
 should be considered identical">
-        <input name="ignorecase" type="checkbox"
-          value="True"<?.ignorecase> checked</?>>
-        case insensitive
-      </label>
+    <div class="control">
+      <input name="ignorecase" type="checkbox"
+        value="True"<?.ignorecase> checked</?>>
+      <strong>case insensitive</strong>
     </div>
   </div>
 </:>
 
 <:sub search-nicks($_)>
-  <div class="field">
-    <label class="label"
-      title="Specify the nick(s) of the author
+  <div class="field"
+    title="Specify the nick(s) of the author
 of messages you would like to see">
-      Nick(s)
-    </label>
+    <p><strong>Nick(s)</strong></p>
     <div class="control">
       <input name="nicks" type="text"
         value="<.nicks>"
@@ -194,26 +185,22 @@ of messages you would like to see">
 </:>
 
 <:sub search-include-aliases($_)>
-  <div class="field">
-    <div class="control">
-      <label class="checkbox"
-        title="Determines whether aliases of nick(s)
+  <div class="field"
+    title="Determines whether aliases of nick(s)
 should also be considered">
-        <input type="checkbox" name="include-aliases"
-          value="True"<?.include-aliases> checked</?>>
-        include nick aliases
-      </label>
+    <div class="control">
+      <input type="checkbox" name="include-aliases"
+        value="True"<?.include-aliases> checked</?>>
+      <strong>include nick aliases</strong>
     </div>
   </div>
 </:>
 
 <:sub search-channel($_)>
-  <div class="field">
-    <label class="label"
-      title="Determines the channel on which you
+  <div class="field"
+    title="Determines the channel on which you
 want to search for messages">
-      Channel
-    </label>
+    <p><strong>Channel</strong></p>
     <div class="control">
       <div class="select">
         <select name="channel" id="SearchChannel">
@@ -231,12 +218,10 @@ want to search for messages">
 </:>
 
 <:sub search-message-type($_)>
-  <div class="field">
-    <label class="label"
-      title="Determines the type(s) of messages to be
+  <div class="field"
+    title="Determines the type(s) of messages to be
 searched for">
-      Show
-    </label>
+    <p><strong>Show</strong></p>
     <div class="control">
       <div class="select">
         <select name="message-type">
@@ -253,12 +238,10 @@ searched for">
 </:>
 
 <:sub search-entries-pp($_)>
-  <div class="field">
-    <label class="label"
-      title="Determines the maximum number of messages
+  <div class="field"
+    title="Determines the maximum number of messages
 that will be returned at a time">
-      Results per page
-    </label>
+    <p><strong>Results at a time</strong></p>
     <div class="control">
       <div class="select">
         <select name="entries-pp">
@@ -276,14 +259,14 @@ that will be returned at a time">
 
 <:sub search-from($_)>
   <div class="control">
-    <strong>From:</strong>
+    <strong>From</strong>
     <input class="input" type="date">
   </div>
 </:>
 
 <:sub search-until($_)>
   <div class="control">
-    <strong>Until:</strong>
+    <strong>Until</strong>
     <input class="input" type="date">
   </div>
 </:sub>
@@ -977,8 +960,8 @@ in the selection.">
   <!-- TODO: center text here -->
             <table width="100%">
               <tr>
-                <td><&nick-messages-input></td>
                 <td><&text-messages-input></td>
+                <td><&nick-messages-input></td>
               </tr>
             </table>
             <table width="100%">
@@ -988,6 +971,33 @@ in the selection.">
                 <td><&camelia-messages-box></td>
               </tr>
             </table>
+            <hr/>
+            <form id="Search" action="/search.html"
+              onsubmit="return checkChannel()">
+              <table width="100%">
+                <tr>
+                  <td><&search-query($_)></td>
+                  <td><p>&nbsp;</p><&search-type($_)></td>
+                </tr><tr>
+                  <td><&search-all-words($_)></td>
+                  <td><&search-ignorecase($_)></td>
+                </tr>
+                <tr><td><&search-nicks($_)></td></tr>
+                <tr><td><&search-include-aliases($_)></td></tr>
+                <tr>
+                  <td><&search-channel($_)></td>
+                  <td><&search-message-type($_)></td>
+                  <td><&search-entries-pp($_)></td>
+                </tr>
+              </table>
+              <table>
+                <tr>
+                  <td><&search-from($_)></td>
+                  <td><&search-until($_)></td>
+                </tr>
+              </table>
+              <&search-submit($_)>
+            </form>
           </div>
           <!-- Mobile only forms in header ends -->
 
@@ -1196,8 +1206,8 @@ the resulting output would be now"
 <?$is-day>
   <div class="block"><input id="sidebar-datepicker" type="date"></div>
 </?>
-            <&nick-messages-input>
             <&text-messages-input>
+            <&nick-messages-input>
             <?$is-day><&system-messages-box('block')></?>
             <&commit-messages-box('block')>
             <&camelia-messages-box('block')>
