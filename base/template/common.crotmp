@@ -945,7 +945,7 @@ messages from the selection
 keeping any non-visible messages
 in the selection.">
                       <a onclick="removeVisibleTargets()">
-                        <span>De-select&nbsp;all&nbsp;visible&nbsp;messages</span>
+                        <span>Unselect&nbsp;all&nbsp;visible&nbsp;messages</span>
                       </a>
                     </li>
                   </ul>
