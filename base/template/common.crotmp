@@ -112,6 +112,190 @@ for it to be shown.'
   </footer>
 </:>
 
+<:sub search-query($_)>
+  <div class="field">
+    <label class="label"
+      title="Show the messages that contain the
+text that you enter here.">
+      Query
+    </label>
+    <div class="control">
+      <input name="query" type="text"
+        value="<.query>"
+        class="input"
+        placeholder="Look for this string"
+        onkeydown="submitSearchIfEnter()">
+    </div>
+  </div>
+</:>
+
+<:sub search-type($_)>
+  <div class="field">
+    <div class="control">
+      <div class="select">
+        <select name="type"
+          title="Determines how your query should be interpreted">
+          <@type-options : $opt>
+            <option
+              value="<$opt.key>"
+              <?{ $opt.key eq .type }> selected="selected"</?>>
+              <$opt.value>
+            </option>
+          </@>
+        </select>
+      </div>
+    </div>
+  </div>
+</:>
+
+<:sub search-all-words($_)>
+  <div class="field">
+    <div class="control">
+      <label class="checkbox"
+        title="Determines whether all words specified
+should occur in a message">
+        <input name="all-words" type="checkbox"
+          value="True"<?.all-words> checked</?>>
+        must contain all words
+      </label>
+    </div>
+  </div>
+</:>
+
+<:sub search-ignorecase($_)>
+  <div class="field">
+    <div class="control">
+      <label class="checkbox"
+        title="Determines whether uppercase / lowercase
+should be considered identical">
+        <input name="ignorecase" type="checkbox"
+          value="True"<?.ignorecase> checked</?>>
+        case insensitive
+      </label>
+    </div>
+  </div>
+</:>
+
+<:sub search-nicks($_)>
+  <div class="field">
+    <label class="label"
+      title="Specify the nick(s) of the author
+of messages you would like to see">
+      Nick(s)
+    </label>
+    <div class="control">
+      <input name="nicks" type="text"
+        value="<.nicks>"
+        class="input"
+        placeholder="Limit search to these nick(s)"
+        onkeydown="submitSearchIfEnter()">
+    </div>
+  </div>
+</:>
+
+<:sub search-include-aliases($_)>
+  <div class="field">
+    <div class="control">
+      <label class="checkbox"
+        title="Determines whether aliases of nick(s)
+should also be considered">
+        <input type="checkbox" name="include-aliases"
+          value="True"<?.include-aliases> checked</?>>
+        include nick aliases
+      </label>
+    </div>
+  </div>
+</:>
+
+<:sub search-channel($_)>
+  <div class="field">
+    <label class="label"
+      title="Determines the channel on which you
+want to search for messages">
+      Channel
+    </label>
+    <div class="control">
+      <div class="select">
+        <select name="channel" id="SearchChannel">
+          <option value="">Select a channel</option>
+          <@channels : $c>
+            <option value="<$c>"
+              <?{ $c eq .channel }> selected="selected"</?>>
+              <$c>
+            </option>
+          </@>
+        </select>
+      </div>
+    </div>
+  </div>
+</:>
+
+<:sub search-message-type($_)>
+  <div class="field">
+    <label class="label"
+      title="Determines the type(s) of messages to be
+searched for">
+      Show
+    </label>
+    <div class="control">
+      <div class="select">
+        <select name="message-type">
+          <@message-options : $opt>
+            <option value="<$opt.key>"
+              <?{ $opt.key eq .message-type }> selected="selected"</?>>
+              <$opt.value>
+            </option>
+          </@>
+        </select>
+      </div>
+    </div>
+  </div>
+</:>
+
+<:sub search-entries-pp($_)>
+  <div class="field">
+    <label class="label"
+      title="Determines the maximum number of messages
+that will be returned at a time">
+      Results per page
+    </label>
+    <div class="control">
+      <div class="select">
+        <select name="entries-pp">
+          <@entries-pp-options : $opt>
+            <option value="<$opt>"
+              <?{ $opt eq .entries-pp }> selected="selected"</?>>
+              <$opt>
+            </option>
+          </@>
+         </select>
+      </div>
+    </div>
+  </div>
+</:>
+
+<:sub search-from($_)>
+  <div class="control">
+    <strong>From:</strong>
+    <input class="input" type="date">
+  </div>
+</:>
+
+<:sub search-until($_)>
+  <div class="control">
+    <strong>Until:</strong>
+    <input class="input" type="date">
+  </div>
+</:sub>
+
+<:sub search-submit($_)>
+  <div class="block">
+    <div class="control mt-3">
+      <button class="button is-primary">Submit</button>
+    </div>
+  </div>
+</:>
+
 <:macro log-page($_, :$icon = 'question',
   :$is-live, :$is-gist, :$is-day, :$is-search
 )>
@@ -844,161 +1028,24 @@ in the selection.">
     <div id="wrapper">
       <div class="columns">
         <div id="left-column" class="column is-narrow is-hidden-mobile">
-  <div id="left-sidebar" class="sidebar is-hidden-mobile"
-    style="display: none">
-    <form id="Search" action="/search.html" onsubmit="return checkChannel()">
-      <div class="field">
-        <label class="label"
-          title="Show the messages that contain the
-text that you enter here.">
-          Query
-        </label>
-        <div class="control">
-          <input name="query" type="text"
-            value="<.query>"
-            class="input"
-            placeholder="Look for this string"
-            onkeydown="submitSearchIfEnter()">
-        </div>
-      </div>
-      <div class="field">
-        <div class="control">
-          <div class="select">
-            <select name="type"
-              title="Determines how your query should be interpreted">
-              <@type-options : $opt>
-                <option
-                  value="<$opt.key>"
-                  <?{ $opt.key eq .type }> selected="selected"</?>>
-                  <$opt.value>
-                </option>
-              </@>
-            </select>
+          <div id="left-sidebar" class="sidebar is-hidden-mobile"
+            style="display: none">
+            <form id="Search" action="/search.html"
+              onsubmit="return checkChannel()">
+              <&search-query($_)>
+              <&search-type($_)>
+              <&search-all-words($_)>
+              <&search-ignorecase($_)>
+              <&search-nicks($_)>
+              <&search-include-aliases($_)>
+              <&search-channel($_)>
+              <&search-message-type($_)>
+              <&search-entries-pp($_)>
+              <&search-from($_)>
+              <&search-until($_)>
+              <&search-submit($_)>
+            </form>
           </div>
-        </div>
-      </div>
-      <div class="block">
-        <div class="field">
-          <div class="control">
-            <label class="checkbox"
-              title="Determines whether all words specified
-should occur in a message">
-              <input name="all-words" type="checkbox"
-                value="True"<?.all-words> checked</?>>
-              must contain all words
-            </label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <label class="checkbox"
-              title="Determines whether uppercase / lowercase
-should be considered identical">
-              <input name="ignorecase" type="checkbox"
-                value="True"<?.ignorecase> checked</?>>
-              case insensitive
-            </label>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label"
-            title="Specify the nick(s) of the author
-of messages you would like to see">
-            Nick(s)
-          </label>
-          <div class="control">
-            <input name="nicks" type="text"
-              value="<.nicks>"
-              class="input"
-              placeholder="Limit search to these nick(s)"
-              onkeydown="submitSearchIfEnter()">
-          </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <label class="checkbox"
-              title="Determines whether aliases of nick(s)
-should also be considered">
-              <input type="checkbox" name="include-aliases"
-                value="True"<?.include-aliases> checked</?>>
-              include nick aliases
-            </label>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label"
-            title="Determines the channel on which you
-want to search for messages">
-            Channel
-          </label>
-          <div class="control">
-            <div class="select">
-              <select name="channel" id="SearchChannel">
-                <option value="">Select a channel</option>
-                <@channels : $c>
-                  <option value="<$c>"
-                    <?{ $c eq .channel }> selected="selected"</?>>
-                    <$c>
-                  </option>
-                </@>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label"
-            title="Determines the type(s) of messages to be
-searched for">
-            Show
-          </label>
-          <div class="control">
-            <div class="select">
-              <select name="message-type">
-                <@message-options : $opt>
-                  <option value="<$opt.key>"
-                    <?{ $opt.key eq .message-type }> selected="selected"</?>>
-                    <$opt.value>
-                  </option>
-                </@>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="field">
-          <label class="label"
-            title="Determines the maximum number of messages
-that will be returned at a time">
-            Results per page
-          </label>
-          <div class="control">
-            <div class="select">
-              <select name="entries-pp">
-                <@entries-pp-options : $opt>
-                  <option value="<$opt>"
-                    <?{ $opt eq .entries-pp }> selected="selected"</?>>
-                    <$opt>
-                  </option>
-                </@>
-               </select>
-            </div>
-          </div>
-        </div>
-        <div class="control">
-          <strong>From:</strong>
-          <input class="input" type="date">
-        </div>
-        <div class="control">
-          <strong>Until:</strong>
-          <input class="input" type="date">
-        </div>
-        <div class="block">
-          <div class="control mt-3">
-            <button class="button is-primary">Submit</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
         </div>
         <!-- Left sidebar ends -->
 
