@@ -1069,12 +1069,23 @@ in the selection.">
                           <&icon('chevron-right')>
                         </button>
                       </a>
+                      <div class="navbar-item dropdown is-hoverable">
+                        <div class="dropdown-trigger">
+                          <button class="button is-primary">
+                            <&icon('calendar')>
+                          </button>
+                        </div>
+                        <div class="dropdown-menu">
+                          <div class="dropdown-content">
+                            <input id="sidebar-datepicker" type="date">
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </nav>
               </?>
-
 
               <!-- message log -->
               <section id="message-log">
@@ -1203,9 +1214,6 @@ the resulting output would be now"
           <!-- We have an empty sidebar here so the content would be nicely centered -->
           <div id="right-sidebar" class="sidebar is-hidden-mobile"
             style="display: none">
-<?$is-day>
-  <div class="block"><input id="sidebar-datepicker" type="date"></div>
-</?>
             <&text-messages-input>
             <&nick-messages-input>
             <?$is-day><&system-messages-box('block')></?>
