@@ -413,7 +413,6 @@ that will be returned at a time">
           setDisplay('right-sidebar', $showRightSide);
       }
 
-<?$is-search>
       function submitSearchIfEnter() {
           if (event.keyCode == 13 && okToSubmitSearch()) {
               document.getElementById('Search').submit();
@@ -433,7 +432,6 @@ that will be returned at a time">
           document.getElementById('SearchChannel').focus();
           return false;
       }
-</?>
 
 <?$is-live>
       function scrollToBottom() {
