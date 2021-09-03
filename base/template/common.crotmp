@@ -891,17 +891,6 @@ serendipitous experience.">
                         <span>I Feel Lucky</span>
                       </a>
                     </li>
-<!$is-search>
-  <li title="Search the messages of the #<.channel>
-channel for a specific text, and/or
-by a specific author, and/or for a
-limited period.">
-    <a href="/<.channel>/search.html">
-      <&icon('search')>
-      <span>Search</span>
-    </a>
-  </li>
-</!>
 <?$is-day>
   <li title="Download the raw log of the #<.channel>
 channel on <.date-human>.">
