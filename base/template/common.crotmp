@@ -761,17 +761,21 @@ that will be returned at a time">
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
             <span
-<?$is-search>
-title="Select the channel on which to
-repeat the current search."
+<?$is-live>
+title="Select the channel of which to see the
+messages as they come in."
 </?>
 <?$is-day>
 title="Select the channel of which to show
 the messages of <.date-human>."
 </?>
-<?$is-live>
-title="Select the channel of which to see the
-messages as they come in."
+<?$is-gist>
+title="Select the channel of which to show
+the selected messages."
+</?>
+<?$is-search>
+title="Select the channel on which to
+repeat the current search."
 </?>
               class="is-text navbar-current-channel-name"
               aria-haspopup="true"
