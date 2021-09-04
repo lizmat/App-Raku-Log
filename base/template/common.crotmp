@@ -336,6 +336,10 @@ move to the top of the page"
     <script src="/bulma-calendar.min.js"></script>
 
     <script>
+      document.addEventListener('DOMContentLoaded', () => { onLoadActions() });
+    </script>
+
+    <script>
       function setCookie(name, value) {
           document.cookie = name + "=" + value + ";path=/";
           return value;
@@ -361,8 +365,7 @@ move to the top of the page"
           return "";
       }
 
-      document.addEventListener('DOMContentLoaded', () => {
-
+      function onLoadActions() {
           const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
           if ($navbarBurgers.length > 0) {
@@ -404,7 +407,7 @@ move to the top of the page"
           setGistTargets();
           markSelected();
           filterMessages();
-      });
+      }
 
       var $gistTargets = getTargets();
 <?$is-gist>
