@@ -398,21 +398,23 @@ move to the top of the page"
 
           setDisplay('left-sidebar',  $showLeftSide);
           setDisplay('right-sidebar', $showRightSide);
-          <?$is-gist>hideChannelsWithoutTargets()</?>
+<?$is-gist>
+          hideChannelsWithoutTargets()
+</?>
           setGistTargets();
           markSelected();
           filterMessages();
       });
 
       var $gistTargets = getTargets();
-      <?$is-gist>
-        <!.entries>
-          // no entries, but targets in cookie, so go show those
-          if ($gistTargets) {
-              window.location.href = 'gist.html?' + $gistTargets;
-          }
-        </!>
-      </?>
+<?$is-gist>
+  <!.entries>
+      // no entries, but targets in cookie, so go show those
+      if ($gistTargets) {
+          window.location.href = 'gist.html?' + $gistTargets;
+      }
+  </!>
+</?>
 
       var $filterMessagesByNick = getCookie("MessagesByNick");
       var $filterMessagesByText = getCookie("MessagesByText");
@@ -801,19 +803,19 @@ move to the top of the page"
           <div class="dropdown-trigger">
             <span
 <?$is-live>
-title="Select the channel of which to see the
+              title="Select the channel of which to see the
 messages as they come in."
 </?>
 <?$is-day>
-title="Select the channel of which to show
+              title="Select the channel of which to show
 the messages of <.date-human>."
 </?>
 <?$is-gist>
-title="Select the channel of which to show
+              title="Select the channel of which to show
 the selected messages."
 </?>
 <?$is-search>
-title="Select the channel on which to
+              title="Select the channel on which to
 repeat the current search."
 </?>
               class="is-text navbar-current-channel-name"
@@ -829,26 +831,18 @@ repeat the current search."
               <div class="dropdown-item">
                 <div class="menu">
                   <ul class="menu-list">
-                    <@channels : $c>
-                      <?{ .channel ne $c }>
-                        <li id="<$c>">
-                          <a
-<?$is-live>
-  href="/<$c>/live.html"
-</?>
-<?$is-day>
-  href="/<$c>/<.date>.html"
-</?>
-<?$is-gist>
-  href="/<$c>/gist.html"
-</?>
-<?$is-search>
-  onClick="submitSearchOnChannel('<$c>')"
-</?>
-                          ><$c></a>
-                        </li>
-                      </?>
-                    </@>
+<@channels : $c>
+  <?{ .channel ne $c }>
+                    <li id="<$c>">
+                      <a
+                        <?$is-live>href="/<$c>/live.html"</?>
+                        <?$is-day> href="/<$c>/<.date>.html"</?>
+                        <?$is-gist> href="/<$c>/gist.html"</?>
+                        <?$is-search> onClick="submitSearchOnChannel('<$c>')"</?>
+                      ><$c></a>
+                    </li>
+  </?>
+</@>
                   </ul>
                 </div>
               </div>
@@ -866,10 +860,10 @@ repeat the current search."
       <div class="navbar-menu">
         <div class="navbar-item">
           <span class="is-text" style="font-size:125%">
-<?$is-live>Live</?>
-<?$is-day>Day</?>
-<?$is-gist>Gist</?>
-<?$is-search>Search</?>
+            <?$is-live>Live</?>
+            <?$is-day>Day</?>
+            <?$is-gist>Gist</?>
+            <?$is-search>Search</?>
           </span>
         </div>
       </div>
@@ -895,14 +889,14 @@ browse the messages on the #<.channel> channel."
                 <div class="menu">
                   <ul class="menu-list">
 <!$is-live>
-  <li title="Follow the messages on the #<.channel>
+                    <li title="Follow the messages on the #<.channel>
 channel as they are happening.  Allows
 scrolling-back in time.">
-    <a href="/<.channel>/live.html">
-      <&icon('signal')>
-      <span>Live</span>
-    </a>
-  </li>
+                      <a href="/<.channel>/live.html">
+                        <&icon('signal')>
+                        <span>Live</span>
+                      </a>
+                    </li>
 </!>
                     <li title="Look at messages of the last date
 for which messages have been seen
@@ -922,13 +916,13 @@ serendipitous experience.">
                       </a>
                     </li>
 <?$is-day>
-  <li title="Download the raw log of the #<.channel>
+                    <li title="Download the raw log of the #<.channel>
 channel on <.date-human>.">
-    <a href="/<.channel>/<.date>.log">
-      <&icon('download')>
-      <span>Raw</span>
-    </a>
-  </li>
+                      <a href="/<.channel>/<.date>.log">
+                        <&icon('download')>
+                        <span>Raw</span>
+                      </a>
+                    </li>
 </?>
                     <li title="Look at an overview of the
 #<.channel> channel and some background information.">
@@ -1103,7 +1097,7 @@ in the selection.">
           <section class="section">
             <div id="main-container" class="container">
 
-              <?$is-day>
+<?$is-day>
               <nav class="level">
                 <!-- Left side -->
                 <div class="level-left">
@@ -1136,12 +1130,12 @@ in the selection.">
                   </div>
                 </div>
               </nav>
-              </?>
+</?>
 
               <!-- message log -->
               <section id="message-log">
                 <table class="table message-table is-fullwidth">
-                <?.initial-topic-text>
+<?.initial-topic-text>
                   <tr class="special-topic">
                     <td colspan="4">
                       <&HTML(.initial-topic-text)><br/>
@@ -1149,15 +1143,15 @@ in the selection.">
                       <a href="/<.channel>/<.initial-topic-date>.html#<.initial-topic-relative-target>"><.initial-topic-human-date></a>.
                     </td>
                   </tr>
-                </?>
-                <@entries>
-                  <!$is-day>
-                    <?.human-date>
+</?>
+<@entries>
+  <!$is-day>
+    <?.human-date>
                       <tr class="special-date">
                         <td colspan="4"><.human-date></td>
                       </tr>
-                    </?>
-                  </!>
+    </?>
+  </!>
                   <tr<?.relative-target> id="<.relative-target>"</?>
                     <?.target>target="<.target>"</?>
                     <?.control-events> class="special-system"</?>
@@ -1167,7 +1161,7 @@ in the selection.">
                     <?.same-nick> class="special-same-nick"</?>
                     <?$is-gist> class="special-selected"</?>
                   >
-                    <?.control-events>
+  <?.control-events>
                       <td/>
                       <td colspan="2">
                         <div class="is-size-7">
@@ -1177,15 +1171,15 @@ in the selection.">
                           </@>
                         </div>
                       </td>
-                    </?>
-                    <!.control-events>
+  </?>
+  <!.control-events>
                       <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
                       <td
                         <?.code> class="column-code"</?>
                         <?.commit> class="column-commit"</?>
                       ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
                       <td class="column-time"><.hh-mm></td>
-                    </!>
+  </!>
                     <td class="column-buttons">
                       <div class="dropdown is-hoverable">
                         <div class="dropdown-trigger">
@@ -1233,7 +1227,9 @@ in the selection.">
             style="display: none">
             <&text-messages-input>
             <&nick-messages-input>
-            <?$is-day><&system-messages-box('block')></?>
+<?$is-day>
+            <&system-messages-box('block')>
+</?>
             <&commit-messages-box('block')>
             <&camelia-messages-box('block')>
           </div>
