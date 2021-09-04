@@ -17,6 +17,8 @@
     <script>
       document.addEventListener('DOMContentLoaded', () => {
 
+          $currentChannel = "<.channel>";
+          $gistTargets    = getGistTargets();
 <?$is-gist>
   <!.entries>
           // no entries, but targets in cookie, so go show those
@@ -24,7 +26,7 @@
               window.location.href = 'gist.html?' + $gistTargets;
           }
   </!>
-          hideChannelsWithoutTargets()
+          hideChannelsWithoutGistTargets()
 </?>
 
           const $navbarBurgers = Array.prototype.slice.call(
@@ -63,8 +65,10 @@
               });
           }
 
-          setDisplay('left-sidebar',  $showLeftSide);
-          setDisplay('right-sidebar', $showRightSide);
+/* Set the width of the sidebar to 300px and the left margin of the page content to 300px */
+
+          setDisplayById('left-sidebar',  $showLeftSide);
+          setDisplayById('right-sidebar', $showRightSide);
           setGistTargets();
           markSelected();
           filterMessages();
@@ -85,7 +89,7 @@
         class="navbar-filter-settings has-tooltip-bottom"
         title="Toggle search sidebar">
         <a class="navbar-item navbar-sidebar-btn"
-          onclick="toggleLeftSide()">
+          onclick="toggleLeftSidebar()">
           <span class="icon-text filter">
             <&icon('cogs')>
             <span class="sidebar-title">Search</span>
@@ -320,7 +324,7 @@ in the selection.">
             </table>
             <hr/>
             <form id="Search" action="/search.html"
-              onsubmit="return checkChannel()">
+              onsubmit="return checkSearchParameters()">
               <table width="100%">
                 <tr>
                   <td><&search-query($_)></td>
@@ -356,7 +360,7 @@ in the selection.">
         class="navbar-end has-tooltip-bottom is-hidden-touch"
         title="Toggle filter sidebar">
         <a class="navbar-item navbar-channels navbar-sidebar-btn"
-          onClick="toggleRightSide()">
+          onClick="toggleRightSidebar()">
           <&icon('chevron-right')>
           <span class="icon-text">
             <&icon('cogs')>
