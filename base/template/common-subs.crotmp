@@ -88,28 +88,20 @@ for it to be shown.'
   )>
 </:>
 
-<:sub footer>
-  <footer class="footer">
-    <div class="container has-text-centered">
-      <nav class="level">
-        <!-- Left side -->
-        <div class="level-left">
-          <div class="level-item">
-            <p>
-              Powered by <a href="https://cro.services">Cro</a> and the <a href="https://raku.org">Raku Programming Language</a>
-            </p>
-          </div>
-        </div>
-
-        <!-- Right side -->
-        <div class="level-right">
-          <p class="level-item">
-            Please report any issues / comments / feature requests <a href="https://github.com/lizmat/App-Raku-Log/issues">as an issue on App::Raku::Log.</a> Thank you!
-          </p>
-        </div>
-      </nav>
-    </div>
-  </footer>
+<:sub footer()>
+  <div class="container has-text-centered">
+    <p>
+      Powered by <a href="https://cro.services">Cro</a>
+      and the <a href="https://raku.org">Raku Programming Language</a>.
+    </p>
+    <p>
+      Please report any issues / comments / feature requests
+      <a href="https://github.com/lizmat/App-Raku-Log/issues">as an issue on App::Raku::Log</a>.
+    </p>
+    <p>
+      Thank you!
+    </p>
+  </div>
 </:>
 
 <:sub search-query($_)>
