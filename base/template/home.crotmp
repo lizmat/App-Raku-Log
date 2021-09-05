@@ -1,3 +1,4 @@
+<:use 'base/template/common-subs.crotmp'>
 <:use 'base/template/common.crotmp'>
 <!DOCTYPE html>
 <html>
