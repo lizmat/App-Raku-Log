@@ -133,7 +133,9 @@ repeat the current search."
               </span>
             </span>
           </div>
-          <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
+          <div id="dropdown-menu4"
+            class="dropdown-menu navbar-channels-dropdown"
+            role="menu">
             <div class="dropdown-content">
               <div class="dropdown-item">
                 <div class="menu">
@@ -396,8 +398,10 @@ in the selection.">
       <div class="columns">
 
         <!-- Left sidebar  -->
-        <div id="left-column" class="column is-narrow is-hidden-mobile">
-          <div id="left-sidebar" class="sidebar is-hidden-mobile"
+        <div id="left-column"
+          class="column is-narrow is-hidden-touch">
+          <div id="left-sidebar"
+          class="sidebar is-hidden-mobile"
             style="display: none">
             <form id="Search" action="/search.html"
               onsubmit="return checkChannel()">
@@ -517,7 +521,9 @@ in the selection.">
                             </span>
                           </button>
                         </div>
-                        <div class="dropdown-menu msg-mobile-dropdown" id="dropdown-menu4" role="menu">
+                        <div id="dropdown-menu4"
+                          class="dropdown-menu msg-mobile-dropdown"
+                          role="menu">
                           <div class="dropdown-content">
                             <div class="dropdown-item">
                               <div class="menu">
@@ -549,7 +555,8 @@ in the selection.">
         <!-- Middle column ends -->
 
         <!-- Right sidebar -->
-        <div id="right-column" class="column is-narrow is-hidden-touch">
+        <div id="right-column"
+          class="column is-narrow is-hidden-touch">
           <div id="right-sidebar"
             class="sidebar is-hidden-mobile"
             style="display: none">
