@@ -12,7 +12,6 @@
     <title><:body></title>
     <link rel="stylesheet" href="/main.css">
     <script src="/bulma-calendar.min.js"></script>
-    <script src="/common-funcs.js"></script>
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
@@ -85,6 +84,7 @@
     <!-- Header -->
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
 
+      <!-- Left sidebar header -->
       <div id="navbar-left-toggle"
         class="navbar-filter-settings has-tooltip-bottom"
         title="Toggle search sidebar">
@@ -97,14 +97,15 @@
           <&icon('chevron-left')>
         </a>
       </div>
+      <!-- Left sidebar header ends -->
 
+      <!-- Channel selection -->
       <div class="navbar-brand">
-
         <a href="/" class="navbar-item" 
           title="Go to the home page of the Raku IRC log browser"
         ><img src="/camelia.png" width="40" height="28"></a>
 
-        <!-- Add action to open modal window with channels or the right sidebar -->
+<!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
             <span
@@ -162,7 +163,9 @@ repeat the current search."
           <span aria-hidden="true"></span>
         </a>
       </div>
+      <!-- Channel selection ends -->
 
+      <!-- Page type header -->
       <div class="navbar-menu">
         <div class="navbar-item">
           <span class="is-text" style="font-size:125%">
@@ -173,134 +176,148 @@ repeat the current search."
           </span>
         </div>
       </div>
+      <!-- Page type header ends -->
 
+      <!-- Other header menus -->
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
-        <div class="navbar-item dropdown is-hoverable">
-          <div class="navbar-delimiter"></div>
-          <div class="dropdown-trigger">
-            <span class="is-text navbar-current-channel-name"
-              title="Select the way you would like to
+
+          <!-- Browse menu -->
+          <div class="navbar-item dropdown is-hoverable">
+            <div class="navbar-delimiter"></div>
+            <div class="dropdown-trigger">
+              <span class="is-text navbar-current-channel-name"
+                title="Select the way you would like to
 browse the messages on the #<.channel> channel."
-              aria-haspopup="true"
-              aria-controls="dropdown-menu4">
-              <span class="icon-text">
-                <&icon('book')><span>Browse</span><&icon('chevron-down')>
+                aria-haspopup="true"
+                aria-controls="dropdown-menu4">
+                <span class="icon-text">
+                  <&icon('book')><span>Browse</span><&icon('chevron-down')>
+                </span>
               </span>
-            </span>
-          </div>
-          <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
-            <div class="dropdown-content">
-              <div class="dropdown-item">
-                <div class="menu">
-                  <ul class="menu-list">
+            </div>
+            <div id="dropdown-menu4"
+              class="dropdown-menu navbar-channels-dropdown"
+              role="menu">
+              <div class="dropdown-content">
+                <div class="dropdown-item">
+                  <div class="menu">
+                    <ul class="menu-list">
 <!$is-live>
-                    <li title="Follow the messages on the #<.channel>
+                      <li title="Follow the messages on the #<.channel>
 channel as they are happening.  Allows
 scrolling-back in time.">
-                      <a href="/<.channel>/live.html">
-                        <&icon('signal')>
-                        <span>Live</span>
-                      </a>
-                    </li>
+                        <a href="/<.channel>/live.html">
+                          <&icon('signal')>
+                          <span>Live</span>
+                        </a>
+                      </li>
 </!>
-                    <li title="Look at messages of the last date
+                      <li title="Look at messages of the last date
 for which messages have been seen
 on the #<.channel> channel.">
-                      <a href="/<.channel>/today">
-                        <&icon('inbox')>
-                        <span>Today</span>
-                      </a>
-                    </li>
-                    <li title="Look at the messages of a
+                        <a href="/<.channel>/today">
+                          <&icon('inbox')>
+                          <span>Today</span>
+                        </a>
+                      </li>
+                      <li title="Look at the messages of a
 randomly selected date on the
 #<.channel> channel for that special
 serendipitous experience.">
-                      <a href="/<.channel>/random">
-                        <&icon('random')>
-                        <span>I Feel Lucky</span>
-                      </a>
-                    </li>
+                        <a href="/<.channel>/random">
+                          <&icon('random')>
+                          <span>I Feel Lucky</span>
+                        </a>
+                      </li>
 <?$is-day>
-                    <li title="Download the raw log of the #<.channel>
+                      <li title="Download the raw log of the #<.channel>
 channel on <.date-human>.">
-                      <a href="/<.channel>/<.date>.log">
-                        <&icon('download')>
-                        <span>Raw</span>
-                      </a>
-                    </li>
+                        <a href="/<.channel>/<.date>.log">
+                          <&icon('download')>
+                          <span>Raw</span>
+                        </a>
+                      </li>
 </?>
-                    <li title="Look at an overview of the
+                      <li title="Look at an overview of the
 #<.channel> channel and some background information.">
-                      <a href="/<.channel>/index.html">
-                        <&icon('star')>
-                        <span>Overview</span>
-                      </a>
-                    </li>
-                  </ul>
+                        <a href="/<.channel>/index.html">
+                          <&icon('star')>
+                          <span>Overview</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="navbar-item dropdown is-hoverable">
-          <div class="navbar-delimiter"></div>
-          <div class="dropdown-trigger">
-            <span class="is-text navbar-current-channel-name"
-              title="A message can be added or removed from
+          <!-- Browse menu ends -->
+
+          <!-- Gist menu -->
+          <div class="navbar-item dropdown is-hoverable">
+            <div class="navbar-delimiter"></div>
+            <div class="dropdown-trigger">
+              <span class="is-text navbar-current-channel-name"
+                title="A message can be added or removed from
 your collection of messages for the #<.channel>
 channel from the ... pulldown with each message.
 Here you can select on what to do with that
 selection."
-              aria-haspopup="true"
-              aria-controls="dropdown-menu4">
-              <span class="icon-text">
-                <&icon('shopping-cart')><span>Gist</span><&icon('chevron-down')>
+                aria-haspopup="true"
+                aria-controls="dropdown-menu4">
+                <span class="icon-text">
+                  <&icon('shopping-cart')>
+                  <span>Gist</span>
+                  <&icon('chevron-down')>
+                </span>
               </span>
-            </span>
-          </div>
-          <div class="dropdown-menu navbar-channels-dropdown" id="dropdown-menu4" role="menu">
-            <div class="dropdown-content">
-              <div class="dropdown-item">
-                <div class="menu">
-                  <ul class="menu-list">
-                    <li title="Show the messages of the #<.channel>
+            </div>
+            <div id="dropdown-menu4"
+              class="dropdown-menu navbar-channels-dropdown"
+              role="menu">
+              <div class="dropdown-content">
+                <div class="dropdown-item">
+                  <div class="menu">
+                    <ul class="menu-list">
+                      <li title="Show the messages of the #<.channel>
 channel that have been collected by
 you so far, or save the link for other
 uses.">
-                      <a id="Gist" href="/<.channel>/gist.html">
-                        <span>Show&nbsp;collected&nbsp;messages</span>
-                      </a>
-                    </li>
-                    <li title="Reset the current selection
+                        <a id="Gist" href="/<.channel>/gist.html">
+                          <span>Show&nbsp;collected&nbsp;messages</span>
+                        </a>
+                      </li>
+                      <li title="Reset the current selection
 of messages to be shown in
 a gist.">
-                      <a onclick="clearGistTargets()">
-                        <span>Clear&nbsp;selected&nbsp;messages</span>
-                      </a>
-                    </li>
-                    <li title="Add the currently visible
+                        <a onclick="clearGistTargets()">
+                          <span>Clear&nbsp;selected&nbsp;messages</span>
+                        </a>
+                      </li>
+                      <li title="Add the currently visible
 messages to the selection of
 messages to be shown in a gist.">
-                      <a onclick="addVisibleTargets()">
-                        <span>Select&nbsp;all&nbsp;visible&nbsp;messages</span>
-                      </a>
-                    </li>
-                    <li title="Remove all currently visible
+                        <a onclick="addVisibleTargets()">
+                          <span>Select&nbsp;all&nbsp;visible&nbsp;messages</span>
+                        </a>
+                      </li>
+                      <li title="Remove all currently visible
 messages from the selection
 (if they were selected), while
 keeping any non-visible messages
 in the selection.">
-                      <a onclick="removeVisibleTargets()">
-                        <span>Unselect&nbsp;all&nbsp;visible&nbsp;messages</span>
-                      </a>
-                    </li>
-                  </ul>
+                        <a onclick="removeVisibleTargets()">
+                          <span>Unselect&nbsp;all&nbsp;visible&nbsp;messages</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+          <!-- Gist menu ends -->
 
           <!-- Mobile only forms in header -->
           <div id="mobile-forms" class="is-hidden-tablet">
@@ -354,8 +371,9 @@ in the selection.">
 
         </div>
       </div>
-      </div>
+      <!-- Other header menus -->
 
+      <!-- Right sidebar header -->
       <div id="navbar-right-toggle"
         class="navbar-end has-tooltip-bottom is-hidden-touch"
         title="Toggle filter sidebar">
@@ -368,13 +386,16 @@ in the selection.">
           </span>
         </a>
       </div>
+      <!-- Right sidebar header ends -->
 
     </nav>
-    <!-- header ends -->
+    <!-- Header ends -->
 
-    <!-- Left sidebar  -->
+    <!-- Columns -->
     <div id="wrapper">
       <div class="columns">
+
+        <!-- Left sidebar  -->
         <div id="left-column" class="column is-narrow is-hidden-mobile">
           <div id="left-sidebar" class="sidebar is-hidden-mobile"
             style="display: none">
@@ -397,15 +418,14 @@ in the selection.">
         </div>
         <!-- Left sidebar ends -->
 
-        <!-- main container -->
+        <!-- Middle column -->
         <div class="column">
-
           <section class="section">
             <div id="main-container" class="container">
 
 <?$is-day>
+              <!-- Day navigator -->
               <nav class="level">
-                <!-- Left side -->
                 <div class="level-left">
                   <div class="level-item">
                     <div class="msg-log-date-switcher">
@@ -436,9 +456,10 @@ in the selection.">
                   </div>
                 </div>
               </nav>
+              <!-- Day navigator ends -->
 </?>
 
-              <!-- message log -->
+              <!-- Messages -->
               <section id="message-log">
                 <table class="table message-table is-fullwidth">
 <?.initial-topic-text>
@@ -458,7 +479,8 @@ in the selection.">
                       </tr>
     </?>
   </!>
-                  <tr<?.relative-target> id="<.relative-target>"</?>
+                  <tr
+                    <?.relative-target> id="<.relative-target>"</?>
                     <?.target>target="<.target>"</?>
                     <?.control-events> class="special-system"</?>
                     <?.commit> class="special-commit"</?>
@@ -513,23 +535,22 @@ in the selection.">
                       </div>
                     </td>
                   </tr>
-                </@>
+</@>
                 </table>
 
               </section>
-              <!-- message log ends -->
+              <!-- Messages ends -->
 
             </div>
           </section>
-          <&footer>
 
         </div>
-        <!-- main container ends -->
+        <!-- Middle column ends -->
 
         <!-- Right sidebar -->
         <div id="right-column" class="column is-narrow is-hidden-touch">
-          <!-- We have an empty sidebar here so the content would be nicely centered -->
-          <div id="right-sidebar" class="sidebar is-hidden-mobile"
+          <div id="right-sidebar"
+            class="sidebar is-hidden-mobile"
             style="display: none">
             <&text-messages-input>
             <&nick-messages-input>
@@ -546,8 +567,9 @@ in the selection.">
     </div>
     <!-- Columns end -->
 
-    <!-- Include Font Awesome -->
+    <!-- External JS to run after parsing -->
     <script defer src="/fontawesome.js"></script>
+    <script defer src="/common-funcs.js"></script>
 
   </body>
 </html>
