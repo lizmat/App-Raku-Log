@@ -213,7 +213,7 @@ want to search for messages">
   <div class="field"
     title="Determines the type(s) of messages to be
 searched for">
-    <p><strong>Show</strong></p>
+    <p><strong>Include</strong></p>
     <div class="control">
       <div class="select">
         <select name="message-type">
@@ -252,16 +252,20 @@ that will be returned at a time">
 <:sub search-from($_)>
   <div class="control">
     <strong>From</strong>
-    <input class="input" type="date" placeholder="dd-mm-yyyy"
-      value="<.start-date>" min="<.first-date>" max="<.last-date>">
+    <input type="date" name="from-yyyymmdd"
+      class="input" placeholder="dd-mm-yyyy"
+      value="<?.from-yyyymmdd><.from-yyyymmdd></?><!.from-yyyymmdd><.first-date></!>"
+      min="<.first-date>" max="<.last-date>">
   </div>
 </:>
 
 <:sub search-until($_)>
   <div class="control">
     <strong>Until</strong>
-    <input class="input" type="date" placeholder="dd-mm-yyyy"
-      value="<.end-date>" min="<.first-date>" max="<.last-date>">
+    <input type="date" name="to-yyyymmdd"
+      class="input" placeholder="dd-mm-yyyy"
+      value="<?.to-yyyymmdd><.to-yyyymmdd></?><!.to-yyyymmdd><.last-date></!>"
+      min="<.first-date>" max="<.last-date>">
   </div>
 </:sub>
 
