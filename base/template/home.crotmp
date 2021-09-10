@@ -129,5 +129,6 @@
         <!-- Columns end -->
 
       <&footer>
+    <script defer src="/fontawesome.js"></script>
   </body>
 </html>
