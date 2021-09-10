@@ -265,6 +265,13 @@ body {
   flex-direction: row;
 }
 
+// Fix camelia image downscale in Chrome
+.navbar {
+  .camelia-image {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
 // Message logs styles
 #message-log {
   // Table

@@ -103,7 +103,7 @@
       <div class="navbar-brand">
         <a href="/" class="navbar-item" 
           title="Go to the home page of the Raku IRC log browser"
-        ><img src="/camelia.png" width="40" height="28"></a>
+        ><img class="camelia-image" src="/camelia.png" width="40" height="28"></a>
 
 <!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
