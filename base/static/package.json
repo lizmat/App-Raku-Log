@@ -4,7 +4,7 @@
   "description": "Raku log site",
   "scripts": {
     "styles-build": "npx sass --source-map styles/main.scss main.css",
-    "styles-watch": "onchange 'styles/*.scss' -- npm run styles-build",
+    "styles-watch": "npx onchange 'styles/*.scss' -- npm run styles-build",
     "styles-optimize": "npx postcss --config ./postcss.config.js -o main.css main.css --map",
     "styles-release": "npm run styles-build && npm run styles-optimize"
   },
