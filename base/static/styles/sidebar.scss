@@ -138,3 +138,10 @@ $sidebar-z: 25 !default;
     }
   }
 }
+
+// Enable border on right sidebar
+#right-sidebar {
+  border-right: unset;
+  border-left: 1px solid $border;
+}
+
