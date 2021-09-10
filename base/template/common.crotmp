@@ -105,7 +105,10 @@
           title="Go to the home page of the Raku IRC log browser"
         ><img class="camelia-image" src="/camelia.png" width="40" height="28"></a>
 
-<!-- Add action to open modal window with channels or the right sidebar -->
+
+      <div class="navbar-delimiter"></div>
+
+        <!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
             <span
@@ -159,6 +162,8 @@ repeat the current search."
           </div>
         </div>
 
+       <div class="navbar-delimiter"></div>
+
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -166,6 +171,7 @@ repeat the current search."
         </a>
       </div>
       <!-- Channel selection ends -->
+
 
       <!-- Page type header -->
       <div class="navbar-menu">
@@ -184,11 +190,12 @@ repeat the current search."
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
 
+          <div class="navbar-delimiter"></div>
+
           <!-- Browse menu -->
           <div class="navbar-item dropdown is-hoverable">
-            <div class="navbar-delimiter"></div>
             <div class="dropdown-trigger">
-              <span class="is-text navbar-current-channel-name"
+              <span class="is-text navbar-browse-label"
                 title="Select the way you would like to
 browse the messages on the #<.channel> channel."
                 aria-haspopup="true"
@@ -199,7 +206,7 @@ browse the messages on the #<.channel> channel."
               </span>
             </div>
             <div id="dropdown-menu4"
-              class="dropdown-menu navbar-channels-dropdown"
+              class="dropdown-menu navbar-browse-dropdown"
               role="menu">
               <div class="dropdown-content">
                 <div class="dropdown-item">
@@ -256,11 +263,12 @@ channel on <.date-human>.">
           </div>
           <!-- Browse menu ends -->
 
+          <div class="navbar-delimiter"></div>
+
           <!-- Gist menu -->
           <div class="navbar-item dropdown is-hoverable">
-            <div class="navbar-delimiter"></div>
             <div class="dropdown-trigger">
-              <span class="is-text navbar-current-channel-name"
+              <span class="is-text navbar-gist-label"
                 title="A message can be added or removed from
 your collection of messages for the #<.channel>
 channel from the ... pulldown with each message.
@@ -276,7 +284,7 @@ selection."
               </span>
             </div>
             <div id="dropdown-menu4"
-              class="dropdown-menu navbar-channels-dropdown"
+              class="dropdown-menu navbar-gist-dropdown"
               role="menu">
               <div class="dropdown-content">
                 <div class="dropdown-item">
