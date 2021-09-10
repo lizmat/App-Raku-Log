@@ -469,7 +469,7 @@ in the selection.">
 
         <!-- Middle column -->
         <div class="column">
-          <section class="section">
+          <section class="section day">
             <div id="main-container" class="container">
 
               <!-- Messages -->
@@ -515,9 +515,7 @@ in the selection.">
   </?>
   <!.control-events>
                       <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
-                      <td
-                        <?.code> class="column-code"</?>
-                        <?.commit> class="column-commit"</?>
+                      <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
                       ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
                       <td class="column-time"><.hh-mm></td>
   </!>

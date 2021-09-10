@@ -171,8 +171,8 @@ body {
   }
 }
 
-// We have long footer, so let's split it
 @include until($widescreen) {
+  // We have long footer, so let's split it
   .footer {
     max-height: 82px;
     padding: 0.5rem 1.5rem 2rem;
@@ -500,7 +500,7 @@ body {
 
 // Mobile forms in navbar
 .navbar {
-  .navbar-current-channel-name {
+  .navbar-current-channel-name, .navbar-browse-label, .navbar-gist-label {
     color: $white;
   }
 
@@ -640,6 +640,10 @@ a.thread-link {
     padding: 0;
   }
 
+  .section.day {
+     padding: 1rem 0;
+  }
+
   .container.homepage {
     border-radius: 0;
     border: 0;
@@ -746,16 +750,17 @@ a.thread-link {
 
   .table tr.special-topic {
     text-align: center;
-    border-top: 2px solid;
-    border-bottom: 2px solid;
+    border-top: 2px solid $border;
+    border-bottom: 2px solid $border;
   }
 
   .table tr.special-date {
     text-align: center;
-    border-top: 2px solid;
-    border-bottom: 2px solid;
+    border-top: 2px solid $border;
+    border-bottom: 2px solid $border;
     font-size: 125%;
     font-weight: $weight-bold;
+    color: $grey-darker;
   }
 
   .table tr.special-nick {
@@ -779,10 +784,9 @@ a.thread-link {
   }
 
   .table tr.special-camelia {
-    border-left: 1px solid $text-strong;
-    border-top: 1px solid $text-strong;
-    border-bottom: 1px solid $text-strong;
-    border-right: 1px solid $text-strong;
+    border: 1px solid $border;
+    // background-color: #eeddff;
+    background-color: #f8f1ff;
     color: $text-strong;
   }
 
@@ -823,12 +827,15 @@ a.thread-link {
 
     // Display table cells as blocks on mobile until 480px
     @include until(480px) {
+
+
       td {
         width: 100%;
         display: block;
 
         &.column-time {
-          text-align: right;
+          text-align: center;
+          font-weight: $weight-semibold;
         }
         
         &.column-author {
@@ -838,6 +845,11 @@ a.thread-link {
         &.column-code {
           font-family: monospace;
         }
+
+        &.column-buttons {
+          text-align: left;
+        }
+
       }
 
       .msg-mobile-dropdown {
@@ -928,5 +940,4 @@ a.thread-link {
   .error-hero .hero-body {
     padding: 0.5rem;
   }
-  
 }
