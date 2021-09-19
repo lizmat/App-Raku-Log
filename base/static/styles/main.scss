@@ -186,6 +186,10 @@ body {
   }
 }
 
+.container-footer {
+  padding-bottom: 1rem;
+}
+
 @include until($widescreen) {
   // We have long footer, so let's split it
   .footer {
