@@ -154,13 +154,14 @@ $calendar-header-background-color: $primary;
 }
 
 // Our site custom styles
+
+// Stick footer to the bottom
 body {
   display: flex;
-  // min-height: calc(100vh - $footer-height);
   min-height: calc(100vh);
   flex-direction: column;
 }
-  
+
 #wrapper {
   flex: 1;
 }
@@ -485,7 +486,7 @@ nav.secondary-navbar {
 #message-log {
   // Table
   .table {
-    border: 0px $border;
+    border: 1px solid $border;
   }
   
   .column-time {
@@ -495,7 +496,7 @@ nav.secondary-navbar {
 
   .column-buttons {
     padding: 0em 0em;
-    text-align: right;
+    // text-align: right;
   }
 
   .column-author {
@@ -503,14 +504,16 @@ nav.secondary-navbar {
   }
 
   .column-code {
-    font-family: monospace;
+    font-family: $family-monospace;
   }
 
   .column-camelia {
-    font-family: monospace;
+    font-family: $family-monospace;
   }
 
+  // Handle very long words/links
   .column-message {
+    // @include mobile {
     /* These are technically the same, but use both */
     overflow-wrap: break-word;
     word-wrap: break-word;
@@ -533,34 +536,36 @@ nav.secondary-navbar {
     margin-bottom: 1rem;
   }
 
-  .time-delimiter {
-    display: flex;
-    align-items: center;
-    text-align: center;
-    line-height: 1.2;
+  // Full width time delimiter
+  // NOTE: not using in current design
+  // .time-delimiter {
+  //   display: flex;
+  //   align-items: center;
+  //   text-align: center;
+  //   line-height: 1.2;
 
-    &::before, &::after {
-      content: '';
-      flex: 1;
-      border-bottom: 1px solid $border-light;
-    }
+  //   &::before, &::after {
+  //     content: '';
+  //     flex: 1;
+  //     border-bottom: 1px solid $border-light;
+  //   }
 
-    &:not(:empty) {
-      ::before {
-        margin-right: .25em;
-        
-      }
-      ::after {
-        margin-left: .25em;
-      }
-    }
-  }
+  //   &:not(:empty) {
+  //     ::before {
+  //       margin-right: .25em;
 
-  .time-delimiter-data {
-    padding: 0 0.5rem;
-    font-size: 0.875rem;
-    font-weight: $weight-semibold;
-  }
+  //     }
+  //     ::after {
+  //       margin-left: .25em;
+  //     }
+  //   }
+  // }
+
+  // .time-delimiter-data {
+  //   padding: 0 0.5rem;
+  //   font-size: 0.875rem;
+  //   font-weight: $weight-semibold;
+  // }
 
   .msg-log-title {
     margin-bottom: 0.5rem;
@@ -605,11 +610,13 @@ nav.secondary-navbar {
     display: none;
   }
 
+  // Disable navbar delimiter on mobile
   .navbar-delimiter {
     display: none;
   }
 }
 
+// Enable flex for navbar blocks
 @include desktop {
   .navbar-filter-settings, .navbar-end .navbar-channels {
     display: flex;
@@ -667,11 +674,12 @@ nav.secondary-navbar {
 
 // Columns for sidebar 
 .column.is-narrow {
-  width: 300px;
+  width: $sidebar-width;
   padding: unset;
   
 }
 
+// Correct color for hamburger menu
 a.navbar-burger:hover {
   color: $scheme-main-bis;
   background-color: $navbar-red-delimiter;
@@ -793,6 +801,7 @@ a.navbar-burger:hover {
   
 }
 
+// Style homepage container
 .container.homepage {
   background: $scheme-main;
   border: 1px solid $border;
@@ -947,7 +956,17 @@ a.navbar-burger:hover {
 
 }
 
+@include mobile {
+  section.search {
+    padding: 1rem 0;
   }
+
+  .section {
+    .title:not(.is-spaced) + .subtitle {
+      margin-top: 0;
+    }
+  }
+
 }
 
 .level {
@@ -1091,12 +1110,11 @@ a.navbar-burger:hover {
   }
 
   @include until(400px) {
-      display: block;
+    display: block;
   }
 
 
   .level-item {
-
     @include until(400px) {
       display: block;
     }
@@ -1131,7 +1149,7 @@ a.navbar-burger:hover {
   font-weight: $weight-bold;
 
   @include mobile {
-      font-size: 3rem;
+    font-size: 3rem;
   }
 }
 
