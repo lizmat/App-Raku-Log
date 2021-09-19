@@ -50,7 +50,7 @@ code snippets.'
   <div class="block">
     <p><strong><$name></strong></p>
     <div class="field has-addons">
-      <div class="control">
+      <div class="control is-expanded">
         <input id="Messages<$id>" class="input" type="text"
           placeholder="<$placeholder>"
           title="<$title>"
@@ -89,7 +89,7 @@ for it to be shown.'
 </:>
 
 <:sub footer()>
-  <div class="container has-text-centered">
+  <div class="container container-footer has-text-centered">
     <p>
       Powered by <a href="https://cro.services">Cro</a>
       and the <a href="https://raku.org">Raku Programming Language</a>.
@@ -271,7 +271,7 @@ that will be returned at a time">
 
 <:sub search-submit($_)>
   <div class="block">
-    <div class="control mt-3">
+    <div class="control mt-3 has-text-centered">
       <button class="button is-primary">Submit</button>
     </div>
   </div>
