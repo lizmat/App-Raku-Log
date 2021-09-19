@@ -49,6 +49,7 @@ $body-background-color: $scheme-main-ter;
 // Navbar
 $navbar-background-color: $primary;
 $navbar-height-size: 3.125rem;
+$navbar-mobile-height: 3rem;
 
 $navbar-item-color: $text-invert;
 $navbar-item-hover-color: $text-invert;
@@ -294,20 +295,49 @@ body {
 
   border-right: 1px solid $navbar-red-delimiter;
 
-  .navbar-filter {
-    width: inherit;
+// Add extra padding for secondary navbar on mobile
+body.has-navbar-fixed-top.has-mobile-navbar-fixed-top {
+  @include mobile {
+    padding-top: calc(#{$navbar-height-size} + #{$navbar-mobile-height});
   }
 }
 
-.navbar-center {
-  display: flex;
-  flex-direction: row;
-}
+// Secondary navbar (for mobile)
+nav.secondary-navbar {
+  @extend .is-hidden-tablet;
 
-// Fix camelia image downscale in Chrome
-.navbar {
-  .camelia-image {
-    image-rendering: -webkit-optimize-contrast;
+  &.is-fixed-top {
+    top: $navbar-height-size;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 25;
+  }
+
+  // TODO: Valign to middle
+  height: $navbar-mobile-height;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+
+  border-bottom: 1px solid $border-light;
+  background: $grey-lighter;
+  padding-top: 0.35rem;
+
+  .button {
+    min-width: 50px;
+    height: 35px;
+  }
+
+  .date-dropdown-button {
+    padding-left: 1.5rem;
+    padding-right: 1.75rem;
+  }
+
+  .date-dropdown-button > span {
+    // background: $primary;
+    color: $text;
   }
 }
 
