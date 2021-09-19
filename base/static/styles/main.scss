@@ -201,117 +201,239 @@ body {
   }
 }
 
-// Align Gist dropdown menu on small screens
-@include until($desktop) {
-  .navbar .navbar-gist-dropdown {
-    margin-left: -10rem;
-  }
-}
-
-@include from($desktop) {
-  @include until($widescreen) {
-    .navbar .navbar-gist-dropdown {
-      margin-left: -7rem;
-    }
-  }
-}
-
-
-@include until(720px) {
-  .footer {
-    max-height: 100%;
-  }
-}
+// @include until(720px) {
+//   .footer {
+//     max-height: 100%;
+//   }
+// }
 
 
 // Navbar (site header) styles
-.navbar-channels-dropdown {
-  margin-left: -0.5rem;
-}
-
-.navbar-channels-dropdown, .navbar-browse-dropdown, .navbar-gist-dropdown {
-  .dropdown-content {
-    max-height: 450px;
-    min-width: 220px;
-    max-width: 300px;
+.navbar {
+  .navbar-channels-dropdown {
+    margin-left: -0.5rem;
   }
-}
 
-.navbar-channels-dropdown {
-  .dropdown-item {
-    overflow-y: auto;
+  .navbar-channels-dropdown, .navbar-browse-dropdown, .navbar-gist-dropdown {
+    .dropdown-content {
+      max-height: 450px;
+      min-width: 220px;
+      max-width: 300px;
+    }
   }
-}
 
-.navbar-browse-dropdown, .navbar-gist-dropdown {
-  .dropdown-content {
-    overflow-y: auto;
+  .navbar-channels-dropdown {
+    .dropdown-item {
+      overflow-y: auto;
+    }
   }
-}
 
-// Align dropdowns
-.navbar-gist-dropdown {
-  margin-left: -4rem;
-}
+  .navbar-browse-dropdown, .navbar-gist-dropdown {
+    .dropdown-content {
+      overflow-y: auto;
+    }
+  }
 
-.navbar-browse-dropdown {
-  margin-left: -2rem;
-}
+  // Align dropdowns
+  .navbar-gist-dropdown {
+    margin-left: -4rem;
+  }
 
+  .navbar-browse-dropdown {
+    margin-left: -2rem;
+  }
 
-.navbar-item {
-  font-size: 1.125rem; 
-  font-weight: 700;
-}
+  // Align Gist dropdown menu on small screens
+  @include until($desktop) {
+    .navbar .navbar-gist-dropdown {
+      margin-left: -10rem;
+    }
+  }
 
-.navbar-delimiter {
-  height: 100%;
-  width: 1px;
-  background-color: $navbar-red-delimiter;
-}
+  @include from($desktop) {
+    @include until($widescreen) {
+      .navbar .navbar-gist-dropdown {
+        margin-left: -7rem;
+      }
+    }
+  }
 
-.navbar-end {
-  .navbar-channels {
+  .navbar-item {
+    font-size: 1.125rem; 
+    font-weight: 700;
+  }
+
+  .navbar-delimiter {
+    height: 100%;
+    width: 1px;
+    background-color: $navbar-red-delimiter;
+  }
+
+  .navbar-end {
+    .navbar-channels {
+      width: $sidebar-width;
+      display: flex;
+      justify-content: space-between;
+
+      border-left: 1px solid $navbar-red-delimiter;
+    }
+
+    .icon-text.channel-list {
+      margin-left: 50px;
+    }
+  }
+
+  .navbar-switcher {
+    max-width: 285px;
+    @extend .is-hidden-mobile;
+    position: relative;
+
+    @include from($tablet) {
+      @include until($desktop) {
+        position: absolute;
+        top: 2px;
+        left: 200px;
+      }
+    }
+  }
+
+  .navbar-start {
+    justify-content: flex-end;
+    margin-right: 0;
+    margin-left: auto;
+  }
+
+  #navbar-left-toggle {
     width: $sidebar-width;
+
+    border-right: 1px solid $navbar-red-delimiter;
+
+    .navbar-sidebar-btn {
+      width: inherit;
+    }
+
+    @extend .is-hidden-touch;
+  }
+
+  .navbar-filter-settings {
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    // margin-left: 0;
 
-    border-left: 1px solid $navbar-red-delimiter;
+    // .icon-sidebar-state {
+    //   position: absolute;
+    //   right: 16px;
+    // }
+
+    // .icon-text.filter {
+    //   margin-left: 90px;
+    // }
+
+    // border-right: 1px solid $navbar-red-delimiter;
+
+    // .navbar-filter {
+    //   width: inherit;
+    // }
   }
 
-  .icon-text.channel-list {
-    margin-left: 50px;
+  .navbar-center {
+    display: flex;
+    flex-direction: row;
+  }
+
+  // Fix camelia image downscaling in Chrome
+  .camelia-image {
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  .date-dropdown-button {
+    background-color: unset;
+    border: unset;
+    
+  }
+
+  // Adjust tooltips in navbar
+  #navbar-left-toggle:hover, #navbar-right-toggle:hover  {
+    &::before {
+      font-weight: $weight-bold;
+    }
+  }
+
+  @include until($widescreen) {
+    #navbar-left-toggle:hover {
+      &::before {
+        margin-left: 3rem;
+      }
+    }
+
+    #navbar-right-toggle:hover {
+      &::before {
+        margin-left: -3rem;
+      }
+    }
+  }
+
+  @include touch {
+    .navbar-search-link:hover {
+      &::before {
+        margin-left: -3rem;
+      }
+    }
+  }
+
+  .navbar-current-channel-name, .navbar-browse-label, .navbar-gist-label {
+    color: $white;
+  }
+
+  #mobile-forms {
+    margin-top: 0.25rem;
+    border-top: 1px solid $navbar-red-delimiter;
+    padding: 1rem;
+    background: $white;
+
+    .title, strong {
+      // color: $text-invert;
+    }
+
+    #tab-content .tab-block {
+      display: none;
+
+      margin: 0 auto;
+    }
+
+    #tab-content .tab-block.is-active {
+      display: block;
+    }
+
+  }
+
+  // Display sidebar toggle icons without label in navbar from table until widescreen layout
+  @include from($tablet) {
+    @include until($widescreen) {
+      #navbar-left-toggle, #navbar-right-toggle, .navbar-end .navbar-channels {
+        width: 50px;
+      }
+      .navbar-sidebar-btn {
+        width: 50px;
+
+        .icon-sidebar-state, .sidebar-title, .sidebar-arrow {
+          display: none;
+        }
+      }
+
+      .navbar-filter-settings .icon-text.filter,
+      .navbar-end .icon-text.channel-list {
+        margin-left: 0;
+      }
+
+      .navbar-item-title {
+        display: none;
+      }
+    }
   }
 }
-
-.navbar-start {
-  justify-content: flex-end;
-  margin-right: 0;
-  margin-left: auto;
-}
-
-#navbar-left-toggle {
-  width: $sidebar-width;
-
-  .navbar-sidebar-btn {
-    width: inherit;
-  }
-}
-
-.navbar-filter-settings {
-  @extend .navbar-end;
-  justify-content: flex-start;
-  margin-left: 0;
-
-  .icon-sidebar-state {
-    position: absolute;
-    right: 16px;
-  }
-
-  .icon-text.filter {
-    margin-left: 90px;
-  }
-
-  border-right: 1px solid $navbar-red-delimiter;
 
 // Add extra padding for secondary navbar on mobile
 body.has-navbar-fixed-top.has-mobile-navbar-fixed-top {
