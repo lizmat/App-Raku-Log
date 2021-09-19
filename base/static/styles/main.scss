@@ -595,6 +595,12 @@ nav.secondary-navbar {
     }
   }
 
+  // Do not add navbar-menu padding on mobile
+  .navbar-menu {
+    padding: 0;
+  }
+
+  // Don't display filter and search setting on mobile
   .navbar-filter-settings, .navbar-end .navbar-channels {
     display: none;
   }
