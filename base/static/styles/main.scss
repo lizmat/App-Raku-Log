@@ -801,12 +801,18 @@ a.navbar-burger:hover {
 }
 
 @include mobile {
-  .section.homepage {
+  // Disable extra padding on mobile for main container
+  .section.homepage, .section.index {
     padding: 0;
   }
 
   .section.day {
-     padding: 1rem 0;
+    padding: 1rem 0;
+
+    #message-log .table {
+      border: unset;
+      border-bottom: 1px solid $border;
+    }
   }
 
   .container.homepage {
