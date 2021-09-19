@@ -115,35 +115,43 @@ $column-gap: 0;
 $calendar-header-background-color: $primary;
 @import '../node_modules/bulma-calendar/src/sass/index.sass';
 
-.datepicker {
-  .datepicker-nav, .datapicker-nav.is-danger {
-    background-color: $calendar-header-background-color;
+// Datepicker styles
+.navbar {
+  .datepicker {
+    .datepicker-nav, .datapicker-nav.is-danger {
+      background-color: $calendar-header-background-color;
 
-    
-    .button.is-text:active, .button.is-text.is-active {
-      background-color: unset;
+      .button.is-text:active, .button.is-text.is-active {
+        background-color: $white;
+      }
+
+      .button.is-text:focus, .button.is-text.focus {
+        background-color: $primary;
+      }
     }
 
-    .button.is-text:focus, .button.is-text.focus {
-      background-color: $primary;
+    .datepicker-month, .datepicker-year, .datepicker-day {
+      color: $text;
+    }
+
+  }
+
+  .datetimepicker .datepicker-body .datepicker-weekdays {
+    .datepicker-date {
+      color: $text-light;
     }
   }
-  
-}
 
-.datetimepicker .datepicker-body .datepicker-weekdays {
-  .datepicker-date {
-    color: $text-light;
+  // Inactive days
+  .datetimepicker .datepicker-body .datepicker-dates .datepicker-days .datepicker-date:not(.is-current-month) {
+    background-color: $border-light;
+
+    .date-item {
+      color: $text-light;
+    }
   }
-}
 
-// Inactive days
-.datetimepicker .datepicker-body .datepicker-dates .datepicker-days .datepicker-date {
-  background-color: $border-light;
 }
-
-// Import our files
-@import 'sidebar';
 
 // Our site custom styles
 body {
