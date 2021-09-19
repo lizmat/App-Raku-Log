@@ -677,96 +677,111 @@ a.navbar-burger:hover {
   background-color: $navbar-red-delimiter;
 }
 
-// Adjust tooltips
-#navbar-left-toggle:hover, #navbar-right-toggle:hover  {
-  &::before {
+// Homepage styles
+.section.homepage {
+
+  .thread-years {
+    .column:first-child {
+      padding-right: 0.5rem;
+    }
+
+    .column:last-child {
+      padding-left: 0.5rem;
+    }
+
+
+    .vline:last-child {
+      display: none;
+    }
+
+    @include mobile {
+      .year-block:not(:last-child) {
+        margin: 1rem 0;
+      }
+
+      .year {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 0.5rem;
+        border-bottom: 1px solid $border-light;
+      }
+
+      // Display links as blocks on mobile until 480px
+      a.month {
+        display: inline-block;
+        min-width: 50px;
+        text-align: center;
+        padding: 0.5rem;
+      }
+
+      .vline {
+        display: none;
+      }
+    }
+
+    @include until($desktop) {
+      a.month {
+        display: inline-block;
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+      }
+    }
+  }
+
+  // Thread styles
+  @include mobile {
+    .thread-years p {
+      margin-bottom: 1rem;
+    }
+  }
+
+  // Thread header
+  .thread-header {
+    display: flex;
+    align-items: center;
+
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid $border;
+    // font-size: 1.125rem;
+    font-weight: bold;
+
+    .control.has-icons-right .icon.is-right {
+      height: 28px;
+      width: 28px;
+    }
+
+    .title {
+      margin-bottom: 0;
+    }
+
+    @include mobile {
+      display: block;
+    }
+  }
+
+  // Vertical delimiter
+  .v-div {
+    background-color: $text-light;
+    height: 1rem;
+    width: 2px;
+    margin: 0 0.25rem;
+
+    @include mobile {
+      display: none;
+    }
+  }
+
+  a.thread-link {
     font-weight: $weight-bold;
   }
-}
 
-
-@include until($widescreen) {
-  #navbar-left-toggle:hover {
-    &::before {
-      margin-left: 3rem;
-    }
-  }
-
-  #navbar-right-toggle:hover {
-    &::before {
-      margin-left: -3rem;
-    }
-  }
-}
-
-@include touch {
-  .navbar-search-link:hover {
-    &::before {
-      margin-left: -3rem;
-    }
-  }
-}
-
-// Homepage styles
-@include mobile {
-  .thread-years p {
-    margin-bottom: 1rem;
-  }
-}
-
-.thread-years {
-  .column:first-child {
-    padding-right: 0.5rem;
-  }
-
-  .column:last-child {
-    padding-left: 0.5rem;
-  }
-}
-
-.thread-header {
-  display: flex;
-  align-items: center;
-  
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid $border;
-  // font-size: 1.125rem;
-  font-weight: bold;
-
-  .control.has-icons-right .icon.is-right {
+  .thread-search-field, .thread-search-field .input {
+    margin-left: 0.25rem;
     height: 28px;
-    width: 28px;
+
   }
-
-  .title {
-    margin-bottom: 0;
-  }
-
-  @include mobile {
-    display: block;
-  }
-
-}
-
-.v-div {
-  background-color: $text-light;
-  height: 1rem;
-  width: 2px;
-  margin: 0 0.25rem;
-  
-  @include mobile {
-    display: none;
-  }
-}
-
-a.thread-link {
-  font-weight: $weight-bold;
-}
-
-.thread-search-field, .thread-search-field .input {
-  margin-left: 0.25rem;
-  height: 28px;
 
 }
 
