@@ -68,6 +68,8 @@ $card-shadow: unset;
 // Disable column gap, because we handle gaps manually
 $column-gap: 0;
 
+// $tabs-toggle-link-active-background-color: $grey-dark;
+
 // Initial Bulma stuff
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "../node_modules/bulma/sass/base/_all.sass";
@@ -84,6 +86,7 @@ $column-gap: 0;
 @import "../node_modules/bulma/sass/components/level.sass";
 // @import "../node_modules/bulma/sass/components/card.sass";
 @import "../node_modules/bulma/sass/components/menu.sass";
+@import "../node_modules/bulma/sass/components/tabs.sass";
 
 // Elements
 @import "../node_modules/bulma/sass/elements/button.sass";
@@ -101,6 +104,9 @@ $column-gap: 0;
 @import "../node_modules/bulma/sass/helpers/spacing.sass";
 
 @import "../node_modules/bulma/sass/grid/columns.sass";
+
+// Import our files
+@import 'sidebar';
 
 // Import extensions
 @import '../node_modules/bulma-tooltip/src/sass/index.sass';
