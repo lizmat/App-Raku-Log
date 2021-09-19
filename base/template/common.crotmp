@@ -533,6 +533,48 @@ in the selection.">
       <!-- Right sidebar header ends -->
 
     </nav>
+
+    <nav id="mobile-navbar" class="secondary-navbar is-fixed-top">
+      <?$is-day>
+      <!-- Day navigator -->
+      <nav class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <div class="msg-log-date-switcher">
+              <a href="/<.channel>/prev/<.date>">
+                <button class="button">
+                  <&icon('angle-double-left')>
+                </button>
+              </a>
+
+              <!-- TODO: replace is-hoverable with JS implementation and use class is-active on dropdown -->
+              <div class="dropdown date-dropdown is-hoverable">
+                <div class="dropdown-trigger">
+                  <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
+                    <span><.date-human></span>
+                    <&icon('chevron-down')>
+                  </button>
+                </div>
+                <div class="dropdown-menu">
+                  <div class="dropdown-content">
+                    <input id="sidebar-datepicker" type="date">
+                  </div>
+                </div>
+              </div>
+
+              <a href="/<.channel>/next/<.date>">
+                <button class="button">
+                  <&icon('angle-double-right')>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- Day navigator ends -->
+      </?>
+
+    </nav>
     <!-- Header ends -->
 
     <!-- Columns -->
