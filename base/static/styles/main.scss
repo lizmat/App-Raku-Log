@@ -829,69 +829,123 @@ a.navbar-burger:hover {
   }
 }
 
-@include mobile {
-  section.search {
-    padding: 1rem 0;
+.section.index {
+  .block-years {
+    .year {
+      text-align: center;
+
+      // &:not(:first-child) {
+      margin-top: 1rem;
+      // }
+    }
   }
 
-}
+  .level-top {
+    word-wrap: break-word;
+    word-break: break-word;
+    padding: 0 1rem;
 
-// Index channel
-.channel-name-dropdown {
-  .dropdown-content {
-    max-height: 400px;
-    min-width: 220px;
-    max-width: 300px;
-    overflow-y: scroll;
+    .level-item {
+      flex-grow: 0;
+    }
+
+    // Align dropdown to center
+    @include from($fullhd) {
+      .level-item-center {
+        flex: 0 1 auto;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    // Don't mess with aligment because of Bulma styles
+    .title {
+      margin-bottom: 0;
+    }
+
+    .subtitle {
+      margin-top: 0;
+    }
+
+    // Otherwise it will overlap with with other level
+    .level-dropdown {
+      z-index: 30;
+    }
+
+    @include until($tablet) {
+      .level-dropdown {
+        margin-bottom: 1rem;
+      }
+
+      padding: 0 0.5rem;
+    }
   }
-}
 
-.month-log {
-  // width: 100%;
-  display: inline-flex;
-  // width: fit-content;
-  flex-wrap: wrap;
-  // width: min-content;
-
-  @include mobile {
-    margin-bottom: 1rem;
+  .channel-name-dropdown {
+    .dropdown-content {
+      max-height: 400px;
+      min-width: 220px;
+      max-width: 300px;
+      overflow-y: scroll;
+    }
   }
 
-  .day, .month {
-    // display: inline-;
-    border: 1px solid $border;
-    // width: 1.25rem;
-    font-size: 0.875rem;
-    min-width: 32px;
-    padding: 0.25em 0.5em;
-    text-align: center;
+
+  .month-block {
+    display: block;
   }
 
-  .day {
-    color: $text-light;
-    &:hover {
+  .month-log {
+    // width: 100%;
+    display: inline-flex;
+    // width: fit-content;
+    flex-wrap: wrap;
+    // width: min-content;
+
+    @include mobile {
+      margin-bottom: 1rem;
+    }
+
+    .day, .month {
+      // display: inline-;
+      border: 1px solid $border;
+      // width: 1.25rem;
+      font-size: 0.875rem;
+      min-width: 32px;
+      padding: 0.25em 0.5em;
+      text-align: center;
+    }
+
+    .day {
+      color: $text-light;
+      &:hover {
+        background-color: $border-light;
+      }
+    }
+
+    a .day {
+      color: $link;
+      font-weight: $weight-bold;
+
+      &:hover {
+        color: $link;
+      }
+    }
+
+    .day.empty {
       background-color: $border-light;
     }
-  }
 
-  a .day {
-    color: $link;
-    font-weight: $weight-bold;
+    .month {
+      width: 96px;
+      font-weight: bold;
+      text-align: center;
 
-    &:hover {
-      color: $link;
     }
   }
 
-  .day.empty {
-    background-color: $border-light;
-  }
-
-  .month {
-    // background: $border-light;
-    width: 96px;
-    font-weight: bold;
-    text-align: center;
+}
 
   }
 }
