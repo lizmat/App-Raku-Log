@@ -616,16 +616,13 @@ nav.secondary-navbar {
   }
 }
 
+// Date switcher styles
 .msg-log-date-switcher {
-  .button {
-    height: 30px;
-    width: 25px;
-  }
-
   .date-dropdown-button {
-    background-color: unset;
-    border: unset;
+    // background-color: unset;
+    // border: unset;
     width: 100%;
+    height: 30px;
     font-weight: $weight-bold;
     padding: 0 0.5rem;
     color: $white;
@@ -649,45 +646,22 @@ nav.secondary-navbar {
   }
 }
 
-// Display sidebar toggle icons without label in navbar from $table until $widescreen layout
-@include from($tablet) {
-  @include until($widescreen) {
-    #navbar-left-toggle, #navbar-right-toggle, .navbar-end .navbar-channels {
-      width: 50px;
-    }
-    .navbar-sidebar-btn {
-      width: 50px;
-
-      .icon-sidebar-state, .sidebar-title {
-        display: none;
-      }
-    }
-
-    .navbar-filter-settings .icon-text.filter,
-    .navbar-end .icon-text.channel-list {
-      margin-left: 0;
-    }
-
-    .navbar-item-title {
-      display: none;
-    }
+// Define button sizes to avoid misalignment
+.navbar {
+  div.msg-log-date-switcher > a > button.button {
+    height: 30px;
+    width: 25px;
   }
 }
 
-// Mobile forms in navbar
-.navbar {
-  .navbar-current-channel-name, .navbar-browse-label, .navbar-gist-label {
-    color: $white;
-  }
+@include tablet {
+  // #navbar-left-toggle {
+  //   display: none;
+  // }
 
-  #mobile-forms {
-    margin-top: 0.25rem;
-    border-top: 1px solid $navbar-red-delimiter;
-    padding: 1rem;
-
-    .title, strong {
-      color: $text-invert;
-    }
+  // Do not add extra padding to navbar-menu
+  .navbar-menu {
+    padding: 0;
   }
 }
 
