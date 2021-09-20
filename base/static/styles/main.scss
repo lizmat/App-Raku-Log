@@ -499,6 +499,10 @@ nav.secondary-navbar {
     // background: $primary;
     color: $text;
   }
+
+  .dropdown-menu {
+    left: -40px;
+  }
 }
 
 // Message logs styles
