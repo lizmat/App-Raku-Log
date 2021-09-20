@@ -115,6 +115,25 @@ $column-gap: 0;
 $calendar-header-background-color: $primary;
 @import '../node_modules/bulma-calendar/src/sass/index.sass';
 
+// Create mixin to fix word-wrap when needed
+@mixin fix-word-wrap {
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
 // Datepicker styles
 .navbar {
   .datepicker {
@@ -512,23 +531,8 @@ nav.secondary-navbar {
   }
 
   // Handle very long words/links
-  .column-message {
-    // @include mobile {
-    /* These are technically the same, but use both */
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-
-    -ms-word-break: break-all;
-    /* This is the dangerous one in WebKit, as it breaks things wherever */
-    word-break: break-all;
-    /* Instead use this non-standard one: */
-    word-break: break-word;
-
-    /* Adds a hyphen where the word breaks, if supported (No Blink) */
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto;
+  .column-message  {
+    @include fix-word-wrap;
   }
 
   
@@ -1182,5 +1186,41 @@ a.navbar-burger:hover {
 @include until(480px) {
   .error-hero .hero-body {
     padding: 0.5rem;
+  }
+
+  .section.day {
+    padding: 0;
+  }
+
+  .special-topic {
+    @include fix-word-wrap;
+  }
+}
+
+// Change template structure
+
+// Disable extra padding on mobile for main container
+.section.homepage, .section.index, .section.day {
+  padding: 0;
+}
+
+@include until($tablet) {
+  #message-log {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@include from($tablet) {
+  #main-container.homepage, #main-container.day {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .section.homepage, .section.index {
+    .column-middle {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
   }
 }
