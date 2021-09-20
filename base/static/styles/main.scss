@@ -1132,6 +1132,33 @@ a.navbar-burger:hover {
   }
 }
 
+// Don't move main contrainer while sidebar is opened
+@include from(1800px) {
+  // #message-log,
+  #main-container {
+    &.has-left-sidebar {
+      left:  -150px;
+    }
+
+    &.has-right-sidebar {
+      right: -150px;
+    }
+
+    &.has-left-sidebar.has-right-sidebar {
+      left:  auto;
+      right: auto;
+    }
+  }
+}
+
+// Fix form trim on small height
+#left-sidebar {
+  form#Search {
+    margin-bottom: 3rem;
+  }
+}
+
+
 // Adjust level on small screens
 .level.is-mobile {
   @include mobile {
