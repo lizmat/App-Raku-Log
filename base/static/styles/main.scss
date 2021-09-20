@@ -507,6 +507,9 @@ nav.secondary-navbar {
 
 // Message logs styles
 #message-log {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
   // Table
   .table {
     border: 1px solid $border;
@@ -897,6 +900,11 @@ a.navbar-burger:hover {
 
       padding: 0 0.5rem;
     }
+
+    // Fix dropdown aligment
+    .dropdown-menu {
+      left: -20px;
+    }
   }
 
   .channel-name-dropdown {
@@ -1077,10 +1085,8 @@ a.navbar-burger:hover {
       scroll-margin-top: $navbar-height-size;
     }
 
-    // Display table cells as blocks on mobile until 480px
     @include until(480px) {
-
-
+      // Display table cells as blocks on mobile until 480px
       td {
         width: 100%;
         display: block;
