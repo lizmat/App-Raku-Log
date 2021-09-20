@@ -1,4 +1,5 @@
 <:use 'base/template/common.crotmp'>
+<:use 'base/template/common-subs.crotmp'>
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,159 +15,168 @@
 
     <div id="wrapper">
 
-      <!-- main container -->
+      <section class="section index">
 
-      <section class="section homepage">
-        <nav id="main-container" class="container homepage">
+        <div class="columns">
+          <!-- Left sidebar  -->
+          <div id="left-column"
+            class="column is-narrow is-mobile-fullwidth is-hidden">
+            <div id="left-sidebar"
+              class="sidebar"
+            >
+              <!-- Close button -->
+              <button class="delete"></button>
 
-          <nav class="block">
+              <div class="title is-size-5">
+                Search
+              </div>
 
-            <nav class="level py-3">
-              <div class="level-left">
-                <div class="level-item title is-size-5-mobile">
+              <div class="block">
+                <form id="Search" action="/search.html"
+                  onsubmit="return checkChannel()">
+                  <&search-query($_)>
+                  <&search-type($_)>
+                  <&search-all-words($_)>
+                  <&search-ignorecase($_)>
+                  <&search-nicks($_)>
+                  <&search-include-aliases($_)>
+                  <&search-channel($_)>
+                  <&search-message-type($_)>
+                  <&search-entries-pp($_)>
+                  <&search-from($_)>
+                  <&search-until($_)>
+                  <&search-submit($_)>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- Left sidebar ends -->
 
-                  <div class="navbar-item dropdown is-hoverable">
+          <!-- main container -->
+          <div class="column column-middle">
 
-                    <div class="dropdown-trigger">
-                      <div class="title is-size-4 is-size-5-mobile" aria-haspopup="true" aria-controls="dropdown-menu4">
-                        <span class="icon-text">
-                          <span>#<.name></span>
-                          <span class="icon">
-                            <i class="fas fa-chevron-down" aria-hidden="true"></i>
-                          </span>
+            <div id="main-container" class="container homepage">
+
+              <div class="block">
+
+                <nav class="level level-top pt-3">
+                  <div class="level-item">
+                    <button id="search-sidebar-toggle" class="button is-primary" onclick="document.getElementById('left-column').classList.toggle('is-hidden'); document.getElementById('main-container').classList.toggle('has-sidebar')">
+
+                      <span class="icon-text">
+                        <span class="icon">
+                          <i class="fas fa-bars"></i>
                         </span>
+                        <span class="toggle-text">
+                          Search
+                        </span>
+                      </span>
+                    </button>
+                  </div>
 
+                  <div class="level-item level-item-center level-dropdown title is-size-5-mobile">
+
+                    <div class="dropdown is-hoverable">
+
+                      <div class="dropdown-trigger">
+                        <div class="title is-size-4 is-size-5-mobile" aria-haspopup="true" aria-controls="dropdown-menu4">
+                          <span class="icon-text">
+                            <span>#<.name> index</span>
+                            <span class="icon">
+                              <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                            </span>
+                          </span>
+
+                        </div>
                       </div>
-                    </div>
-                    <div class="dropdown-menu channel-name-dropdown" id="dropdown-menu4" role="menu">
-                      <div class="dropdown-content">
-                        <div class="dropdown-item">
-                          <div class="menu">
-                            <ul class="menu-list">
-                              <li><a href="/home.html">Homepage</a></li>
-                              <@channels>
-                              <li><a href="/<$_>/index.html">#<$_></a></li>
-                              </@>
-                            </ul>
+                      <div class="dropdown-menu channel-name-dropdown" id="dropdown-menu4" role="menu">
+                        <div class="dropdown-content">
+                          <div class="dropdown-item">
+                            <div class="menu">
+                              <ul class="menu-list">
+                                <li><a href="/home.html">Homepage</a></li>
+                                <@channels>
+                                <li><a href="/<$_>/index.html">#<$_></a></li>
+                                </@>
+                              </ul>
 
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
 
+                    </div>
+                  </div>
+
+                  <div class="level-item subtitle is-size-4-desktop is-size-5-mobile is-size-4-tablet">
+                    <.first-human-date></a> - <.last-human-date>
                   </div>
 
 
-                </div>
-              </div>
-              <div class="level-right">
-                <div class="level-item subtitle is-size-4 is-size-5-mobile has-text-centered">
-                  <.first-human-date></a> - <.last-human-date>
-                </div>
+                </nav>
 
-              </div>
+                <hr>
 
-            </nav>
-
-            <hr>
-
-            <!-- navigation -->
-            <nav class="level is-mobile">
-              <div class="level-item">
-                <a href="/home.html" class="button is-text">Home</a>
-              </div>
-
-              <div class="level-item">
-                <a href="/search.html?channel=<.name>" class="button is-text">Search</a>
-              </div>
-              <div class="level-item">
-                <a href="/<.name>/live.html" class="button is-text">Live</a>
-              </div>
-              <div class="level-item">
-                <a href="/<.name>/today" class="button is-text">
-                  Today
-                </a>
-              </div>
-
-              <div class="level-item">
-                <a class="button is-text" href="/<.name>/random">
-                  I feel lucky
-                </a>
-              </div>
-            </nav>
-
-
-            <hr>
-
-            <nav class="level mt-3">
-              <div class="level-left">
-                <div class="level-item title is-4 is-size-5-mobile">
-                  Channel index
-                </div>
-              </div>
-
-
-              <div class="level-right">
-                <form class="level" action="search.html">
+                <!-- navigation -->
+                <nav class="level is-mobile">
                   <div class="level-item">
-                    <div class="control is-inline-flex">
-                      <div class="select">
-                        <select name="channel">
-                          <@channels>
-                            <option value="<$_>">#<$_></option>
-                          </@>
-                        </select>
-                      </div>
-                    </div>
+                    <a href="/home.html" class="button is-text">Home</a>
                   </div>
 
                   <div class="level-item">
-                    <div class="control has-icons-right is-inline-flex">
-                      <input name="query" class="input" type="text" placeholder="Search">
-                      <span class="icon is-small is-right">
-                        <i class="fas fa-search"></i>
-                      </span>
-                    </div>
+                    <a href="/search.html?channel=<.name>" class="button is-text">Search</a>
+                  </div>
+                  <div class="level-item">
+                    <a href="/<.name>/live.html" class="button is-text">Live</a>
+                  </div>
+                  <div class="level-item">
+                    <a href="/<.name>/today" class="button is-text">
+                      Today
+                    </a>
                   </div>
 
                   <div class="level-item">
-                    <div class="control is-inline-flex">
-                      <button type="submit" class="button is-primary">Submit</button>
-                    </div>
+                    <a class="button is-text" href="/<.name>/random">
+                      I feel lucky
+                    </a>
                   </div>
-                </form>
+                </nav>
 
-              </div>
-            </nav>
 
-            <@years>
-              <div class="block">
-                <div class="title is-4"><.year></div>
+                <hr>
 
-                <@months>
-                  <div class="month-log">
-                    <div class="month"><.human-month></div>
-                    <@dates>
+                <@years>
+                <div class="block block-years">
+                  <div class="year title is-4"><.year></div>
+
+                  <div class="month-block">
+                    <@months>
+                    <div class="month-log">
+                      <div class="month"><.human-month></div>
+                      <@dates>
                       <?.conversation><a href="<.date>.html"><div class="day"><.day></div></a></?>
                       <!.conversation><div class="day <?.empty>empty</?>"><.day></div></!>
+                      </@>
+                    </div>
                     </@>
                   </div>
+                </div>
                 </@>
+
               </div>
-            </@>
 
             </div>
-
-
           </div>
+
+          <!-- main container ends -->
+        </div>
+
       </section>
-      <!-- main container ends -->
-
-
     </div>
+
     <!-- Columns end -->
 
     <&footer>
-
+    <script defer src="/fontawesome.js"></script>
   </body>
 </html>
