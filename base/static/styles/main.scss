@@ -1192,10 +1192,16 @@ a.navbar-burger:hover {
   }
 }
 
-// Align sidebar on search page
-@include from(1800px) {
-  .container.has-sidebar {
-    left: -150px;
+// Fix level layout when sidebar is open
+@include until($desktop) {
+  #main-container.has-sidebar {
+    .level-top {
+      flex-direction: column;
+
+      .level-item {
+        padding: 1rem;
+      }
+    }
   }
 }
 
@@ -1276,3 +1282,4 @@ a.navbar-burger:hover {
     }
   }
 }
+
