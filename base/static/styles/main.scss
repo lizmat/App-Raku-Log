@@ -1002,6 +1002,12 @@ a.navbar-burger:hover {
   .table tr.special-same-nick {
     margin-top: 0;
     padding-top: 0;
+
+    @include until(480px) {
+      td:first-child {
+        display: none;
+      }
+    }
   }
 
   .table tr.special-selected {
@@ -1092,8 +1098,14 @@ a.navbar-burger:hover {
         display: block;
 
         &.column-time {
-          text-align: center;
+          width: auto;
+          // display: inline-block;
+          // text-align: center;
           font-weight: $weight-semibold;
+
+          position: absolute;
+          left: 50%;
+          transform: translate(-50%, 0);
         }
         
         &.column-author {
@@ -1105,7 +1117,10 @@ a.navbar-burger:hover {
         }
 
         &.column-buttons {
-          text-align: left;
+          width: auto;
+          // display: inline-block;
+          left: 1rem;
+          // text-align: left;
         }
 
       }
