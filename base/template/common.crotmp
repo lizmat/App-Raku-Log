@@ -66,8 +66,8 @@
 
 /* Set the width of the sidebar to 300px and the left margin of the page content to 300px */
 
-          setDisplayById('left-sidebar',  $showLeftSide);
-          setDisplayById('right-sidebar', $showRightSide);
+          setDisplayById('left-column',  $showLeftSide);
+          setDisplayById('right-column', $showRightSide);
           setGistTargets();
           markSelected();
           filterMessages();
@@ -483,7 +483,7 @@ in the selection.">
                 <&camelia-messages-box('block')>
               </div>
 
-              <div class="tab-block tab-search" data-content="2">
+              <div class="tab-block tab-search is-active" data-content="2">
                 <!-- Search tab -->
                 <form id="Search" action="/search.html"
                 onsubmit="return checkChannel()">
@@ -579,42 +579,45 @@ in the selection.">
 
     <!-- Columns -->
     <div id="wrapper">
-      <div class="columns">
 
-        <!-- Left sidebar  -->
-        <div id="left-column"
-          class="column is-narrow is-hidden-touch">
-          <div id="left-sidebar"
-          class="sidebar is-hidden-mobile"
-            style="display: none">
-            <form id="Search" action="/search.html"
-              onsubmit="return checkChannel()">
-              <&search-query($_)>
-              <&search-type($_)>
-              <&search-all-words($_)>
-              <&search-ignorecase($_)>
-              <&search-nicks($_)>
-              <&search-include-aliases($_)>
-              <&search-channel($_)>
-              <&search-message-type($_)>
-              <&search-entries-pp($_)>
-              <&search-from($_)>
-              <&search-until($_)>
-              <&search-submit($_)>
-            </form>
+      <section class="section day">
+
+        <div class="columns">
+
+          <!-- Left sidebar  -->
+          <div id="left-column"
+            style="display: none"
+            class="column is-narrow is-hidden-touch">
+            <div id="left-sidebar"
+              class="sidebar is-hidden-mobile"
+            >
+              <form id="Search" action="/search.html"
+                onsubmit="return checkChannel()">
+                <&search-query($_)>
+                <&search-type($_)>
+                <&search-all-words($_)>
+                <&search-ignorecase($_)>
+                <&search-nicks($_)>
+                <&search-include-aliases($_)>
+                <&search-channel($_)>
+                <&search-message-type($_)>
+                <&search-entries-pp($_)>
+                <&search-from($_)>
+                <&search-until($_)>
+                <&search-submit($_)>
+              </form>
+            </div>
           </div>
-        </div>
-        <!-- Left sidebar ends -->
+          <!-- Left sidebar ends -->
 
-        <!-- Middle column -->
-        <div class="column">
-          <section class="section day">
-            <div id="main-container" class="container">
+          <!-- Middle column -->
+          <div class="column column-middle">
+            <div id="main-container" class="container day">
 
               <!-- Messages -->
               <section id="message-log">
                 <table class="table message-table is-fullwidth">
-<?.initial-topic-text>
+                  <?.initial-topic-text>
                   <tr class="special-topic">
                     <td colspan="4">
                       <&HTML(.initial-topic-text)><br/>
@@ -622,15 +625,15 @@ in the selection.">
                       <a href="/<.channel>/<.initial-topic-date>.html#<.initial-topic-relative-target>"><.initial-topic-human-date></a>.
                     </td>
                   </tr>
-</?>
-<@entries>
-  <!$is-day>
-    <?.human-date>
-                      <tr class="special-date">
-                        <td colspan="4"><.human-date></td>
-                      </tr>
-    </?>
-  </!>
+                  </?>
+                  <@entries>
+                  <!$is-day>
+                  <?.human-date>
+                  <tr class="special-date">
+                    <td colspan="4"><.human-date></td>
+                  </tr>
+                  </?>
+                  </!>
                   <tr
                     <?.relative-target> id="<.relative-target>"</?>
                     <?.target>target="<.target>"</?>
@@ -640,24 +643,24 @@ in the selection.">
                     <?.test-t> class="special-test"</?>
                     <?.same-nick> class="special-same-nick"</?>
                     <?$is-gist> class="special-selected"</?>
-                  >
-  <?.control-events>
-                      <td/>
-                      <td colspan="2">
-                        <div class="is-size-7">
-                          <@control-events>
-                            <b id="<.id>"><.hh-mm></b>
-                            <&HTML(.message)>
-                          </@>
-                        </div>
-                      </td>
-  </?>
-  <!.control-events>
-                      <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
-                      <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
-                      ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
-                      <td class="column-time"><.hh-mm></td>
-  </!>
+                    >
+                    <?.control-events>
+                    <td/>
+                    <td colspan="2">
+                      <div class="is-size-7">
+                        <@control-events>
+                        <b id="<.id>"><.hh-mm></b>
+                        <&HTML(.message)>
+                        </@>
+                      </div>
+                    </td>
+                    </?>
+                    <!.control-events>
+                    <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
+                    <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
+                    ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
+                    <td class="column-time"><.hh-mm></td>
+                    </!>
                     <td class="column-buttons">
                       <div class="dropdown is-hoverable">
                         <div class="dropdown-trigger">
@@ -676,9 +679,9 @@ in the selection.">
                                 <ul class="menu-list">
                                   <li><&day-link($_, $is-day)></li>
                                   <li><&gist-link($_)></li>
-<?.runcode-link>
+                                  <?.runcode-link>
                                   <li><&runcode-link($_)></li>
-</?>
+                                  </?>
                                 </ul>
                               </div>
                             </div>
@@ -687,37 +690,38 @@ in the selection.">
                       </div>
                     </td>
                   </tr>
-</@>
+                  </@>
                 </table>
 
               </section>
               <!-- Messages ends -->
 
             </div>
-          </section>
-          <&footer>
+            <&footer>
 
-        </div>
-        <!-- Middle column ends -->
-
-        <!-- Right sidebar -->
-        <div id="right-column"
-          class="column is-narrow is-hidden-touch">
-          <div id="right-sidebar"
-            class="sidebar is-hidden-mobile"
-            style="display: none">
-            <&text-messages-input>
-            <&nick-messages-input>
-<?$is-day>
-            <&system-messages-box('block')>
-</?>
-            <&commit-messages-box('block')>
-            <&camelia-messages-box('block')>
           </div>
-        </div>
-        <!-- Right sidebar ends -->
+          <!-- Middle column ends -->
 
-      </div>
+          <!-- Right sidebar -->
+          <div id="right-column"
+            style="display: none"
+            class="column is-narrow is-hidden-touch">
+            <div id="right-sidebar"
+              class="sidebar is-hidden-mobile" >
+              <&text-messages-input>
+              <&nick-messages-input>
+              <?$is-day>
+              <&system-messages-box('block')>
+              </?>
+              <&commit-messages-box('block')>
+              <&camelia-messages-box('block')>
+            </div>
+          </div>
+          <!-- Right sidebar ends -->
+
+        </div>
+
+      </section>
     </div>
     <!-- Columns end -->
 
