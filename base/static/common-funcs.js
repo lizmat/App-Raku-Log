@@ -395,3 +395,11 @@ function filterMessages(
         visibilityCameliaOutput();
     }
 }
+
+function filterMessagesByNick(nick) {
+    filterMessages(nick);
+}
+
+function filterMessagesByText(text) {
+    filterMessages($filterMessagesByNick, text);
+}
