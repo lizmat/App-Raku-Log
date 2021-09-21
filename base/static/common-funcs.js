@@ -403,3 +403,18 @@ function filterMessagesByNick(nick) {
 function filterMessagesByText(text) {
     filterMessages($filterMessagesByNick, text);
 }
+
+function filterExcludeByNick(button) {
+  $filterExcludeByNick = setCookie(
+    'ExcludeByNick',
+    !!button.classList.contains('is-primary')
+  );
+  filterMessages();
+}
+function filterExcludeByText(button) {
+  $filterExcludeByText = setCookie(
+    'ExcludeByText',
+    !!button.classList.contains('is-primary')
+  );
+  filterMessages();
+}
