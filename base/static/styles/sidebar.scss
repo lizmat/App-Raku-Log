@@ -104,7 +104,7 @@ $sidebar-z: 25 !default;
   box-shadow: 1px 2px 2px 0px rgba( 0, 0, 0, 0.25 );
 }
 
-.search-sidebar {
+#left-sidebar {
   .delete {
     position: absolute;
     top: 1rem;
@@ -125,9 +125,9 @@ $sidebar-z: 25 !default;
     position: fixed;
     left: 1rem;
     // top: 2rem;
-    z-index: 50;
+    z-index: 20;
 
-    top: 1rem;
+    top: 2.5rem;
 
     .icon {
       margin-right: -0.5em;
@@ -138,3 +138,10 @@ $sidebar-z: 25 !default;
     }
   }
 }
+
+// Enable border on right sidebar
+#right-sidebar {
+  border-right: unset;
+  border-left: 1px solid $border;
+}
+

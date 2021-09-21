@@ -87,6 +87,7 @@ function setButtons(name, state) {
 // Generic function to set display state of an element by ID
 function setDisplayById(id, state) {
     document.getElementById(id).style.display = state ? "block" : "none";
+    document.getElementById(id).style.width = state ? "300px" : "0";
 }
 
 // Generic function to set state of checkboxes by id
@@ -100,13 +101,13 @@ function setCheckboxes(name, state) {
 // Toggle visibility of left sidebar
 function toggleLeftSidebar() {
     $showLeftSide = setCookie('showLeftSide', !$showLeftSide);
-    setDisplayById('left-sidebar', $showLeftSide);
+    setDisplayById('left-column', $showLeftSide);
 }
 
 // Toggle visibility of right sidebar
 function toggleRightSidebar() {
     $showRightSide = setCookie('showRightSide', !$showRightSide);
-    setDisplayById('right-sidebar', $showRightSide);
+    setDisplayById('right-column', $showRightSide);
 }
 
 // Submit search if Enter was pressed and all requirements are met

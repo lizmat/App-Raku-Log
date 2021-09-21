@@ -15,119 +15,179 @@
 
     <div id="wrapper">
 
-      <!-- main container -->
-
       <section class="section homepage">
-        <div id="main-container" class="container homepage">
 
-          <div class="block">
+        <div class="columns">
+          <!-- Left sidebar  -->
+          <div id="left-column"
+            class="column is-narrow is-mobile-fullwidth is-hidden">
+            <div id="left-sidebar"
+              class="sidebar"
+            >
+              <!-- Close button -->
+              <button class="delete"></button>
 
-            <div class="title is-size-5-mobile">
-              Welcome to the home of the Raku Programming Language IRC logs 
-            </div>
-
-            <p class="py-1">
-              This website provides access to the historic IRC logs of the development of the <a href="https://raku.org" target="_blank">Raku Programming Language</a> (née Perl 6).They are provided here as complete as possible, but there is no guarantee that these logs are by any means complete: network issues can cause an IRC logger to lose connection with the IRC server, while people are still chatting on a channel. Thus losing parts of the conversation, at least as seen by some people on a channel. 
-            </p>
-
-            <hr>
-
-            <nav class="level mt-3">
-              <div class="level-left">
-                <div class="level-item title is-4 is-size-5-mobile">
-                  Channel list
-                </div>
+              <div class="title is-size-5">
+                Search
               </div>
-              
 
-              <div class="level-right">
-                <form class="level" action="search.html">
-                  <div class="level-item">
-                    <div class="control is-inline-flex">
-                      <div class="select">
-                        <select name="channel">
-                          <@channels>
-                          <option value="<.name>">#<.name></option>
-                          </@>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="level-item">
-                    <div class="control has-icons-right is-inline-flex">
-                      <input name="query" class="input" type="text" placeholder="Search">
-                      <span class="icon is-small is-right">
-                        <i class="fas fa-search"></i>
-                      </span>
-                    </div>
-                  </div>
-
-                  <div class="level-item">
-                    <div class="control is-inline-flex">
-                      <button type="submit" class="button is-primary">Submit</button>
-                    </div>
-                  </div>
+              <div class="block">
+                <form id="Search" action="/search.html"
+                  onsubmit="return checkChannel()">
+                  <&search-query($_)>
+                  <&search-type($_)>
+                  <&search-all-words($_)>
+                  <&search-ignorecase($_)>
+                  <&search-nicks($_)>
+                  <&search-include-aliases($_)>
+                  <&search-channel($_)>
+                  <&search-message-type($_)>
+                  <&search-entries-pp($_)>
+                  <&search-from($_)>
+                  <&search-until($_)>
+                  <&search-submit($_)>
                 </form>
-
               </div>
-            </nav>
-
-
-            <div class="block homepage-thread">
-
-            <@channels>
-              <div class="thread-header">
-                <div class="is-inline-flex is-block-mobile">
-                  <a href="/<.name>/live.html" class="thread-link">
-                    #<.name>
-                  </a>
-
-                </div> 
-
-                <div class="v-div"></div>
-
-                <div class="is-inline-flex is-block-mobile">
-                  <a href="/<.name>/index.html">
-                    <span class="icon-text">
-                      <span class="icon">
-                        <i class="fas fa-calendar-alt"></i>
-                      </span>
-                      <span>Index</span>
-                    </span>
-                  </a>
-                </div>
-                &nbsp;
-                <div class="v-div"></div>
-
-                <div class="inline-flex is-block-mobile">
-                  <.first-human-date> - <.last-human-date>
-                </div>
-
-              </div>
-
-              <div class="block thread-years">
-                <@years>
-                  <p>
-                    <strong><.year></strong>
-                    <@months>
-                      <a href="/<.channel>/<.month>"><.human-month></a>&nbsp;&#124;&nbsp;
-                    </@>
-                  </p>
-                </@>
-              </div>
-            </@>
-
-            <!-- thread list ends -->
-
+            </div>
           </div>
-      </section>
-      <!-- main container ends -->
+          <!-- Left sidebar ends -->
+
+          
+          <!-- main container -->
+          <div class="column column-middle">
+
+            <div id="main-container" class="container homepage">
+
+              <div class="block main-block">
+
+                <div class="title is-size-5-mobile has-text-centered">
+                  Welcome to the home of the Raku Programming Language IRC logs 
+                </div>
+
+                <p class="py-1">
+                  This website provides access to the historic IRC logs of the development of the <a href="https://raku.org" target="_blank">Raku Programming Language</a> (née Perl 6).They are provided here as complete as possible, but there is no guarantee that these logs are by any means complete: network issues can cause an IRC logger to lose connection with the IRC server, while people are still chatting on a channel. Thus losing parts of the conversation, at least as seen by some people on a channel. 
+                </p>
+
+                <hr>
+
+                <nav class="level mt-3">
+                  <div class="level-left">
+
+                    <div class="level-item">
+                      <button id="search-sidebar-toggle" class="button is-primary" onclick="document.getElementById('left-column').classList.toggle('is-hidden'); document.getElementById('main-container').classList.toggle('has-sidebar')">
+                        
+                        <span class="icon-text">
+                          <span class="icon">
+                            <i class="fas fa-bars"></i>
+                          </span> 
+                          <span class="toggle-text">
+                            Search
+                          </span>
+                        </span>
+                      </button>
+                    </div>
 
 
+                    <div class="level-item title is-4 is-size-5-mobile">
+                      Channel list
+                    </div>
+                  </div>
+                  
+
+                  <!-- <div class="level-right">
+                       <form class="level" action="search.html">
+                       <div class="level-item">
+                       <div class="control is-inline-flex">
+                       <div class="select">
+                       <select name="channel">
+                       <@channels>
+                       <option value="<.name>">#<.name></option>
+                       </@>
+                       </select>
+                       </div>
+                       </div>
+                       </div>
+
+                       <div class="level-item">
+                       <div class="control has-icons-right is-inline-flex">
+                       <input name="query" class="input" type="text" placeholder="Search">
+                       <span class="icon is-small is-right">
+                       <i class="fas fa-search"></i>
+                       </span>
+                       </div>
+                       </div>
+
+                       <div class="level-item">
+                       <div class="control is-inline-flex">
+                       <button type="submit" class="button is-primary">Submit</button>
+                       </div>
+                       </div>
+                       </form>
+
+                       </div> -->
+                </nav>
+
+
+                <div class="block homepage-thread">
+
+                  <@channels>
+                  <div class="thread-header">
+                    <div class="is-inline-flex is-block-mobile">
+                      <a href="/<.name>/live.html" class="thread-link">
+                        #<.name>
+                      </a>
+
+                    </div> 
+
+                    <div class="v-div"></div>
+
+                    <div class="is-inline-flex is-block-mobile">
+                      <a href="/<.name>/index.html">
+                        <span class="icon-text">
+                          <span class="icon">
+                            <i class="fas fa-calendar-alt"></i>
+                          </span>
+                          <span>Index</span>
+                        </span>
+                      </a>
+                    </div>
+                    &nbsp;
+                    <div class="v-div"></div>
+
+                    <div class="inline-flex is-block-mobile">
+                      <.first-human-date> - <.last-human-date>
+                    </div>
+
+                  </div>
+
+                  <div class="block thread-years">
+                    <@years>
+                    <p class="year-block">
+                      <strong class="year"><.year></strong>
+                      <@months>
+                      <a class="month" href="/<.channel>/<.month>"><.human-month></a><span class="vline">&nbsp;&#124;&nbsp;</span>
+                      </@>
+                    </p>
+                    </@>
+                  </div>
+                  </@>
+
+                  <!-- thread list ends -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- main container ends -->
         </div>
-        <!-- Columns end -->
 
-      <&footer>
+      </section>
+
+    </div>
+
+    <!-- Columns end -->
+
+    <&footer>
+    <script defer src="/fontawesome.js"></script>
   </body>
 </html>

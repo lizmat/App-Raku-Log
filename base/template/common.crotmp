@@ -66,8 +66,8 @@
 
 /* Set the width of the sidebar to 300px and the left margin of the page content to 300px */
 
-          setDisplayById('left-sidebar',  $showLeftSide);
-          setDisplayById('right-sidebar', $showRightSide);
+          setDisplayById('left-column',  $showLeftSide);
+          setDisplayById('right-column', $showRightSide);
           setGistTargets();
           markSelected();
           filterMessages();
@@ -79,22 +79,28 @@
       });
     </script>
   </head>
-  <body class="has-navbar-fixed-top">
+  <body class="has-navbar-fixed-top has-mobile-navbar-fixed-top">
 
     <!-- Header -->
     <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
 
       <!-- Left sidebar header -->
       <div id="navbar-left-toggle"
-        class="navbar-filter-settings has-tooltip-bottom"
-        title="Toggle search sidebar">
-        <a class="navbar-item navbar-sidebar-btn"
+        class="has-tooltip-bottom"
+        title="Toggle search sidebar"
+      >
+        <a class="navbar-item navbar-filter-settings navbar-sidebar-btn"
           onclick="toggleLeftSidebar()">
-          <span class="icon-text filter">
-            <&icon('cogs')>
-            <span class="sidebar-title">Search</span>
-          </span>
-          <&icon('chevron-left')>
+          <div class="empty"></div>
+          <div>
+            <span class="icon-text filter">
+              <&icon('cogs')>
+              <span class="sidebar-title">Search</span>
+            </span>
+          </div>
+          <div class="sidebar-arrow">
+            <&icon('chevron-left')>
+          </div>
         </a>
       </div>
       <!-- Left sidebar header ends -->
@@ -103,9 +109,12 @@
       <div class="navbar-brand">
         <a href="/" class="navbar-item" 
           title="Go to the home page of the Raku IRC log browser"
-        ><img src="/camelia.png" width="40" height="28"></a>
+        ><img class="camelia-image" src="/camelia.png" width="40" height="28"></a>
 
-<!-- Add action to open modal window with channels or the right sidebar -->
+
+      <div class="navbar-delimiter"></div>
+
+        <!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
             <span
@@ -159,6 +168,46 @@ repeat the current search."
           </div>
         </div>
 
+       <div class="navbar-delimiter"></div>
+
+       <div class="is-hidden-mobile is-hidden-tablet is-flex-tablet-only">
+            <?$is-live>Live</?>
+            <?$is-day>
+              <!-- Day navigator -->
+            <div class="msg-log-date-switcher">
+              <a href="/<.channel>/prev/<.date>">
+                <button class="button is-primary">
+                  <&icon('chevron-left')>
+                </button>
+              </a>
+
+              <!-- TODO: replace is-hoverable with JS implementation and use class is-active on dropdown -->
+              <div class="dropdown is-hoverable">
+                <div class="dropdown-trigger">
+                  <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
+                    <span><.date-human></span>
+                    <&icon('chevron-down')>
+                  </button>
+                </div>
+                <div class="dropdown-menu">
+                  <div class="dropdown-content">
+                    <input id="sidebar-datepicker" type="date">
+                  </div>
+                </div>
+              </div>
+
+              <a href="/<.channel>/next/<.date>">
+                <button class="button is-primary">
+                  <&icon('chevron-right')>
+                </button>
+              </a>
+            </div>
+            <!-- Day navigator ends -->
+            </?>
+            <?$is-gist>Gist</?>
+            <?$is-search>Search</?>
+       </div>
+
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
           <span aria-hidden="true"></span>
           <span aria-hidden="true"></span>
@@ -167,28 +216,57 @@ repeat the current search."
       </div>
       <!-- Channel selection ends -->
 
+
       <!-- Page type header -->
-      <div class="navbar-menu">
-        <div class="navbar-item">
-          <span class="is-text" style="font-size:125%">
+        <div class="navbar-item navbar-switcher">
             <?$is-live>Live</?>
-            <?$is-day>Day</?>
+            <?$is-day>
+              <!-- Day navigator -->
+            <div class="msg-log-date-switcher">
+              <a href="/<.channel>/prev/<.date>">
+                <button class="button is-primary">
+                  <&icon('chevron-left')>
+                </button>
+              </a>
+
+              <!-- TODO: replace is-hoverable with JS implementation and use class is-active on dropdown -->
+              <div class="dropdown is-hoverable">
+                <div class="dropdown-trigger">
+                  <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
+                    <span><.date-human></span>
+                    <&icon('chevron-down')>
+                  </button>
+                </div>
+                <div class="dropdown-menu">
+                  <div class="dropdown-content">
+                    <input id="sidebar-datepicker" type="date">
+                  </div>
+                </div>
+              </div>
+
+              <a href="/<.channel>/next/<.date>">
+                <button class="button is-primary">
+                  <&icon('chevron-right')>
+                </button>
+              </a>
+            </div>
+            <!-- Day navigator ends -->
+            </?>
             <?$is-gist>Gist</?>
             <?$is-search>Search</?>
-          </span>
         </div>
-      </div>
       <!-- Page type header ends -->
 
       <!-- Other header menus -->
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
 
+          <div class="navbar-delimiter"></div>
+
           <!-- Browse menu -->
-          <div class="navbar-item dropdown is-hoverable">
-            <div class="navbar-delimiter"></div>
+          <div class="navbar-item dropdown is-hoverable is-hidden-touch">
             <div class="dropdown-trigger">
-              <span class="is-text navbar-current-channel-name"
+              <span class="is-text navbar-browse-label"
                 title="Select the way you would like to
 browse the messages on the #<.channel> channel."
                 aria-haspopup="true"
@@ -199,7 +277,7 @@ browse the messages on the #<.channel> channel."
               </span>
             </div>
             <div id="dropdown-menu4"
-              class="dropdown-menu navbar-channels-dropdown"
+              class="dropdown-menu navbar-browse-dropdown"
               role="menu">
               <div class="dropdown-content">
                 <div class="dropdown-item">
@@ -256,11 +334,12 @@ channel on <.date-human>.">
           </div>
           <!-- Browse menu ends -->
 
+          <div class="navbar-delimiter"></div>
+
           <!-- Gist menu -->
-          <div class="navbar-item dropdown is-hoverable">
-            <div class="navbar-delimiter"></div>
+          <div class="navbar-item dropdown is-hoverable is-hidden-touch">
             <div class="dropdown-trigger">
-              <span class="is-text navbar-current-channel-name"
+              <span class="is-text navbar-gist-label"
                 title="A message can be added or removed from
 your collection of messages for the #<.channel>
 channel from the ... pulldown with each message.
@@ -276,7 +355,7 @@ selection."
               </span>
             </div>
             <div id="dropdown-menu4"
-              class="dropdown-menu navbar-channels-dropdown"
+              class="dropdown-menu navbar-gist-dropdown"
               role="menu">
               <div class="dropdown-content">
                 <div class="dropdown-item">
@@ -322,52 +401,110 @@ in the selection.">
           <!-- Gist menu ends -->
 
           <!-- Mobile only forms in header -->
-          <div id="mobile-forms" class="is-hidden-tablet">
-  <!-- TODO: center text here -->
-            <table width="100%">
-              <tr>
-                <td><&text-messages-input></td>
-                <td><&nick-messages-input></td>
-              </tr>
-            </table>
-            <table width="100%">
-<!$is-live>
-              <tr>
-                <td colspan="2"><&system-messages-box></td>
-              </tr>
-</!>
-              <tr>
-                <td><&commit-messages-box></td>
-                <td><&camelia-messages-box></td>
-              </tr>
-            </table>
-            <hr/>
-            <form id="Search" action="/search.html"
-              onsubmit="return checkSearchParameters()">
-              <table width="100%">
-                <tr>
-                  <td><&search-query($_)></td>
-                  <td><p>&nbsp;</p><&search-type($_)></td>
-                </tr><tr>
-                  <td><&search-all-words($_)></td>
-                  <td><&search-ignorecase($_)></td>
-                </tr>
-                <tr><td><&search-nicks($_)></td></tr>
-                <tr><td><&search-include-aliases($_)></td></tr>
-                <tr>
-                  <td><&search-channel($_)></td>
-                  <td><&search-message-type($_)></td>
-                  <td><&search-entries-pp($_)></td>
-                </tr>
-              </table>
-              <table>
-                <tr>
-                  <td><&search-from($_)></td>
-                  <td><&search-until($_)></td>
-                </tr>
-              </table>
-              <&search-submit($_)>
-            </form>
+          <div id="mobile-forms" class="is-hidden-desktop">
+
+            <div>
+              <div class="menu">
+                <ul class="menu-list">
+                  <!$is-live>
+                  <li title="Follow the messages on the #<.channel>
+                             channel as they are happening.  Allows
+                             scrolling-back in time.">
+                    <a href="/<.channel>/live.html">
+                      <&icon('signal')>
+                      <span>Live</span>
+                    </a>
+                  </li>
+                  </!>
+                  <li title="Look at messages of the last date
+                             for which messages have been seen
+                             on the #<.channel> channel.">
+                    <a href="/<.channel>/today">
+                      <&icon('inbox')>
+                      <span>Today</span>
+                    </a>
+                  </li>
+                  <li title="Look at the messages of a
+                             randomly selected date on the
+                             #<.channel> channel for that special
+                             serendipitous experience.">
+                    <a href="/<.channel>/random">
+                      <&icon('random')>
+                      <span>I Feel Lucky</span>
+                    </a>
+                  </li>
+                  <?$is-day>
+                  <li title="Download the raw log of the #<.channel>
+                             channel on <.date-human>.">
+                    <a href="/<.channel>/<.date>.log">
+                      <&icon('download')>
+                      <span>Raw</span>
+                    </a>
+                  </li>
+                  </?>
+                  <li title="Look at an overview of the
+                             #<.channel> channel and some background information.">
+                    <a href="/<.channel>/index.html">
+                      <&icon('star')>
+                      <span>Overview</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="tabs is-toggle is-fullwidth">
+              <ul>
+                <li class="is-active">
+                  <a>
+                    <!-- <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span> -->
+                    <span>Filter</span>
+                  </a>
+                </li>
+                <li>
+                  <a>
+                    <!-- <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span> -->
+                    <span>Search</span>
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div id="tab-content">
+              <div class="tab-block tab-filter is-active" data-content="1">
+                <&text-messages-input>
+                <&nick-messages-input>
+<?$is-day>
+                <&system-messages-box('block')>
+</?>
+                <&commit-messages-box('block')>
+                <&camelia-messages-box('block')>
+              </div>
+
+              <div class="tab-block tab-search is-active" data-content="2">
+                <!-- Search tab -->
+                <form id="Search" action="/search.html"
+                onsubmit="return checkChannel()">
+                  <&search-query($_)>
+                  <&search-type($_)>
+                  <&search-all-words($_)>
+                  <&search-ignorecase($_)>
+                  <&search-nicks($_)>
+                  <&search-include-aliases($_)>
+                  <&search-channel($_)>
+                  <&search-message-type($_)>
+                  <&search-entries-pp($_)>
+                  <&search-from($_)>
+                  <&search-until($_)>
+                  <&search-submit($_)>
+                </form>
+              </div>
+
+            </div>
+
+
           </div>
           <!-- Mobile only forms in header ends -->
 
@@ -381,92 +518,106 @@ in the selection.">
         title="Toggle filter sidebar">
         <a class="navbar-item navbar-channels navbar-sidebar-btn"
           onClick="toggleRightSidebar()">
+          <div class="sidebar-arrow">
           <&icon('chevron-right')>
+          </div>
+          <div>
           <span class="icon-text">
             <&icon('cogs')>
             <span class="sidebar-title">Filter</span>
           </span>
+          </div>
+          <div class="empty"></div>
         </a>
       </div>
       <!-- Right sidebar header ends -->
+
+    </nav>
+
+    <nav id="mobile-navbar" class="secondary-navbar is-fixed-top">
+      <?$is-day>
+      <!-- Day navigator -->
+      <nav class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <div class="msg-log-date-switcher">
+              <a href="/<.channel>/prev/<.date>">
+                <button class="button">
+                  <&icon('angle-double-left')>
+                </button>
+              </a>
+
+              <!-- TODO: replace is-hoverable with JS implementation and use class is-active on dropdown -->
+              <div class="dropdown date-dropdown is-hoverable">
+                <div class="dropdown-trigger">
+                  <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
+                    <span><.date-human></span>
+                    <&icon('chevron-down')>
+                  </button>
+                </div>
+                <div class="dropdown-menu">
+                  <div class="dropdown-content">
+                    <input id="sidebar-datepicker" type="date">
+                  </div>
+                </div>
+              </div>
+
+              <a href="/<.channel>/next/<.date>">
+                <button class="button">
+                  <&icon('angle-double-right')>
+                </button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- Day navigator ends -->
+      </?>
 
     </nav>
     <!-- Header ends -->
 
     <!-- Columns -->
     <div id="wrapper">
-      <div class="columns">
 
-        <!-- Left sidebar  -->
-        <div id="left-column"
-          class="column is-narrow is-hidden-touch">
-          <div id="left-sidebar"
-          class="sidebar is-hidden-mobile"
-            style="display: none">
-            <form id="Search" action="/search.html"
-              onsubmit="return checkChannel()">
-              <&search-query($_)>
-              <&search-type($_)>
-              <&search-all-words($_)>
-              <&search-ignorecase($_)>
-              <&search-nicks($_)>
-              <&search-include-aliases($_)>
-              <&search-channel($_)>
-              <&search-message-type($_)>
-              <&search-entries-pp($_)>
-              <&search-from($_)>
-              <&search-until($_)>
-              <&search-submit($_)>
-            </form>
+      <section class="section day">
+
+        <div class="columns">
+
+          <!-- Left sidebar  -->
+          <div id="left-column"
+            style="display: none"
+            class="column is-narrow is-hidden-touch">
+            <div id="left-sidebar"
+              class="sidebar is-hidden-mobile"
+            >
+              <form id="Search" action="/search.html"
+                onsubmit="return checkChannel()">
+                <&search-query($_)>
+                <&search-type($_)>
+                <&search-all-words($_)>
+                <&search-ignorecase($_)>
+                <&search-nicks($_)>
+                <&search-include-aliases($_)>
+                <&search-channel($_)>
+                <&search-message-type($_)>
+                <&search-entries-pp($_)>
+                <&search-from($_)>
+                <&search-until($_)>
+                <&search-submit($_)>
+              </form>
+            </div>
           </div>
-        </div>
-        <!-- Left sidebar ends -->
+          <!-- Left sidebar ends -->
 
-        <!-- Middle column -->
-        <div class="column">
-          <section class="section">
-            <div id="main-container" class="container">
-
-<?$is-day>
-              <!-- Day navigator -->
-              <nav class="level">
-                <div class="level-left">
-                  <div class="level-item">
-                    <div class="msg-log-date-switcher">
-                      <a href="/<.channel>/prev/<.date>">
-                        <button class="button is-primary">
-                          <&icon('chevron-left')>
-                        </button>
-                      </a>
-                      <span class="title is-4 today-date"><.date-human></span>
-                      <a href="/<.channel>/next/<.date>">
-                        <button class="button is-primary">
-                          <&icon('chevron-right')>
-                        </button>
-                      </a>
-                      <div class="navbar-item dropdown is-hoverable">
-                        <div class="dropdown-trigger">
-                          <button class="button is-primary">
-                            <&icon('calendar')>
-                          </button>
-                        </div>
-                        <div class="dropdown-menu">
-                          <div class="dropdown-content">
-                            <input id="sidebar-datepicker" type="date">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </nav>
-              <!-- Day navigator ends -->
-</?>
+          <!-- Middle column -->
+          <div class="column column-middle">
+            <div id="main-container" class="container day">
 
               <!-- Messages -->
               <section id="message-log">
                 <table class="table message-table is-fullwidth">
-<?.initial-topic-text>
+                  <?.initial-topic-text>
                   <tr class="special-topic">
                     <td colspan="4">
                       <&HTML(.initial-topic-text)><br/>
@@ -474,15 +625,15 @@ in the selection.">
                       <a href="/<.channel>/<.initial-topic-date>.html#<.initial-topic-relative-target>"><.initial-topic-human-date></a>.
                     </td>
                   </tr>
-</?>
-<@entries>
-  <!$is-day>
-    <?.human-date>
-                      <tr class="special-date">
-                        <td colspan="4"><.human-date></td>
-                      </tr>
-    </?>
-  </!>
+                  </?>
+                  <@entries>
+                  <!$is-day>
+                  <?.human-date>
+                  <tr class="special-date">
+                    <td colspan="4"><.human-date></td>
+                  </tr>
+                  </?>
+                  </!>
                   <tr
                     <?.relative-target> id="<.relative-target>"</?>
                     <?.target>target="<.target>"</?>
@@ -492,26 +643,24 @@ in the selection.">
                     <?.test-t> class="special-test"</?>
                     <?.same-nick> class="special-same-nick"</?>
                     <?$is-gist> class="special-selected"</?>
-                  >
-  <?.control-events>
-                      <td/>
-                      <td colspan="2">
-                        <div class="is-size-7">
-                          <@control-events>
-                            <b id="<.id>"><.hh-mm></b>
-                            <&HTML(.message)>
-                          </@>
-                        </div>
-                      </td>
-  </?>
-  <!.control-events>
-                      <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
-                      <td
-                        <?.code> class="column-code"</?>
-                        <?.commit> class="column-commit"</?>
-                      ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
-                      <td class="column-time"><.hh-mm></td>
-  </!>
+                    >
+                    <?.control-events>
+                    <td/>
+                    <td colspan="2">
+                      <div class="is-size-7">
+                        <@control-events>
+                        <b id="<.id>"><.hh-mm></b>
+                        <&HTML(.message)>
+                        </@>
+                      </div>
+                    </td>
+                    </?>
+                    <!.control-events>
+                    <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
+                    <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
+                    ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
+                    <td class="column-time"><.hh-mm></td>
+                    </!>
                     <td class="column-buttons">
                       <div class="dropdown is-hoverable">
                         <div class="dropdown-trigger">
@@ -530,9 +679,9 @@ in the selection.">
                                 <ul class="menu-list">
                                   <li><&day-link($_, $is-day)></li>
                                   <li><&gist-link($_)></li>
-<?.runcode-link>
+                                  <?.runcode-link>
                                   <li><&runcode-link($_)></li>
-</?>
+                                  </?>
                                 </ul>
                               </div>
                             </div>
@@ -541,37 +690,38 @@ in the selection.">
                       </div>
                     </td>
                   </tr>
-</@>
+                  </@>
                 </table>
 
               </section>
               <!-- Messages ends -->
 
             </div>
-          </section>
-          <&footer>
+            <&footer>
 
-        </div>
-        <!-- Middle column ends -->
-
-        <!-- Right sidebar -->
-        <div id="right-column"
-          class="column is-narrow is-hidden-touch">
-          <div id="right-sidebar"
-            class="sidebar is-hidden-mobile"
-            style="display: none">
-            <&text-messages-input>
-            <&nick-messages-input>
-<?$is-day>
-            <&system-messages-box('block')>
-</?>
-            <&commit-messages-box('block')>
-            <&camelia-messages-box('block')>
           </div>
-        </div>
-        <!-- Right sidebar ends -->
+          <!-- Middle column ends -->
 
-      </div>
+          <!-- Right sidebar -->
+          <div id="right-column"
+            style="display: none"
+            class="column is-narrow is-hidden-touch">
+            <div id="right-sidebar"
+              class="sidebar is-hidden-mobile" >
+              <&text-messages-input>
+              <&nick-messages-input>
+              <?$is-day>
+              <&system-messages-box('block')>
+              </?>
+              <&commit-messages-box('block')>
+              <&camelia-messages-box('block')>
+            </div>
+          </div>
+          <!-- Right sidebar ends -->
+
+        </div>
+
+      </section>
     </div>
     <!-- Columns end -->
 
