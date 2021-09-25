@@ -181,7 +181,6 @@ repeat the current search."
                 </button>
               </a>
 
-              <!-- TODO: replace is-hoverable with JS implementation and use class is-active on dropdown -->
               <div class="dropdown is-hoverable">
                 <div class="dropdown-trigger">
                   <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -229,7 +228,6 @@ repeat the current search."
                 </button>
               </a>
 
-              <!-- TODO: replace is-hoverable with JS implementation and use class is-active on dropdown -->
               <div class="dropdown is-hoverable">
                 <div class="dropdown-trigger">
                   <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -547,7 +545,6 @@ in the selection.">
                 </button>
               </a>
 
-              <!-- TODO: replace is-hoverable with JS implementation and use class is-active on dropdown -->
               <div class="dropdown date-dropdown is-hoverable">
                 <div class="dropdown-trigger">
                   <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
