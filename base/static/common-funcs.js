@@ -2,6 +2,14 @@
 var $showLeftSide  = getCookie("showLeftSide");
 var $showRightSide = getCookie("showRightSide");
 
+// Init main position wrt sidebars
+if ($showLeftSide === true) {
+    document.getElementById('main-container').classList.add('has-left-sidebar');
+}
+if ($showRightSide === true) {
+    document.getElementById('main-container').classList.add('has-right-sidebar');
+}
+
 // targets for gist of current channel
 var $currentChannel;
 var $gistTargets;
@@ -101,12 +109,22 @@ function setCheckboxes(name, state) {
 // Toggle visibility of left sidebar
 function toggleLeftSidebar() {
     $showLeftSide = setCookie('showLeftSide', !$showLeftSide);
+    if ($showLeftSide === "" || !$showLeftSide) {
+        document.getElementById('main-container').classList.remove('has-left-sidebar');
+    } else {
+        document.getElementById('main-container').classList.add('has-left-sidebar');
+    }
     setDisplayById('left-column', $showLeftSide);
 }
 
 // Toggle visibility of right sidebar
 function toggleRightSidebar() {
     $showRightSide = setCookie('showRightSide', !$showRightSide);
+    if ($showRightSide === "" || !$showRightSide) {
+        document.getElementById('main-container').classList.remove('has-right-sidebar');
+    } else {
+        document.getElementById('main-container').classList.add('has-right-sidebar');
+    }
     setDisplayById('right-column', $showRightSide);
 }
 
