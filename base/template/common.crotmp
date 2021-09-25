@@ -455,14 +455,14 @@ in the selection.">
 
             <div class="tabs is-toggle is-fullwidth">
               <ul>
-                <li class="is-active">
-                  <a>
+                <li id="filter-mobile-switch" class="is-active">
+                  <a onclick="switchMobileTab(0);">
                     <!-- <span class="icon is-small"><i class="fas fa-image" aria-hidden="true"></i></span> -->
                     <span>Filter</span>
                   </a>
                 </li>
-                <li>
-                  <a>
+                <li id="search-mobile-switch">
+                  <a onclick="switchMobileTab(1);">
                     <!-- <span class="icon is-small"><i class="fas fa-music" aria-hidden="true"></i></span> -->
                     <span>Search</span>
                   </a>
@@ -471,7 +471,7 @@ in the selection.">
             </div>
 
             <div id="tab-content">
-              <div class="tab-block tab-filter is-active" data-content="1">
+              <div id="tab-filter" class="tab-block tab-filter is-active" data-content="1">
                 <&text-messages-input>
                 <&nick-messages-input>
 <?$is-day>
@@ -481,7 +481,7 @@ in the selection.">
                 <&camelia-messages-box('block')>
               </div>
 
-              <div class="tab-block tab-search is-active" data-content="2">
+              <div id="tab-search" class="tab-block tab-search" data-content="2">
                 <!-- Search tab -->
                 <form id="Search" action="/search.html"
                 onsubmit="return checkChannel()">

@@ -128,6 +128,21 @@ function toggleRightSidebar() {
     setDisplayById('right-column', $showRightSide);
 }
 
+// Toggle currently opened tab in a mobile filter/search menu
+function switchMobileTab(num) {
+    if (num === 0) {
+        document.getElementById('filter-mobile-switch').classList.add('is-active');
+        document.getElementById('search-mobile-switch').classList.remove('is-active');
+        document.getElementById('tab-filter').classList.add('is-active');
+        document.getElementById('tab-search').classList.remove('is-active');
+    } else if (num === 1) {
+        document.getElementById('search-mobile-switch').classList.add('is-active');
+        document.getElementById('filter-mobile-switch').classList.remove('is-active');
+        document.getElementById('tab-search').classList.add('is-active');
+        document.getElementById('tab-filter').classList.remove('is-active');
+    }
+}
+
 // Submit search if Enter was pressed and all requirements are met
 function submitSearchIfEnter() {
     if (event.keyCode == 13 && okToSubmitSearch()) {
