@@ -72,6 +72,26 @@
 <?$is-live>
           history.scrollRestoration = "manual";
           window.onload = scrollToBottom;
+          var previousY = 0;
+          var upTarget = "<.up-target>";
+          window.addEventListener('scroll', function(e) {
+            var currentY = window.scrollY;
+            if (Math.min(currentY, previousY) == currentY && currentY == 0 && upTarget !== null) {
+              var xmlHttp = new XMLHttpRequest();
+              var url = "/<.channel>/scroll-up.html?target=" + upTarget;
+              xmlHttp.open("GET", url, false);
+              xmlHttp.send(null);
+              var tbodyEl = document.querySelector("tbody");
+              tbodyEl.innerHTML = xmlHttp.responseText + tbodyEl.innerHTML;
+              var newTargetEl = tbodyEl.children[1];
+              if (newTargetEl.hasAttribute("target")) {
+                  upTarget = document.querySelector("tbody").children[1].getAttribute("target");
+              } else {
+                  upTarget = null;
+              }
+            }
+            previousY = currentY;
+          });
 </?>
       });
     </script>
