@@ -56,13 +56,22 @@ sub htmlize($entry, %colors) is export {
         $text .= subst('<', '&lt;',  :global);
         $text .= subst('>', '&gt;',  :global);
 
+        sub strip-protocol($url) {
+            with $url.index('://') {
+                $url.substr($_ + 3)
+            }
+            else {
+                $url
+            }
+        }
+
         # URL linking
         $text .= subst( / https? '://' \S+ /, {
             my $link   := $/.Str;
             '<a href="'
               ~ $link
               ~ '">'
-              ~ ($link.chars > 55
+              ~ strip-protocol($link.chars > 55
                   ?? "$link.substr(0,42)...$link.substr(*-10)"
                   !! $link
                 )
