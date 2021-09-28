@@ -1,4 +1,4 @@
-#!/usr/bin/env raku
+#!/usr/bin/env raku --ll-exception
 
 use v6.*;
 
