@@ -46,15 +46,12 @@
 
           var options = {
             displayMode: 'inline',
-             showHeader: false,
-             showFooter: false,
-              weekStart: 1,
-             dateFormat: 'yyyy-MM-dd',
-              startDate: new Date("<.start-date>"),
-                endDate: new Date("<.end-date>"),
-                minDate: new Date("<.first-date>"),
-                maxDate: new Date("<.last-date>")
-              // TODO anyone wanting to add a working minDate: 'today' here?
+            showHeader: false,
+            showFooter: false,
+            weekStart: 1,
+            dateFormat: 'yyy-MM-dd',
+            startDate: new Date("<.start-date>"),
+            endDate: new Date("<.end-date>"),
           };
           var calendars = bulmaCalendar.attach('[id="sidebar-datepicker"]', options);
           for (let i = 0; i < calendars.length; i++) {
@@ -99,7 +96,7 @@
             </span>
           </div>
           <div class="sidebar-arrow">
-            <&icon('chevron-left')>
+            <&icon('chevron-right')>
           </div>
         </a>
       </div>
@@ -517,7 +514,7 @@ in the selection.">
         <a class="navbar-item navbar-channels navbar-sidebar-btn"
           onClick="toggleRightSidebar()">
           <div class="sidebar-arrow">
-          <&icon('chevron-right')>
+          <&icon('chevron-left')>
           </div>
           <div>
           <span class="icon-text">

@@ -111,8 +111,10 @@ function toggleLeftSidebar() {
     $showLeftSide = setCookie('showLeftSide', !$showLeftSide);
     if ($showLeftSide === "" || !$showLeftSide) {
         document.getElementById('main-container').classList.remove('has-left-sidebar');
+        document.getElementById('navbar-left-toggle').querySelectorAll('svg')[1].classList.add('fa-chevron-right');
     } else {
         document.getElementById('main-container').classList.add('has-left-sidebar');
+        document.getElementById('navbar-left-toggle').querySelectorAll('svg')[1].classList.add('fa-chevron-left');
     }
     setDisplayById('left-column', $showLeftSide);
 }
@@ -122,8 +124,10 @@ function toggleRightSidebar() {
     $showRightSide = setCookie('showRightSide', !$showRightSide);
     if ($showRightSide === "" || !$showRightSide) {
         document.getElementById('main-container').classList.remove('has-right-sidebar');
+        document.getElementById('navbar-right-toggle').querySelectorAll('svg')[0].classList.add('fa-chevron-left');
     } else {
         document.getElementById('main-container').classList.add('has-right-sidebar');
+        document.getElementById('navbar-right-toggle').querySelectorAll('svg')[0].classList.add('fa-chevron-right');
     }
     setDisplayById('right-column', $showRightSide);
 }
