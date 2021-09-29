@@ -334,6 +334,12 @@ sub mark-camelia-invocations(@entries --> Nil) {
     }
 }
 
+sub live-plugins() is export {
+    my constant @live-plugins =
+      &mark-camelia-invocations,
+    ;
+}
+
 sub day-plugins() is export {
     my constant @day-plugins =
       &merge-commit-messages, 

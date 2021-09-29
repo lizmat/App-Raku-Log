@@ -78,7 +78,7 @@
             var currentY = window.scrollY;
             if (Math.min(currentY, previousY) == currentY && currentY == 0 && upTarget !== null) {
               var xmlHttp = new XMLHttpRequest();
-              var url = "/<.channel>/scroll-up.html?target=" + upTarget;
+              var url = "/<.channel>/scroll-up.html?target=" + upTarget + "&entries=" + 15;
               xmlHttp.open("GET", url, false);
               xmlHttp.send(null);
               var tbodyEl = document.querySelector("tbody");
