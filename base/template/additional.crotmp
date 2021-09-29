@@ -1,37 +1,64 @@
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
-  <table class="chat" valign="top">
-    <?.up-target>
-      <tr><td><a href="scroll-up.html?target=<.up-target>&current-entries=<.up-entries>">scroll up</a></td></tr>
-    </?>
-    <@entries>
-      <?{ .human-date }><tr><td class="date" colspan="2"><hr/><a href="<.date>.html"><.human-date><hr/></td></tr></?>
-      <?{ .sender && .sender ne '"'}>
-        <!{ .commit }>
-          <tr id="nick">
-            <td class="nick" style="font-size: 110%;"><&HTML(.sender)></td>
-            <td id="<.relative-target>" align="right"><a href="<.date>.html#<.relative-target>">§</a></td>
-          </tr>
-        </!>
-      </?>
-      <tr><td class="talk odd"
-        <?{ .commit }> id="commit"</?>
-        <?{ .test-t }> id="test-t"</?>
-      ><&HTML(.message)></td>
-      <?.hh-mm>
-        <td align="right"><.hh-mm></td>
-      </?>
-      <!.hh-mm>
-        <td></td>
-      </!>
-      </tr>
-    </@>
-    <?.down-target>
-      <tr><td><a href="scroll-down.html?target=<.down-target>&current-entries=<.down-entries>">scroll down</a></td></tr>
-    </?>
-  </table>
-</body>
-</html>
+<:use 'base/template/common-subs.crotmp'>
+
+<@entries>
+<?.human-date>
+<tr class="special-date">
+  <td colspan="4"><.human-date></td>
+</tr>
+</?>
+<tr
+  <?.relative-target> id="<.relative-target>"</?>
+  <?.target>target="<.target>"</?>
+  <?.control-events> class="special-system"</?>
+  <?.commit> class="special-commit"</?>
+  <?.camelia> class="special-camelia"</?>
+  <?.test-t> class="special-test"</?>
+  <?.same-nick> class="special-same-nick"</?>
+  >
+  <?.control-events>
+  <td/>
+  <td colspan="2">
+    <div class="is-size-7">
+      <@control-events>
+      <b id="<.id>"><.hh-mm></b>
+      <&HTML(.message)>
+      </@>
+    </div>
+  </td>
+  </?>
+  <!.control-events>
+  <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
+  <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
+  ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
+  <td class="column-time"><.hh-mm></td>
+  </!>
+  <td class="column-buttons">
+    <div class="dropdown is-hoverable">
+      <div class="dropdown-trigger">
+        <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
+          <span class="icon is-small">
+            <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+      <div id="dropdown-menu4"
+        class="dropdown-menu msg-mobile-dropdown"
+        role="menu">
+        <div class="dropdown-content">
+          <div class="dropdown-item">
+            <div class="menu">
+              <ul class="menu-list">
+                <li><&day-link($_, False)></li>
+                <li><&gist-link($_)></li>
+                <?.runcode-link>
+                <li><&runcode-link($_)></li>
+                </?>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>
+</@>

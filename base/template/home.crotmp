@@ -74,7 +74,7 @@
                   <div class="level-left">
 
                     <div class="level-item">
-                      <button id="search-sidebar-toggle" class="button is-primary" onclick="document.getElementById('left-column').classList.toggle('is-hidden'); document.getElementById('main-container').classList.toggle('has-sidebar')">
+                      <button id="search-sidebar-toggle" class="button is-primary" onclick="document.getElementById('left-column').classList.toggle('is-hidden'); document.getElementById('main-container').classList.toggle('has-left-sidebar')">
                         
                         <span class="icon-text">
                           <span class="icon">
