@@ -493,9 +493,9 @@ in the selection.">
                 <&nick-messages-input>
 <?$is-day>
                 <&system-messages-box('block')>
-</?>
                 <&commit-messages-box('block')>
                 <&camelia-messages-box('block')>
+</?>
               </div>
 
               <div id="tab-search" class="tab-block tab-search" data-content="2">
@@ -724,11 +724,11 @@ in the selection.">
               class="sidebar is-hidden-mobile" >
               <&text-messages-input>
               <&nick-messages-input>
-              <?$is-day>
+<?$is-day>
               <&system-messages-box('block')>
-              </?>
               <&commit-messages-box('block')>
               <&camelia-messages-box('block')>
+</?>
             </div>
           </div>
           <!-- Right sidebar ends -->
