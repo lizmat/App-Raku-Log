@@ -78,7 +78,7 @@
           window.addEventListener('scroll', function(e) {
               let currentY = window.scrollY;
               if (currentY == 0) {
-                  if (0 > $minY) {
+                  if (-3 > $minY) {
                       if ($upTarget !== null) {
                           $upTarget = scrollup(
                             "<.channel>",
