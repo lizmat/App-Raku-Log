@@ -456,11 +456,19 @@ function filterExcludeByText(button) {
     filterMessages();
 }
 
+// scroll up the given channel/target for given number of entries
 function scrollup(channel, target, entries) {
     let xmlHttp = new XMLHttpRequest();
     let url = "/" + channel + "/scroll-up.html?target=" + target + "&entries=" + entries;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
+
+    let topElement = document.querySelector("tr[target='" + target + "']");
+    if (topElement) {
+        topElement.previousSibling.previousSibling.remove();
+        topElement.previousSibling.remove();
+        topElement.remove();
+    }
 
     let tbodyEl = document.querySelector("tbody");
     tbodyEl.innerHTML = xmlHttp.responseText + tbodyEl.innerHTML;
