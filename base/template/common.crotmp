@@ -80,7 +80,11 @@
               if (currentY == 0) {
                   if (0 > $minY) {
                       if ($upTarget !== null) {
-                          $upTarget = scrollup($upTarget, 5 + Math.floor(-$minY / 3));
+                          $upTarget = scrollup(
+                            "<.channel>",
+                            $upTarget,
+                            5 + Math.floor(-$minY / 3)
+                          );
                       }
                       $minY = 0;
                   }
@@ -89,23 +93,6 @@
                   $minY = Math.min($minY, currentY);
               }
           });
-
-          function scrollup(target, entries) {
-              let xmlHttp = new XMLHttpRequest();
-              let url = "/<.channel>/scroll-up.html?target=" + target + "&entries=" + entries;
-              xmlHttp.open("GET", url, false);
-              xmlHttp.send(null);
-
-              let tbodyEl = document.querySelector("tbody");
-              tbodyEl.innerHTML = xmlHttp.responseText + tbodyEl.innerHTML;
-
-              let newTargetEl = tbodyEl.children[1];
-              if (newTargetEl.hasAttribute("target")) {
-                  return document.querySelector("tbody").children[1].getAttribute("target");
-              } else {
-                  return null;
-              }
-          }
 </?>
       });
     </script>

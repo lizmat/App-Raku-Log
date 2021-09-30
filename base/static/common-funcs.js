@@ -442,16 +442,33 @@ function filterMessagesByText(text) {
 }
 
 function filterExcludeByNick(button) {
-  $filterExcludeByNick = setCookie(
-    'ExcludeByNick',
-    !!button.classList.contains('is-primary')
-  );
-  filterMessages();
+    $filterExcludeByNick = setCookie(
+      'ExcludeByNick',
+      !!button.classList.contains('is-primary')
+    );
+    filterMessages();
 }
 function filterExcludeByText(button) {
-  $filterExcludeByText = setCookie(
-    'ExcludeByText',
-    !!button.classList.contains('is-primary')
-  );
-  filterMessages();
+    $filterExcludeByText = setCookie(
+      'ExcludeByText',
+      !!button.classList.contains('is-primary')
+    );
+    filterMessages();
+}
+
+function scrollup(channel, target, entries) {
+    let xmlHttp = new XMLHttpRequest();
+    let url = "/" + channel + "/scroll-up.html?target=" + target + "&entries=" + entries;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+
+    let tbodyEl = document.querySelector("tbody");
+    tbodyEl.innerHTML = xmlHttp.responseText + tbodyEl.innerHTML;
+
+    let newTargetEl = tbodyEl.children[1];
+    if (newTargetEl.hasAttribute("target")) {
+        return document.querySelector("tbody").children[1].getAttribute("target");
+    } else {
+        return null;
+    }
 }
