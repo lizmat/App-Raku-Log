@@ -472,6 +472,7 @@ function scrollup(channel, target, entries) {
 
     let tbodyEl = document.querySelector("tbody");
     tbodyEl.innerHTML = xmlHttp.responseText + tbodyEl.innerHTML;
+    filterMessages();
 
     let newTargetEl = tbodyEl.children[1];
     if (newTargetEl.hasAttribute("target")) {
