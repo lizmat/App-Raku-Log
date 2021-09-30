@@ -72,26 +72,40 @@
 <?$is-live>
           history.scrollRestoration = "manual";
           window.onload = scrollToBottom;
-          var previousY = 0;
-          var upTarget = "<.up-target>";
+
+          var $minY      = 0;
+          var $upTarget = "<.up-target>";
           window.addEventListener('scroll', function(e) {
-            var currentY = window.scrollY;
-            if (Math.min(currentY, previousY) == currentY && currentY == 0 && upTarget !== null) {
-              var xmlHttp = new XMLHttpRequest();
-              var url = "/<.channel>/scroll-up.html?target=" + upTarget + "&entries=" + 15;
+              let currentY = window.scrollY;
+              if (currentY == 0) {
+                  if (0 > $minY) {
+                      if ($upTarget !== null) {
+                          $upTarget = scrollup($upTarget, 5 + Math.floor(-$minY / 3));
+                      }
+                      $minY = 0;
+                  }
+              }
+              else if (0 > currentY) {
+                  $minY = Math.min($minY, currentY);
+              }
+          });
+
+          function scrollup(target, entries) {
+              let xmlHttp = new XMLHttpRequest();
+              let url = "/<.channel>/scroll-up.html?target=" + target + "&entries=" + entries;
               xmlHttp.open("GET", url, false);
               xmlHttp.send(null);
-              var tbodyEl = document.querySelector("tbody");
+
+              let tbodyEl = document.querySelector("tbody");
               tbodyEl.innerHTML = xmlHttp.responseText + tbodyEl.innerHTML;
-              var newTargetEl = tbodyEl.children[1];
+
+              let newTargetEl = tbodyEl.children[1];
               if (newTargetEl.hasAttribute("target")) {
-                  upTarget = document.querySelector("tbody").children[1].getAttribute("target");
+                  return document.querySelector("tbody").children[1].getAttribute("target");
               } else {
-                  upTarget = null;
+                  return null;
               }
-            }
-            previousY = currentY;
-          });
+          }
 </?>
       });
     </script>
