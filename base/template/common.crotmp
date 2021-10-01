@@ -73,24 +73,23 @@
           history.scrollRestoration = "manual";
           window.onload = scrollToBottom;
 
-          var $minY      = 0;
-          var $upTarget = "<.up-target>";
+          var $minY = 0;
           window.addEventListener('scroll', function(e) {
               let currentY = window.scrollY;
               if (currentY == 0) {
                   if (-3 > $minY) {
                       if ($upTarget !== null) {
-                          $upTarget = scrollup(
-                            "<.channel>",
-                            $upTarget,
-                            5 + Math.floor(-$minY / 3)
-                          );
+                          scrollup("<.channel>", 5 + Math.floor(-$minY / 3));
                       }
                       $minY = 0;
                   }
               }
               else if (0 > currentY) {
                   $minY = Math.min($minY, currentY);
+              }
+
+              if (document.body.clientHeight > currentY) {  // NEEDS TUNING!!!
+                  scrolldown("<.channel>");
               }
           });
 </?>

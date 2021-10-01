@@ -457,8 +457,10 @@ function filterExcludeByText(button) {
 }
 
 // scroll up the given channel/target for given number of entries
-function scrollup(channel, target, entries) {
+// returns the new target to look for
+function scrollup(channel, entries) {
     let xmlHttp = new XMLHttpRequest();
+    let target = document.querySelector("tbody").children[1].getAttribute("target");
     let url = "/" + channel + "/scroll-up.html?target=" + target + "&entries=" + entries;
     xmlHttp.open("GET", url, false);
     xmlHttp.send(null);
@@ -473,11 +475,20 @@ function scrollup(channel, target, entries) {
     let tbodyEl = document.querySelector("tbody");
     tbodyEl.innerHTML = xmlHttp.responseText + tbodyEl.innerHTML;
     filterMessages();
+}
 
-    let newTargetEl = tbodyEl.children[1];
-    if (newTargetEl.hasAttribute("target")) {
-        return document.querySelector("tbody").children[1].getAttribute("target");
-    } else {
-        return null;
+// scroll down the given channel/target (finding all newest messages)
+function scrolldown(channel) {
+    let xmlHttp = new XMLHttpRequest();
+    let target = document.querySelector("tbody").lastElementChild.getAttribute("target");
+    let url = "/" + channel + "/scroll-down.html?target=" + target;
+    xmlHttp.open("GET", url, false);
+    xmlHttp.send(null);
+
+    let additionalHTML = xmlHttp.responseText;
+    if (additionalHTML) {
+        let tbodyEl = document.querySelector("tbody");
+        tbodyEl.innerHTML = tbodyEl.innerHTML + additionalHTML;
+        filterMessages();
     }
 }
