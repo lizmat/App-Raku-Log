@@ -73,14 +73,13 @@
           history.scrollRestoration = "manual";
           window.onload = scrollToBottom;
 
-          var $minY = 0;
+          var $minY  = 0;
+          var $lastY = 0;
           window.addEventListener('scroll', function(e) {
               let currentY = window.scrollY;
               if (currentY == 0) {
                   if (-3 > $minY) {
-                      if ($upTarget !== null) {
-                          scrollup("<.channel>", 5 + Math.floor(-$minY / 3));
-                      }
+                      scrollup("<.channel>", 5 + Math.floor(-$minY / 3));
                       $minY = 0;
                   }
               }
@@ -88,9 +87,14 @@
                   $minY = Math.min($minY, currentY);
               }
 
-              if (document.body.clientHeight > currentY) {  // NEEDS TUNING!!!
+              setInterval(function() {
+                  scrolldown("<.channel>")  // 50 - 70 seconds randomly
+              }, 50000 + Math.floor(Math.random() * 20000));
+
+              if (currentY > $lastY) {  // NEEDS TUNING!!!
                   scrolldown("<.channel>");
               }
+              $lastY = currentY;
           });
 </?>
       });
