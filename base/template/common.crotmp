@@ -553,9 +553,9 @@ in the selection.">
 
     </nav>
 
+<?$is-day>
+    <!-- mobile day navigator -->
     <nav id="mobile-navbar" class="secondary-navbar is-fixed-top">
-      <?$is-day>
-      <!-- Day navigator -->
       <nav class="level">
         <div class="level-left">
           <div class="level-item">
@@ -589,10 +589,10 @@ in the selection.">
           </div>
         </div>
       </nav>
-      <!-- Day navigator ends -->
-      </?>
 
     </nav>
+    <!-- mobile day navigator ends -->
+</?>
     <!-- Header ends -->
 
     <!-- Columns -->
