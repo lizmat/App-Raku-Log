@@ -193,11 +193,18 @@ sub merge-commit-messages(@entries) {
 
 # Merge messages of test-t report together
 sub merge-test-t-messages(@entries) {
-    my constant %head = Set.new: <
+    my constant @head = <<
       csv-ip5xs csv-ip5xs-20 csv-parser csv-test-xs-20
-      test test-t test-t-20
-    >;
-    my constant Tux   = '[Tux]' | '[TuxCM]' | '|Tux|';
+      test test-t 'test-t --race' test-t-20 'test-t-20 --race'
+    >>.sort(-*.chars);
+    my constant width = @head[0].chars;
+    my constant Tux = '[Tux]' | '[TuxCM]' | '|Tux|';
+    my constant test-t-marker = 'Rakudo v';
+
+    sub part-of-test-t($line) {
+        return $_ if $line.starts-with($_) for @head;
+        Nil
+    }
 
     for @entries.kv -> $index, \entry {
         # An entry by Tux?
@@ -208,53 +215,45 @@ sub merge-test-t-messages(@entries) {
             my $nick-used := entry<nick>;
 
             # The start of a test result stream?
-            with message.index(' ') -> \pos {
-                if message.substr(0,pos) eq 'Rakudo' {
+            if message.starts-with(test-t-marker) {
 
-                    # Start looking for test result stream.  Allow for up to
-                    # three messages inbetween.
-                    my int @indices;
-                    my int $i = $index;
-                    my int $skipped;
-                    while @entries[++$i] -> \this-entry {
-                        if this-entry<nick> eq $nick-used {
-                            last   # ran into another test result stream
-                              if this-entry<message>.substr(0,pos) eq 'Rakudo';
-                            @indices.push: $i;
-                            $skipped = 0;
-                        }
-                        elsif ++$skipped == 3 {
-                            last;
-                        }
+                # Start looking for test result stream.  Allow for up to
+                # three messages inbetween.
+                my int $i = $index;
+                my int $skipped;
+                my %tests;
+                while @entries[++$i] -> \this-entry {
+                    my \this-message := this-entry<message>;
+                    if this-entry<nick> eq $nick-used
+                      && part-of-test-t(this-message) -> $name {
+                        last   # ran into another test result stream
+                          if this-message.starts-with(test-t-marker);
+                        %tests{$name} := this-message.substr(width).words.List;
+                        this-entry = Any;
+                        $skipped = 0;
                     }
-                    next unless @indices;  # nothing found
-
-                    # Collect the test-stream, remove entries after collection
-                    my %tests;
-                    for @entries[@indices] -> \this-entry {
-                        given this-entry<message> {
-                            %tests{.substr(0, .index(' '))} := $_;
-                            this-entry = Any;
-                        }
+                    elsif ++$skipped == 3 {
+                        last;
                     }
-
-                    # Synthesize the new message
-                    entry<message> := '<table><tr colspan="4">'
-                      ~ message
-                      ~ "</tr>\n"
-                      ~ %tests.sort.map( -> (:key($name), :value($message)) {
-                        '<tr>'
-                          ~ ('<td>' ~ $name ~ '</td>')
-                          ~ $message.words.skip.map({
-                              '<td align="right">'
-                                ~ $_
-                                ~ '</td>'
-                            })
-                          ~ "</tr>"
-                        }).join("\n")
-                      ~ '</table>';
-                    entry<test-t>  := True;
                 }
+                next unless %tests;  # nothing found
+
+                # Synthesize the new message
+                entry<message> := '<table><tr colspan="4">'
+                  ~ message
+                  ~ "</tr>\n"
+                  ~ %tests.sort(*.key).map( -> (:key($name), :value(@times)) {
+                    '<tr>'
+                      ~ ('<td>' ~ $name ~ '</td>')
+                      ~ @times.map({
+                          '<td align="right">'
+                            ~ $_
+                            ~ '</td>'
+                        })
+                      ~ "</tr>"
+                    }).join("\n")
+                  ~ '</table>';
+                entry<test-t>  := True;
             }
         }
     }
