@@ -3,7 +3,7 @@
 <@entries>
 <?.human-date>
 <tr class="special-date">
-  <td colspan="4"><.human-date></td>
+  <td colspan="4"><a href="/<.channel>/<.date>.html"><.human-date></a></td>
 </tr>
 </?>
 <tr
