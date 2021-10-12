@@ -637,6 +637,29 @@ in the selection.">
           <div class="column column-middle">
             <div id="main-container" class="container day">
 
+<?$is-index>
+              <div class="block">
+                <@years>
+                  <div class="block block-years">
+                    <div class="year title is-4"><.year></div>
+
+                    <div class="month-block">
+                      <@months>
+                        <div class="month-log">
+                          <div class="month"><.human-month></div>
+                          <@dates>
+                            <?.conversation><a href="<.date>.html"><div class="day"><.day></div></a></?>
+                            <!.conversation><div class="day <?.empty>empty</?>"><.day></div></!>
+                          </@>
+                        </div>
+                      </@>
+                    </div>
+                  </div>
+                </@>
+              </div>
+</?>
+
+<?$has-entries>
               <!-- Messages -->
               <section id="message-log">
                 <table class="table message-table is-fullwidth">
@@ -649,7 +672,6 @@ in the selection.">
                     </td>
                   </tr>
 </?>
-<?$has-entries>
                   <@entries>
 <!$is-day>
   <?.human-date>
@@ -715,11 +737,10 @@ in the selection.">
                       </td>
                     </tr>
                   </@>
-</?>
                 </table>
-
               </section>
               <!-- Messages ends -->
+</?>
 
             </div>
             <&footer>
