@@ -1,4 +1,4 @@
 <:use 'base/template/common.crotmp'>
-<|log-page($_, :is-search, :icon('search'))>
-  Searching #<.channel> - Raku Programming Language Log
-</|>
+<|log-page($_, :is-search, :icon('search'), :title('Search'),
+  :has-entries
+)>Searching #<.channel> - Raku® Programming Language Log</|>

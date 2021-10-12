@@ -1,7 +1,7 @@
 <:use 'base/template/common-subs.crotmp'>
 
-<:macro log-page($_, :$icon = 'question',
-  :$is-live, :$is-gist, :$is-day, :$is-search
+<:macro log-page($_, :$icon = 'question', :$title = '',
+  :$is-live, :$is-gist, :$is-day, :$is-search, :$is-index, :$has-entries
 )>
 <!DOCTYPE html>
 <html>
@@ -133,6 +133,10 @@
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
             <span
+<?$is-index>
+              title="Select the channel of which to see an
+overview."
+</?>
 <?$is-live>
               title="Select the channel of which to see the
 messages as they come in."
@@ -168,6 +172,7 @@ repeat the current search."
   <?{ .channel ne $c }>
                     <li id="<$c>">
                       <a
+                        <?$is-index>href="/<$c>/index.html"</?>
                         <?$is-live>href="/<$c>/live.html"</?>
                         <?$is-day> href="/<$c>/<.date>.html"</?>
                         <?$is-gist> href="/<$c>/gist.html"</?>
@@ -186,8 +191,10 @@ repeat the current search."
        <div class="navbar-delimiter"></div>
 
        <div class="is-hidden-mobile is-hidden-tablet is-flex-tablet-only">
-            <?$is-live>Live</?>
-            <?$is-day>
+<?$title>
+            <$title>
+</?>
+<?$is-day>
               <!-- Day navigator -->
             <div class="msg-log-date-switcher">
               <a href="/<.channel>/prev/<.date>">
@@ -217,9 +224,7 @@ repeat the current search."
               </a>
             </div>
             <!-- Day navigator ends -->
-            </?>
-            <?$is-gist>Gist</?>
-            <?$is-search>Search</?>
+</?>
        </div>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navMenu">
@@ -233,8 +238,10 @@ repeat the current search."
 
       <!-- Page type header -->
         <div class="navbar-item navbar-switcher">
-            <?$is-live>Live</?>
-            <?$is-day>
+<?$title>
+            <$title>
+</?>
+<?$is-day>
               <!-- Day navigator -->
             <div class="msg-log-date-switcher">
               <a href="/<.channel>/prev/<.date>">
@@ -264,9 +271,7 @@ repeat the current search."
               </a>
             </div>
             <!-- Day navigator ends -->
-            </?>
-            <?$is-gist>Gist</?>
-            <?$is-search>Search</?>
+</?>
         </div>
       <!-- Page type header ends -->
 
@@ -332,13 +337,15 @@ channel on <.date-human>.">
                         </a>
                       </li>
 </?>
+<!$is-index>
                       <li title="Look at an overview of the
 #<.channel> channel and some background information.">
                         <a href="/<.channel>/index.html">
-                          <&icon('star')>
+                          <&icon('asterisk')>
                           <span>Overview</span>
                         </a>
                       </li>
+</!>
                     </ul>
                   </div>
                 </div>
@@ -419,7 +426,7 @@ in the selection.">
             <div>
               <div class="menu">
                 <ul class="menu-list">
-                  <!$is-live>
+<!$is-live>
                   <li title="Follow the messages on the #<.channel>
                              channel as they are happening.  Allows
                              scrolling-back in time.">
@@ -428,7 +435,7 @@ in the selection.">
                       <span>Live</span>
                     </a>
                   </li>
-                  </!>
+</!>
                   <li title="Look at messages of the last date
                              for which messages have been seen
                              on the #<.channel> channel.">
@@ -446,7 +453,7 @@ in the selection.">
                       <span>I Feel Lucky</span>
                     </a>
                   </li>
-                  <?$is-day>
+<?$is-day>
                   <li title="Download the raw log of the #<.channel>
                              channel on <.date-human>.">
                     <a href="/<.channel>/<.date>.log">
@@ -454,14 +461,16 @@ in the selection.">
                       <span>Raw</span>
                     </a>
                   </li>
-                  </?>
+</?>
+<!$is-index>
                   <li title="Look at an overview of the
                              #<.channel> channel and some background information.">
                     <a href="/<.channel>/index.html">
-                      <&icon('star')>
+                      <&icon('asterisk')>
                       <span>Overview</span>
                     </a>
                   </li>
+</!>
                 </ul>
               </div>
             </div>
@@ -525,6 +534,7 @@ in the selection.">
       </div>
       <!-- Other header menus ends -->
 
+<?$has-entries>
       <!-- Right sidebar header -->
       <div id="navbar-right-toggle"
         class="navbar-end has-tooltip-bottom is-hidden-touch"
@@ -544,6 +554,7 @@ in the selection.">
         </a>
       </div>
       <!-- Right sidebar header ends -->
+</?>
 
     </nav>
 
@@ -629,7 +640,7 @@ in the selection.">
               <!-- Messages -->
               <section id="message-log">
                 <table class="table message-table is-fullwidth">
-                  <?.initial-topic-text>
+<?.initial-topic-text>
                   <tr class="special-topic">
                     <td colspan="4">
                       <&HTML(.initial-topic-text)><br/>
@@ -637,72 +648,74 @@ in the selection.">
                       <a href="/<.channel>/<.initial-topic-date>.html#<.initial-topic-relative-target>"><.initial-topic-human-date></a>.
                     </td>
                   </tr>
-                  </?>
+</?>
+<?$has-entries>
                   <@entries>
-                  <!$is-day>
-                  <?.human-date>
-                  <tr class="special-date">
-                    <td colspan="4"><a href="/<.channel>/<.date>.html"><.human-date></a></td>
-                  </tr>
-                  </?>
-                  </!>
-                  <tr
-                    <?.relative-target> id="<.relative-target>"</?>
-                    <?.target>target="<.target>"</?>
-                    <?.control-events> class="special-system"</?>
-                    <?.commit> class="special-commit"</?>
-                    <?.camelia> class="special-camelia"</?>
-                    <?.test-t> class="special-test"</?>
-                    <?.same-nick> class="special-same-nick"</?>
-                    <?$is-gist> class="special-selected"</?>
-                    >
-                    <?.control-events>
-                    <td/>
-                    <td colspan="2">
-                      <div class="is-size-7">
-                        <@control-events>
-                        <b id="<.id>"><.hh-mm></b>
-                        <&HTML(.message)>
-                        </@>
-                      </div>
-                    </td>
-                    </?>
-                    <!.control-events>
-                    <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
-                    <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
-                    ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
-                    <td class="column-time"><.hh-mm></td>
-                    </!>
-                    <td class="column-buttons">
-                      <div class="dropdown is-hoverable">
-                        <div class="dropdown-trigger">
-                          <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
-                            <span class="icon is-small">
-                              <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
-                            </span>
-                          </button>
+<!$is-day>
+  <?.human-date>
+                    <tr class="special-date">
+                      <td colspan="4"><a href="/<.channel>/<.date>.html"><.human-date></a></td>
+                    </tr>
+  </?>
+</!>
+                    <tr
+                      <?.relative-target> id="<.relative-target>"</?>
+                      <?.target>target="<.target>"</?>
+                      <?.control-events> class="special-system"</?>
+                      <?.commit> class="special-commit"</?>
+                      <?.camelia> class="special-camelia"</?>
+                      <?.test-t> class="special-test"</?>
+                      <?.same-nick> class="special-same-nick"</?>
+                      <?$is-gist> class="special-selected"</?>
+                      >
+<?.control-events>
+                      <td/>
+                      <td colspan="2">
+                        <div class="is-size-7">
+                          <@control-events>
+                          <b id="<.id>"><.hh-mm></b>
+                          <&HTML(.message)>
+                          </@>
                         </div>
-                        <div id="dropdown-menu4"
-                          class="dropdown-menu msg-mobile-dropdown"
-                          role="menu">
-                          <div class="dropdown-content">
-                            <div class="dropdown-item">
-                              <div class="menu">
-                                <ul class="menu-list">
-                                  <li><&day-link($_, $is-day)></li>
-                                  <li><&gist-link($_)></li>
-                                  <?.runcode-link>
-                                  <li><&runcode-link($_)></li>
-                                  </?>
-                                </ul>
+                      </td>
+</?>
+<!.control-events>
+                      <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
+                      <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
+                      ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
+                      <td class="column-time"><.hh-mm></td>
+</!>
+                      <td class="column-buttons">
+                        <div class="dropdown is-hoverable">
+                          <div class="dropdown-trigger">
+                            <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
+                              <span class="icon is-small">
+                                <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+                              </span>
+                            </button>
+                          </div>
+                          <div id="dropdown-menu4"
+                            class="dropdown-menu msg-mobile-dropdown"
+                            role="menu">
+                            <div class="dropdown-content">
+                              <div class="dropdown-item">
+                                <div class="menu">
+                                  <ul class="menu-list">
+                                    <li><&day-link($_, $is-day)></li>
+                                    <li><&gist-link($_)></li>
+                                    <?.runcode-link>
+                                    <li><&runcode-link($_)></li>
+                                    </?>
+                                  </ul>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </td>
-                  </tr>
+                      </td>
+                    </tr>
                   </@>
+</?>
                 </table>
 
               </section>
@@ -714,6 +727,7 @@ in the selection.">
           </div>
           <!-- Middle column ends -->
 
+<?$has-entries>
           <!-- Right sidebar -->
           <div id="right-column"
             style="display: none"
@@ -730,6 +744,7 @@ in the selection.">
             </div>
           </div>
           <!-- Right sidebar ends -->
+</?>
 
         </div>
 
