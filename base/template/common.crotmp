@@ -638,6 +638,16 @@ in the selection.">
             <div id="main-container" class="container day">
 
 <?$is-index>
+              <div class="level-item subtitle is-size-4-desktop is-size-5-mobile is-size-4-tablet">
+                #<.channel>
+                &nbsp;
+                <a href="/<.channel>/<.first-date>.html"><.first-human-date></a>
+                &nbsp;-&nbsp;
+                <a href="/<.channel>/<.last-date>.html"><.last-human-date></a>
+              </div>
+              <div class="level-item subtitle is-size-4-desktop is-size-5-mobile is-size-4-tablet">
+                <&HTML(.description)>
+              </div>
               <div class="block">
                 <@years>
                   <div class="block block-years">

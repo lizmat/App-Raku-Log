@@ -348,6 +348,10 @@ sub day-plugins() is export {
     ;
 }
 
+sub descriptions($io) is export {
+    $io.dir.map: { .basename => .slurp.chomp }
+}
+
 =begin pod
 
 =head1 NAME
