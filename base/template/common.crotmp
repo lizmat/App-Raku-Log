@@ -605,7 +605,7 @@ in the selection.">
     <!-- Columns -->
     <div id="wrapper">
 
-      <section class="section day">
+      <section class="section <?$is-index>index</?><!$is-index>day</!>">
 
         <div class="columns">
 
@@ -637,7 +637,7 @@ in the selection.">
 
           <!-- Middle column -->
           <div class="column column-middle">
-            <div id="main-container" class="container day">
+            <div id="main-container" class="container <?$is-index>homepage</?><!$is-index>day</!>">
 
 <?$is-index>
               <div class="level-item subtitle is-size-4-desktop is-size-5-mobile is-size-4-tablet">
