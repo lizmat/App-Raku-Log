@@ -660,8 +660,8 @@ in the selection.">
                         <div class="month-log">
                           <div class="month"><.human-month></div>
                           <@dates>
-                            <?.conversation><a href="<.date>.html"><div class="day"><.day></div></a></?>
-                            <!.conversation><div class="day <?.empty>empty</?>"><.day></div></!>
+                            <?.date><a href="/<.channel>/<.date>.html"><div class="day"><.day></div></a></?>
+                            <!.date><div class="day empty"><.day></div></!>
                           </@>
                         </div>
                       </@>
