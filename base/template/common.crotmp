@@ -64,10 +64,12 @@
 /* Set the width of the sidebar to 300px and the left margin of the page content to 300px */
 
           setDisplayById('left-column',  $showLeftSide);
+<?$has-entries>
           setDisplayById('right-column', $showRightSide);
           setGistTargets();
           markSelected();
           filterMessages();
+</?>
 
 <?$is-live>
           history.scrollRestoration = "manual";
