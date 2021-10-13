@@ -11,7 +11,7 @@ my constant $log-class = IRC::Log::Colabti;
 
 my %*SUB-MAIN-OPTS = :named-anywhere;
 sub MAIN(
-  IO()  $log-dir  = 'IRC-log',
+  IO()  $log-dir  = 'IRC-logs',
   IO()  $base-dir = "base",
   IO() :$rendered-dir     = $base-dir.add('rendered'),
   IO() :$state-dir        = $base-dir.add('state'),

@@ -2,6 +2,10 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.3  2021-10-13T15:34:15+02:00
+    - Fix default log location
+    - Fix version/auth marker
+
 0.0.2  2021-10-13T15:19:46+02:00
     - Move the start script to bin as 'raku-logs-server'
 
