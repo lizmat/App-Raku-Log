@@ -2,5 +2,6 @@
 /App-Raku-Log-*
 /releases/
 *.gz
-/logs
+/IRC-log
+/old
 node_modules

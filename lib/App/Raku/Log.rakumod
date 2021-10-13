@@ -1,4 +1,5 @@
-use v6.*;
+my
+class App::Raku::Log:ver<0.0.1>:auth:<zef:lizmat> { };  # for Mi6 only
 
 use RandomColor;
 

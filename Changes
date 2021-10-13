@@ -1,4 +1,6 @@
 Revision history for App-Raku-Log
 
 {{$NEXT}}
-    - Initial version
+
+0.0.1  2021-10-13T15:07:29+02:00
+    - Initial version, released for debugging new-disp issues

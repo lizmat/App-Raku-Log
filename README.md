@@ -1,24 +1,30 @@
+[![Actions Status](https://github.com/lizmat/App-Raku-Log/workflows/test/badge.svg)](https://github.com/lizmat/App-Raku-Log/actions)
+
 NAME
 ====
 
-App::Raku::Logs - blah blah blah
+App::Raku::Log - Cro application for presenting Raku IRC logs
 
 SYNOPSIS
 ========
 
 ```raku
-use App::Raku::Logs;
+$ ./start
+
+$ ./start logs base
 ```
 
 DESCRIPTION
 ===========
 
-App::Raku::Logs is ...
+App::Raku::Log is ...
 
 AUTHOR
 ======
 
 Elizabeth Mattijsen <liz@wenzperl.nl>
+
+Source can be located at: https://github.com/lizmat/App-Raku-Log . Comments and Pull Requests are welcome.
 
 COPYRIGHT AND LICENSE
 =====================

@@ -12,14 +12,14 @@
   ],
   "description": "Cro application for presenting Raku IRC logs",
   "license": "Artistic-2.0",
-  "name": "App::Raku::Logs",
+  "name": "App::Raku::Log",
   "perl": "6.d",
   "provides": {
     "App::Raku::Log": "lib/App/Raku/Log.rakumod"
   },
   "resources": [
   ],
-  "source-url": "",
+  "source-url": "https://github.com/lizmat/App-Raku-Log.git",
   "tags": [
   ],
   "test-depends": [
