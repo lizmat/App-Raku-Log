@@ -2,5 +2,8 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.2  2021-10-13T15:19:46+02:00
+    - Move the start script to bin as 'raku-logs-server'
+
 0.0.1  2021-10-13T15:07:29+02:00
     - Initial version, released for debugging new-disp issues
