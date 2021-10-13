@@ -11,7 +11,7 @@ my constant $log-class = IRC::Log::Colabti;
 
 my %*SUB-MAIN-OPTS = :named-anywhere;
 sub MAIN(
-  IO()  $log-dir  = 'IRC-logs',
+  IO()  $log-dir  = 'logs',
   IO()  $base-dir = "base",
   IO() :$rendered-dir     = $base-dir.add('rendered'),
   IO() :$state-dir        = $base-dir.add('state'),
@@ -24,6 +24,7 @@ sub MAIN(
        :$batch  = 16,
        :$degree = Kernel.cpu-cores,
        :$channels,
+       :$dontstart,
   ) {
 
     my @channels = $channels
@@ -43,16 +44,21 @@ sub MAIN(
       channels      => @channels,
     ;
 
-    my $service := Cro::HTTP::Server.new:
-      :application($ail.application),
-      :$host, :$port,
-    ;
-    $service.start;
-    say "The website is started at http://$host:$port/";
+    if $dontstart {
+        $ail.channels.map: { $ail.clog($_); say "Loaded $_" }
+    }
+    else {
+        my $service := Cro::HTTP::Server.new:
+          :application($ail.application),
+          :$host, :$port,
+        ;
+        $service.start;
+        say "The website is started at http://$host:$port/";
 
-    react whenever signal(SIGINT) {
-        $service.stop;
-        $ail.shutdown;
-        exit;
+        react whenever signal(SIGINT) {
+            $service.stop;
+            $ail.shutdown;
+            exit;
+        }
     }
 }
