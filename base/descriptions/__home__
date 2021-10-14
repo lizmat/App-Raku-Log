@@ -1,16 +1,19 @@
-<div class="subtitle">
-Welcome to the home of the Raku® Programming Language IRC logs!
-</div>
+<img src="/camelia.png" width="30%" vspace="2%" hspace="2%" align="left">
 <div class="subtitle">
 This website provides access to the historic IRC logs of the development
 of the Raku® Programming Language.  They are provided here as complete
-as possible, but there is no guarantee that these logs are by any means
-complete: network issues can cause an IRC logger to lose connection
-with the IRC server, while people are still chatting on a channel. Thus
-losing parts of the conversation, at least as seen by some people on a
-channel.
+as possible, either from
+<a href="https://colabti.org/irclogger//irclogger_logs">historic logs</a>
+or from the new <a href="https://github.com/Raku/IRC-logs">Raku IRC logs</a>.
 </div>
 <div class="subtitle">
-Please enjoy the history of Raku, or just check out current development
-on the live pages of the channels that are active.
+Due to the nature of IRC, there can be no guarantee that these logs are
+by any means complete: network issues can cause an IRC logger to lose
+connection with the IRC server, while people are still chatting on an
+IRCchannel.  However, considerable efforts have been made to fill any
+gaps in the historical record.
+</div>
+<div class="subtitle">
+Please enjoy the history of Raku, or check out current development on
+the live pages of the channels that are active.
 </div>

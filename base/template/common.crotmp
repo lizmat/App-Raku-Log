@@ -158,68 +158,71 @@
 
       <!-- Channel selection -->
       <div class="navbar-brand">
+<!$is-home>
         <a href="/" class="navbar-item" 
           title="Go to the home page of the Raku IRC log browser"
         ><img class="camelia-image" src="/camelia.png" width="40" height="28"></a>
 
       <div class="navbar-delimiter"></div>
-        <div class="navbar-item dropdown is-hoverable">
-          <div class="dropdown-trigger">
-            <span
+</!>
+
+      <div class="navbar-item dropdown is-hoverable">
+        <div class="dropdown-trigger">
+          <span
 <?{ $is-index || $is-home }>
-              title="Select the channel of which to see an
+            title="Select the channel of which to see an
 overview."
 </?>
 <?$is-live>
-              title="Select the channel of which to see the
+            title="Select the channel of which to see the
 messages as they come in."
 </?>
 <?$is-day>
-              title="Select the channel of which to show
+            title="Select the channel of which to show
 the messages of <.date-human>."
 </?>
 <?$is-gist>
-              title="Select the channel of which to show
+            title="Select the channel of which to show
 the selected messages."
 </?>
 <?$is-search>
-              title="Select the channel on which to
+            title="Select the channel on which to
 repeat the current search."
 </?>
-              class="is-text navbar-current-channel-name"
-              aria-haspopup="true"
-              aria-controls="dropdown-menu4">
-              <span class="icon-text">
-                <&icon($icon)><span><.channel></span><&icon('chevron-down')>
-              </span>
+            class="is-text navbar-current-channel-name"
+            aria-haspopup="true"
+            aria-controls="dropdown-menu4">
+            <span class="icon-text">
+              <&icon($icon)><span><.channel></span><&icon('chevron-down')>
             </span>
-          </div>
-          <div id="dropdown-menu4"
-            class="dropdown-menu navbar-channels-dropdown"
-            role="menu">
-            <div class="dropdown-content">
-              <div class="dropdown-item">
-                <div class="menu">
-                  <ul class="menu-list">
+          </span>
+        </div>
+        <div id="dropdown-menu4"
+          class="dropdown-menu navbar-channels-dropdown"
+          role="menu">
+          <div class="dropdown-content">
+            <div class="dropdown-item">
+              <div class="menu">
+                <ul class="menu-list">
 <@channels : $c>
   <?{ .channel ne $c }>
-                    <li id="<$c>">
-                      <a
-                        <?{ $is-index || $is-home }>href="/<$c>/index.html"</?>
-                        <?$is-live>href="/<$c>/live.html"</?>
-                        <?$is-day> href="/<$c>/<.date>.html"</?>
-                        <?$is-gist> href="/<$c>/gist.html"</?>
-                        <?$is-search> onClick="submitSearchOnChannel('<$c>')"</?>
-                      ><$c></a>
-                    </li>
+                  <li id="<$c>">
+                    <a
+                      <?{ $is-index || $is-home }>href="/<$c>/index.html"</?>
+                      <?$is-live>href="/<$c>/live.html"</?>
+                      <?$is-day> href="/<$c>/<.date>.html"</?>
+                      <?$is-gist> href="/<$c>/gist.html"</?>
+                      <?$is-search> onClick="submitSearchOnChannel('<$c>')"</?>
+                    ><$c></a>
+                  </li>
   </?>
 </@>
-                  </ul>
-                </div>
+                </ul>
               </div>
             </div>
           </div>
         </div>
+      </div>
 
        <div class="navbar-delimiter"></div>
 
@@ -318,7 +321,7 @@ channel on <.date-human>.">
                       <li title="Look at an overview of the
 #<.channel> channel and some background information.">
                         <a href="/<.channel>/index.html#<.month>">
-                          <&icon('asterisk')>
+                          <&icon('calendar-alt')>
                           <span>Overview</span>
                         </a>
                       </li>
@@ -443,7 +446,7 @@ in the selection.">
                   <li title="Look at an overview of the
                              #<.channel> channel and some background information.">
                     <a href="/<.channel>/index.html#<.month>">
-                      <&icon('asterisk')>
+                      <&icon('calendar-alt')>
                       <span>Overview</span>
                     </a>
                   </li>
@@ -591,12 +594,50 @@ in the selection.">
 
 <?$is-home>
               <div class="level-item subtitle is-size-4-desktop is-size-5-mobile is-size-4-tablet">
-                <a href="/<.channel>/<.first-date>.html"><.first-human-date></a>
-                &nbsp;-&nbsp;
-                <a href="/<.channel>/<.last-date>.html"><.last-human-date></a>
+                <.first-human-date></a>&nbsp;-&nbsp;<.last-human-date>
               </div>
               <div class="is-size-4-desktop is-size-5-mobile is-size-4-tablet">
                 <&HTML(.description)>
+              </div>
+
+              <div class="block homepage-thread">
+<@channel-info>
+                <hr/>
+                <div class="thread-header">
+                  <div class="is-size-4-desktop is-size-5-mobile is-size-4-tablet">
+                    #<.name> <.one-line-description>
+                  </div>
+                  <div class="is-inline-flex is-block-mobile">
+                    <a href="/<.name>/<.first-date>.html"><.first-human-date></a>
+                    -
+                    <a href="/<.name>/<.last-date>.html"><.last-human-date></a>
+                  </div>
+                  &nbsp;
+                  <div class="is-inline-flex is-block-mobile">
+                    <a href="/<.name>/index.html">
+                      <&icon('calendar-alt')>
+                      <span>Overview</span></a>
+                    </a>
+                  </div>
+                  &nbsp;
+                  <div class="is-inline-flex is-block-mobile">
+                    <a href="/<.name>/live.html" class="thread-link">
+                      <&icon('signal')><span>Live</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="block thread-years">
+  <@years>
+                  <p class="year-block">
+                    <strong class="year"><.year></strong>
+    <@months>
+                    <a class="month" href="/<.channel>/<.month>"><.human-month></a><span class="vline">&nbsp;&#124;&nbsp;</span>
+    </@>
+                  </p>
+  </@>
+                </div>
+</@>
               </div>
 </?>
 
