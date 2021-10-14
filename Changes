@@ -3,6 +3,8 @@ Revision history for App-Raku-Log
 {{$NEXT}}
     - Up dependency
     - Add support for month linking in index and pages
+    - Make home page functional as intended
+    - Moved the day navigator HTML into a sub (called 2x)
 
 0.0.4  2021-10-13T16:37:48+02:00
     - Fix version snafu in the start script

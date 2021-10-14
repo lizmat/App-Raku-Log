@@ -1,8 +1,42 @@
 <:use 'base/template/common-subs.crotmp'>
 
 <:macro log-page($_, :$icon = 'question', :$title = '',
-  :$is-live, :$is-gist, :$is-day, :$is-search, :$is-index, :$has-entries
+  :$is-live, :$is-gist, :$is-day, :$is-search, :$is-index, :$is-home,
+  :$has-entries
 )>
+
+<?$is-day>
+<:sub day-navigator($channel, $date, $human-date)>
+  <div class="msg-log-date-switcher">
+    <a href="/<$channel>/prev/<$date>">
+       <button class="button is-primary">
+        <&icon('chevron-left')>
+      </button>
+    </a>
+
+    <div class="dropdown is-hoverable">
+      <div class="dropdown-trigger">
+        <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
+          <span><$human-date></span>
+          <&icon('chevron-down')>
+        </button>
+      </div>
+      <div class="dropdown-menu">
+        <div class="dropdown-content">
+          <input id="sidebar-datepicker" type="date">
+        </div>
+      </div>
+    </div>
+
+    <a href="/<$channel>/next/<$date>">
+      <button class="button is-primary">
+        <&icon('chevron-right')>
+      </button>
+    </a>
+  </div>
+</:>
+</?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -128,14 +162,11 @@
           title="Go to the home page of the Raku IRC log browser"
         ><img class="camelia-image" src="/camelia.png" width="40" height="28"></a>
 
-
       <div class="navbar-delimiter"></div>
-
-        <!-- Add action to open modal window with channels or the right sidebar -->
         <div class="navbar-item dropdown is-hoverable">
           <div class="dropdown-trigger">
             <span
-<?$is-index>
+<?{ $is-index || $is-home }>
               title="Select the channel of which to see an
 overview."
 </?>
@@ -174,7 +205,7 @@ repeat the current search."
   <?{ .channel ne $c }>
                     <li id="<$c>">
                       <a
-                        <?$is-index>href="/<$c>/index.html"</?>
+                        <?{ $is-index || $is-home }>href="/<$c>/index.html"</?>
                         <?$is-live>href="/<$c>/live.html"</?>
                         <?$is-day> href="/<$c>/<.date>.html"</?>
                         <?$is-gist> href="/<$c>/gist.html"</?>
@@ -194,38 +225,10 @@ repeat the current search."
 
        <div class="is-hidden-mobile is-hidden-tablet is-flex-tablet-only">
 <?$title>
-            <$title>
+          <$title>
 </?>
 <?$is-day>
-              <!-- Day navigator -->
-            <div class="msg-log-date-switcher">
-              <a href="/<.channel>/prev/<.date>">
-                <button class="button is-primary">
-                  <&icon('chevron-left')>
-                </button>
-              </a>
-
-              <div class="dropdown is-hoverable">
-                <div class="dropdown-trigger">
-                  <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span><.date-human></span>
-                    <&icon('chevron-down')>
-                  </button>
-                </div>
-                <div class="dropdown-menu">
-                  <div class="dropdown-content">
-                    <input id="sidebar-datepicker" type="date">
-                  </div>
-                </div>
-              </div>
-
-              <a href="/<.channel>/next/<.date>">
-                <button class="button is-primary">
-                  <&icon('chevron-right')>
-                </button>
-              </a>
-            </div>
-            <!-- Day navigator ends -->
+          <&day-navigator(.channel, .date, .human-date)>
 </?>
        </div>
 
@@ -237,46 +240,18 @@ repeat the current search."
       </div>
       <!-- Channel selection ends -->
 
-
       <!-- Page type header -->
-        <div class="navbar-item navbar-switcher">
+      <div class="navbar-item navbar-switcher">
 <?$title>
-            <$title>
+        <$title>
 </?>
 <?$is-day>
-              <!-- Day navigator -->
-            <div class="msg-log-date-switcher">
-              <a href="/<.channel>/prev/<.date>">
-                <button class="button is-primary">
-                  <&icon('chevron-left')>
-                </button>
-              </a>
-
-              <div class="dropdown is-hoverable">
-                <div class="dropdown-trigger">
-                  <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span><.date-human></span>
-                    <&icon('chevron-down')>
-                  </button>
-                </div>
-                <div class="dropdown-menu">
-                  <div class="dropdown-content">
-                    <input id="sidebar-datepicker" type="date">
-                  </div>
-                </div>
-              </div>
-
-              <a href="/<.channel>/next/<.date>">
-                <button class="button is-primary">
-                  <&icon('chevron-right')>
-                </button>
-              </a>
-            </div>
-            <!-- Day navigator ends -->
+        <&day-navigator(.channel, .date, .human-date)>
 </?>
-        </div>
+      </div>
       <!-- Page type header ends -->
 
+<!$is-home>
       <!-- Other header menus -->
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
@@ -535,6 +510,7 @@ in the selection.">
         </div>
       </div>
       <!-- Other header menus ends -->
+</!>
 
 <?$has-entries>
       <!-- Right sidebar header -->
@@ -566,33 +542,7 @@ in the selection.">
       <nav class="level">
         <div class="level-left">
           <div class="level-item">
-            <div class="msg-log-date-switcher">
-              <a href="/<.channel>/prev/<.date>">
-                <button class="button">
-                  <&icon('angle-double-left')>
-                </button>
-              </a>
-
-              <div class="dropdown date-dropdown is-hoverable">
-                <div class="dropdown-trigger">
-                  <button class="button date-dropdown-button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span><.date-human></span>
-                    <&icon('chevron-down')>
-                  </button>
-                </div>
-                <div class="dropdown-menu">
-                  <div class="dropdown-content">
-                    <input id="sidebar-datepicker" type="date">
-                  </div>
-                </div>
-              </div>
-
-              <a href="/<.channel>/next/<.date>">
-                <button class="button">
-                  <&icon('angle-double-right')>
-                </button>
-              </a>
-            </div>
+            <&day-navigator(.channel, .date, .human-date)>
           </div>
         </div>
       </nav>
@@ -638,6 +588,17 @@ in the selection.">
           <!-- Middle column -->
           <div class="column column-middle">
             <div id="main-container" class="container <?$is-index>homepage</?><!$is-index>day</!>">
+
+<?$is-home>
+              <div class="level-item subtitle is-size-4-desktop is-size-5-mobile is-size-4-tablet">
+                <a href="/<.channel>/<.first-date>.html"><.first-human-date></a>
+                &nbsp;-&nbsp;
+                <a href="/<.channel>/<.last-date>.html"><.last-human-date></a>
+              </div>
+              <div class="is-size-4-desktop is-size-5-mobile is-size-4-tablet">
+                <&HTML(.description)>
+              </div>
+</?>
 
 <?$is-index>
               <div class="level-item subtitle is-size-4-desktop is-size-5-mobile is-size-4-tablet">
