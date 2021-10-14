@@ -342,7 +342,7 @@ channel on <.date-human>.">
 <!$is-index>
                       <li title="Look at an overview of the
 #<.channel> channel and some background information.">
-                        <a href="/<.channel>/index.html">
+                        <a href="/<.channel>/index.html#<.month>">
                           <&icon('asterisk')>
                           <span>Overview</span>
                         </a>
@@ -467,7 +467,7 @@ in the selection.">
 <!$is-index>
                   <li title="Look at an overview of the
                              #<.channel> channel and some background information.">
-                    <a href="/<.channel>/index.html">
+                    <a href="/<.channel>/index.html#<.month>">
                       <&icon('asterisk')>
                       <span>Overview</span>
                     </a>
@@ -657,7 +657,7 @@ in the selection.">
 
                     <div class="month-block">
                       <@months>
-                        <div class="month-log">
+                        <div class="month-log" id="<.month>">
                           <div class="month"><.human-month></div>
                           <@dates>
                             <?.date><a href="/<.channel>/<.date>.html"><div class="day"><.day></div></a></?>
