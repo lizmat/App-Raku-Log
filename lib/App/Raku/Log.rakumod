@@ -353,6 +353,62 @@ sub descriptions($io) is export {
     $io.dir.map: { .basename => .slurp.chomp }
 }
 
+sub one-liners($io) is export {
+    $io.dir.map: { .basename => .slurp.chomp }
+}
+
+sub channel-ordering(@channels) is export {
+    my %channels is SetHash = @channels;
+    my @ordered = <
+      raku
+      raku-beginner
+    >.grep: { %channels{$_}:delete }
+
+    if <
+      raku-dev
+      moarvm
+    >.grep({ %channels{$_}:delete }) -> @core {
+        @ordered.push("-core");
+        @ordered.append(@core);
+    }
+
+    if <
+      cro
+      red
+      mugs
+      raku-land
+      raku-gamedev
+    >.grep({ %channels{$_}:delete }) -> @associated {
+        @ordered.push("-associated");
+        @ordered.append(@associated);
+    }
+
+    if <
+      raku-steering-council
+    >.grep({ %channels{$_}:delete }) -> @community {
+        @ordered.push("-community");
+        @ordered.append(@community);
+    }
+
+    if <
+      perl6
+      perl6-dev
+      p6dev
+      perl6-macros
+      perl6-toolchain
+    >.grep({ %channels{$_}:delete }) -> @historical {
+        @ordered.push("-historical");
+        @ordered.append(@historical);
+    }
+
+    if %channels.keys -> @additional {
+        @ordered.push("-additional");
+        @ordered.append(@additional.sort);
+    }
+
+    @ordered
+}
+
 =begin pod
 
 =head1 NAME

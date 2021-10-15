@@ -1,10 +1,14 @@
 Revision history for App-Raku-Log
 
 {{$NEXT}}
+
+0.0.5  2021-10-15T19:58:34+02:00
     - Up dependency
     - Add support for month linking in index and pages
     - Make home page functional as intended
     - Moved the day navigator HTML into a sub (called 2x)
+    - Add support for one-liners and channel ordering
+    - Mark perl6* channels as inactive
 
 0.0.4  2021-10-13T16:37:48+02:00
     - Fix version snafu in the start script

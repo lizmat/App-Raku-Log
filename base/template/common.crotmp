@@ -205,17 +205,19 @@ repeat the current search."
               <div class="menu">
                 <ul class="menu-list">
 <@channels : $c>
-  <?{ .channel ne $c }>
+  <!$c.divider>
+    <?{ .channel ne $c }>
                   <li id="<$c>">
                     <a
                       <?{ $is-index || $is-home }>href="/<$c>/index.html"</?>
-                      <?$is-live>href="/<$c>/live.html"</?>
-                      <?$is-day> href="/<$c>/<.date>.html"</?>
+                      <?$is-live> href="/<$c>/live.html"</?>
+                      <?$is-day> href="/<$c>/this/<.date>"</?>
                       <?$is-gist> href="/<$c>/gist.html"</?>
                       <?$is-search> onClick="submitSearchOnChannel('<$c>')"</?>
                     ><$c></a>
                   </li>
-  </?>
+    </?>
+  </!>
 </@>
                 </ul>
               </div>
@@ -281,7 +283,8 @@ browse the messages on the #<.channel> channel."
                 <div class="dropdown-item">
                   <div class="menu">
                     <ul class="menu-list">
-<!$is-live>
+  <!$is-live>
+    <?.active>
                       <li title="Follow the messages on the #<.channel>
 channel as they are happening.  Allows
 scrolling-back in time.">
@@ -290,7 +293,9 @@ scrolling-back in time.">
                           <span>Live</span>
                         </a>
                       </li>
-</!>
+    </?>
+  </!>
+  <?.active>
                       <li title="Look at messages of the last date
 for which messages have been seen
 on the #<.channel> channel.">
@@ -299,6 +304,8 @@ on the #<.channel> channel.">
                           <span>Today</span>
                         </a>
                       </li>
+  </?>
+
                       <li title="Look at the messages of a
 randomly selected date on the
 #<.channel> channel for that special
@@ -308,7 +315,7 @@ serendipitous experience.">
                           <span>I Feel Lucky</span>
                         </a>
                       </li>
-<?$is-day>
+  <?$is-day>
                       <li title="Download the raw log of the #<.channel>
 channel on <.date-human>.">
                         <a href="/<.channel>/<.date>.log">
@@ -316,8 +323,8 @@ channel on <.date-human>.">
                           <span>Raw</span>
                         </a>
                       </li>
-</?>
-<!$is-index>
+  </?>
+  <!$is-index>
                       <li title="Look at an overview of the
 #<.channel> channel and some background information.">
                         <a href="/<.channel>/index.html#<.month>">
@@ -325,7 +332,7 @@ channel on <.date-human>.">
                           <span>Overview</span>
                         </a>
                       </li>
-</!>
+  </!>
                     </ul>
                   </div>
                 </div>
@@ -406,7 +413,8 @@ in the selection.">
             <div>
               <div class="menu">
                 <ul class="menu-list">
-<!$is-live>
+  <!$is-live>
+    <?.active>
                   <li title="Follow the messages on the #<.channel>
                              channel as they are happening.  Allows
                              scrolling-back in time.">
@@ -415,7 +423,9 @@ in the selection.">
                       <span>Live</span>
                     </a>
                   </li>
-</!>
+    </?>
+  </!>
+  <?.active>
                   <li title="Look at messages of the last date
                              for which messages have been seen
                              on the #<.channel> channel.">
@@ -424,6 +434,7 @@ in the selection.">
                       <span>Today</span>
                     </a>
                   </li>
+  </?>
                   <li title="Look at the messages of a
                              randomly selected date on the
                              #<.channel> channel for that special
@@ -433,7 +444,7 @@ in the selection.">
                       <span>I Feel Lucky</span>
                     </a>
                   </li>
-<?$is-day>
+  <?$is-day>
                   <li title="Download the raw log of the #<.channel>
                              channel on <.date-human>.">
                     <a href="/<.channel>/<.date>.log">
@@ -441,8 +452,8 @@ in the selection.">
                       <span>Raw</span>
                     </a>
                   </li>
-</?>
-<!$is-index>
+  </?>
+  <!$is-index>
                   <li title="Look at an overview of the
                              #<.channel> channel and some background information.">
                     <a href="/<.channel>/index.html#<.month>">
@@ -450,7 +461,7 @@ in the selection.">
                       <span>Overview</span>
                     </a>
                   </li>
-</!>
+  </!>
                 </ul>
               </div>
             </div>
@@ -478,11 +489,11 @@ in the selection.">
               <div id="tab-filter" class="tab-block tab-filter is-active" data-content="1">
                 <&text-messages-input>
                 <&nick-messages-input>
-<?$is-day>
+  <?$is-day>
                 <&system-messages-box('block')>
                 <&commit-messages-box('block')>
                 <&camelia-messages-box('block')>
-</?>
+  </?>
               </div>
 
               <div id="tab-search" class="tab-block tab-search" data-content="2">
@@ -600,12 +611,24 @@ in the selection.">
                 <&HTML(.description)>
               </div>
 
+              <hr/>
+
               <div class="block homepage-thread">
-<@channel-info>
-                <hr/>
+  <@channel-info>
                 <div class="thread-header">
+    <?.divider>
+                  <div
+                    class="is-size-4-desktop is-size-5-mobile is-size-4-tablet"
+                    style="background: #eeeeee; width: 100%">
+                    <em>&nbsp;<.divider.tc></em>
+                  </div>
+    </?>
+    <!.divider>
                   <div class="is-size-4-desktop is-size-5-mobile is-size-4-tablet">
-                    #<.name> <.one-line-description>
+                    <b>#<.name></b>
+      <?.one-liner>
+                    &nbsp;-&nbsp;<em><&HTML(.one-liner)></em>
+      </?>
                   </div>
                   <div class="is-inline-flex is-block-mobile">
                     <a href="/<.name>/<.first-date>.html"><.first-human-date></a>
@@ -619,25 +642,30 @@ in the selection.">
                       <span>Overview</span></a>
                     </a>
                   </div>
+      <?.active>
                   &nbsp;
                   <div class="is-inline-flex is-block-mobile">
                     <a href="/<.name>/live.html" class="thread-link">
                       <&icon('signal')><span>Live</span>
                     </a>
                   </div>
+      </?>
                 </div>
 
                 <div class="block thread-years">
-  <@years>
-                  <p class="year-block">
+      <@years>
+                  <div class="year-block">
                     <strong class="year"><.year></strong>
-    <@months>
-                    <a class="month" href="/<.channel>/<.month>"><.human-month></a><span class="vline">&nbsp;&#124;&nbsp;</span>
-    </@>
-                  </p>
-  </@>
+        <@months>
+                    <span class="vline">&nbsp;&#124;&nbsp;</span>
+                    <a class="month-block" href="/<.channel>/<.month>"><.human-month></a>
+        </@>
+                  </div>
+      </@>
+    </!>
                 </div>
-</@>
+  </@>
+              <hr/>
               </div>
 </?>
 
