@@ -5,6 +5,27 @@
   :$has-entries
 )>
 
+<:sub mobile-search-options($_)>
+  <div id="tab-search" class="tab-block tab-search" data-content="2">
+    <!-- Search tab -->
+    <form id="Search" action="/search.html"
+    onsubmit="return checkChannel()">
+      <&search-query($_)>
+      <&search-type($_)>
+      <&search-all-words($_)>
+      <&search-ignorecase($_)>
+      <&search-nicks($_)>
+      <&search-include-aliases($_)>
+      <&search-channel($_)>
+      <&search-message-type($_)>
+      <&search-entries-pp($_)>
+      <&search-from($_)>
+      <&search-until($_)>
+      <&search-submit($_)>
+    </form>
+  </div>
+</:>
+
 <?$is-day>
 <:sub day-navigator($channel, $date, $human-date)>
   <div class="msg-log-date-switcher">
@@ -256,11 +277,15 @@ repeat the current search."
       </div>
       <!-- Page type header ends -->
 
-<!$is-home>
       <!-- Other header menus -->
       <div id="navMenu" class="navbar-menu">
         <div class="navbar-start">
-
+<?$is-home>
+          <div id="mobile-forms" class="is-hidden-desktop">
+            <&mobile-search-options($_)>
+          </div>
+</?>
+<!$is-home>
           <div class="navbar-delimiter"></div>
 
           <!-- Browse menu -->
@@ -495,36 +520,17 @@ in the selection.">
                 <&camelia-messages-box('block')>
   </?>
               </div>
-
-              <div id="tab-search" class="tab-block tab-search" data-content="2">
-                <!-- Search tab -->
-                <form id="Search" action="/search.html"
-                onsubmit="return checkChannel()">
-                  <&search-query($_)>
-                  <&search-type($_)>
-                  <&search-all-words($_)>
-                  <&search-ignorecase($_)>
-                  <&search-nicks($_)>
-                  <&search-include-aliases($_)>
-                  <&search-channel($_)>
-                  <&search-message-type($_)>
-                  <&search-entries-pp($_)>
-                  <&search-from($_)>
-                  <&search-until($_)>
-                  <&search-submit($_)>
-                </form>
-              </div>
-
+              <&mobile-search-options($_)>
             </div>
 
 
           </div>
           <!-- Mobile only forms in header ends -->
+</!>
 
         </div>
       </div>
       <!-- Other header menus ends -->
-</!>
 
 <?$has-entries>
       <!-- Right sidebar header -->
