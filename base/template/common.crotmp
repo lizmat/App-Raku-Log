@@ -749,7 +749,7 @@ in the selection.">
                       <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
                       <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
                       ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
-                      <td class="column-time"><.hh-mm></td>
+                      <td class="column-time is-hidden-mobile"><.hh-mm></td>
 </!>
                       <td class="column-buttons">
                         <div class="dropdown is-hoverable">
