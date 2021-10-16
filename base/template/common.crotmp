@@ -688,7 +688,7 @@ in the selection.">
                 <&HTML(.description)>
               </div>
               <div class="block">
-                <@years>
+                <@years.reverse>
                   <div class="block block-years">
                     <div class="year title is-4"><.year></div>
 
