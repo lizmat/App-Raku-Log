@@ -44,7 +44,7 @@
       </div>
       <div class="dropdown-menu">
         <div class="dropdown-content">
-          <input id="sidebar-datepicker" type="date">
+          <input class="sidebar-datepicker" type="date">
         </div>
       </div>
     </div>
@@ -108,7 +108,8 @@
             startDate: new Date("<.start-date>"),
             endDate: new Date("<.end-date>"),
           };
-          var calendars = bulmaCalendar.attach('[id="sidebar-datepicker"]', options);
+          var calendars = bulmaCalendar.attach('[class="sidebar-datepicker"]', options);
+          console.log(calendars);
           for (let i = 0; i < calendars.length; i++) {
               // Add listener to select event
               calendars[i].on('select', date => {
