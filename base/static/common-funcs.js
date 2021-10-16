@@ -2,12 +2,28 @@
 var $showLeftSide  = getCookie("showLeftSide");
 var $showRightSide = getCookie("showRightSide");
 
+// Add class to given id
+function addClassToId(id, name) {
+    document.getElementById(id).classList.add(name);
+}
+
+// Remove class from given id
+function removeClassFromId(id, name) {
+    document.getElementById(id).classList.remove(name);
+}
+
+// Set add/remove class from given id
+function setStateOfClassOnId(id, add, name = 'is-active') {
+    let classlist = document.getElementById(id).classList;
+    add ? classlist.add(name) : classlist.remove(name);
+}
+
 // Init main position wrt sidebars
 if ($showLeftSide === true) {
-    document.getElementById('main-container').classList.add('has-left-sidebar');
+    addClassToId('main-container', 'has-left-sidebar');
 }
 if ($showRightSide === true) {
-    document.getElementById('main-container').classList.add('has-right-sidebar');
+    addClassToId('main-container', 'has-right-sidebar');
 }
 
 // targets for gist of current channel
@@ -60,8 +76,7 @@ function scrollToBottom() {
 function setPrimaryByElement(element, primary) {
     if (primary) {
         element.classList.remove('is-primary');
-    }
-    else {
+    } else {
         element.classList.add('is-primary');
     }
 }
@@ -70,8 +85,7 @@ function setPrimaryByElement(element, primary) {
 function setVisibilityByElement(element, visible) {
     if (visible) {
         element.classList.remove('is-hidden');
-    }
-    else {
+    } else {
         element.classList.add('is-hidden');
     }
 }
@@ -94,8 +108,9 @@ function setButtons(name, state) {
 
 // Generic function to set display state of an element by ID
 function setDisplayById(id, state) {
-    document.getElementById(id).style.display = state ? "block" : "none";
-    document.getElementById(id).style.width = state ? "300px" : "0";
+    let style = document.getElementById(id).style;
+    style.display = state ? "block" : "none";
+    style.width   = state ? "300px" : "0";
 }
 
 // Generic function to set state of checkboxes by id
@@ -134,17 +149,10 @@ function toggleRightSidebar() {
 
 // Toggle currently opened tab in a mobile filter/search menu
 function switchMobileTab(num) {
-    if (num === 0) {
-        document.getElementById('filter-mobile-switch').classList.add('is-active');
-        document.getElementById('search-mobile-switch').classList.remove('is-active');
-        document.getElementById('tab-filter').classList.add('is-active');
-        document.getElementById('tab-search').classList.remove('is-active');
-    } else if (num === 1) {
-        document.getElementById('search-mobile-switch').classList.add('is-active');
-        document.getElementById('filter-mobile-switch').classList.remove('is-active');
-        document.getElementById('tab-search').classList.add('is-active');
-        document.getElementById('tab-filter').classList.remove('is-active');
-    }
+    setStateOfClassOnId('filter-mobile-switch', num == 0);
+    setStateOfClassOnId('search-mobile-switch', num == 1);
+    setStateOfClassOnId('tab-filter', num == 0);
+    setStateOfClassOnId('tab-search', num == 1);
 }
 
 // Submit search if Enter was pressed and all requirements are met
@@ -236,8 +244,7 @@ function removeVisibleTargets() {
         if (tr) {
             if (tr.classList.contains('is-hidden')) {
                 newTargets.push(target);
-            }
-            else {
+            } else {
                 setTargetSelectionState(target, false);
             }
         }
@@ -251,8 +258,7 @@ function setTargetSelectionState(target, on) {
     if (tr) {
         if (on) {
             tr.classList.add('special-selected');
-        }
-        else {
+        } else {
             tr.classList.remove('special-selected');
         }
     }
@@ -261,8 +267,7 @@ function setTargetSelectionState(target, on) {
         if (on) {
             option.classList.add('is-hidden');
             option.nextSibling.classList.remove('is-hidden');
-        }
-        else {
+        } else {
             option.classList.remove('is-hidden');
             option.nextSibling.classList.add('is-hidden');
         }
@@ -279,8 +284,7 @@ function toggleTargetFromGist(target) {
         if (current == target) {
             setTargetSelectionState(target, false);
             mustAdd = false;
-        }
-        else {
+        } else {
             newTargets.push(current);
         }
     }
@@ -301,8 +305,7 @@ function removeTargetFromGist(target) {
         if (current) {
             if (current == target) {
                 remove = true;
-            }
-            else {
+            } else {
                 newTargets.push(current);
             }
         }
@@ -323,8 +326,7 @@ function addTargetToGist(target) {
         if (current) {
             if (current == target) {
                 add = false;
-            }
-            else {
+            } else {
                 newTargets.push(current);
             }
         }
@@ -389,8 +391,7 @@ function containsAnyTexts(haystack, needles) {
             if (haystack.toLowerCase().indexOf(needle) != -1) {
                 return true;
             }
-        }
-        else {
+        } else {
             return true;
         }
     }
@@ -441,9 +442,7 @@ function filterMessages(
                 || (!text && nickOK)
             )
         }
-    }
-
-    else {
+    } else {
         for (let i = 0; columns.length > i; i++) {
             setVisibilityByElement(columns[i].parentElement, true)
         }
