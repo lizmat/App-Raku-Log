@@ -252,7 +252,7 @@ that will be returned at a time">
   <div class="control">
     <strong>From</strong>
     <input type="date" name="from-yyyymmdd"
-      class="input" placeholder="dd-mm-yyyy"
+      class="input"
       value="<?.from-yyyymmdd><.from-yyyymmdd></?><!.from-yyyymmdd><.first-date></!>"
       min="<.first-date>" max="<.last-date>">
   </div>
@@ -262,7 +262,7 @@ that will be returned at a time">
   <div class="control">
     <strong>Until</strong>
     <input type="date" name="to-yyyymmdd"
-      class="input" placeholder="dd-mm-yyyy"
+      class="input"
       value="<?.to-yyyymmdd><.to-yyyymmdd></?><!.to-yyyymmdd><.last-date></!>"
       min="<.first-date>" max="<.last-date>">
   </div>

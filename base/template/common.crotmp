@@ -59,7 +59,7 @@
 </?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -182,7 +182,7 @@
 <!$is-home>
         <a href="/" class="navbar-item" 
           title="Go to the home page of the Raku IRC log browser"
-        ><img class="camelia-image" src="/camelia.png" width="40" height="28"></a>
+        ><img class="camelia-image" src="/camelia.png" width="40" height="28" alt="Camelia"></a>
 
       <div class="navbar-delimiter"></div>
 </!>
@@ -611,7 +611,7 @@ in the selection.">
 
 <?$is-home>
               <div class="level-item subtitle is-size-4-desktop is-size-5-mobile is-size-4-tablet">
-                <.first-human-date></a>&nbsp;-&nbsp;<.last-human-date>
+                <.first-human-date>&nbsp;-&nbsp;<.last-human-date>
               </div>
               <div class="is-size-4-desktop is-size-5-mobile is-size-4-tablet">
                 <&HTML(.description)>
