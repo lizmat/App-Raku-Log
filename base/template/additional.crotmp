@@ -9,14 +9,10 @@
 <tr
   <?.relative-target> id="<.relative-target>"</?>
   <?.target>target="<.target>"</?>
-  <?.control-events> class="special-system"</?>
-  <?.commit> class="special-commit"</?>
-  <?.camelia> class="special-camelia"</?>
-  <?.test-t> class="special-test"</?>
-  <?.same-nick> class="special-same-nick"</?>
-  >
+  class="<?.control-events>special-system</?> <?.commit>special-commit</?> <?.camelia>special-camelia</?> <?.test-t>special-test</?> <?.same-nick>special-same-nick</?> <?$is-gist>special-selected</?>">
+>
   <?.control-events>
-  <td/>
+  <td></td>
   <td colspan="2">
     <div class="is-size-7">
       <@control-events>
@@ -29,7 +25,7 @@
   <!.control-events>
   <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
   <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
-  ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
+  ><?.targets><@targets><span id="<$_>"></span></@></?><&HTML(.message)></td>
   <td class="column-time"><.hh-mm></td>
   </!>
   <td class="column-buttons">
