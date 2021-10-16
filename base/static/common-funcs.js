@@ -269,9 +269,30 @@ function setTargetSelectionState(target, on) {
     }
 }
 
-// Remove target of given link, updates status, visibility and cookie
-function removeTargetFromGist(link) {
-    let target = link.previousSibling.getAttribute('target');
+// Toggle target, update status, visibility and cookie
+function toggleTargetFromGist(target) {
+    let currentTargets = $gistTargets.split(',');
+    let newTargets = [];
+    let mustAdd = true;
+    for (let i = 0; currentTargets.length > i; i++) {
+        let current = currentTargets[i];
+        if (current == target) {
+            setTargetSelectionState(target, false);
+            mustAdd = false;
+        }
+        else {
+            newTargets.push(current);
+        }
+    }
+    if (mustAdd) {
+        setTargetSelectionState(target, true);
+        newTargets.push(target);
+    }
+    setGistTargets(newTargets.sort().join(','));
+}
+
+// Remove target, update status, visibility and cookie
+function removeTargetFromGist(target) {
     let currentTargets = $gistTargets.split(',');
     let newTargets = [];
     let remove = false;
@@ -292,9 +313,8 @@ function removeTargetFromGist(link) {
     setGistTargets(newTargets.sort().join(','));
 }
 
-// Add target of given link, updates status, visibility and cookie
-function addTargetToGist(link) {
-    let target = link.getAttribute('target');
+// Add target, update status, visibility and cookie
+function addTargetToGist(target) {
     let currentTargets = $gistTargets.split(',');
     let newTargets = [];
     let add = true;

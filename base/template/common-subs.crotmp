@@ -288,13 +288,13 @@ the resulting output would be now"
   <a
     class="msg-log-btn"
     target="<.target>"
-    onclick="addTargetToGist(this)"
+    onclick="addTargetToGist('<.target>')"
     title="Allows you to collect messages relevant to a
 discussion and create a link for others to refer
 to that discussion"
   ><&column-button('cart-plus', 'Add to gist')></a><a
     class="msg-log-btn is-hidden"
-    onclick="removeTargetFromGist(this)"
+    onclick="removeTargetFromGist('<.target>')"
     title="Remove this message from the current selection"
   ><&column-button('times', 'Remove')></a>
 </:>

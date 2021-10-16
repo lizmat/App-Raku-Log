@@ -753,7 +753,9 @@ in the selection.">
 </?>
 <!.control-events>
                       <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
-                      <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
+                      <td
+                        class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
+                        onClick="toggleTargetFromGist('<.target>')"
                       ><?.targets><@targets><span id="<$_>"/></@></?><&HTML(.message)></td>
                       <td class="column-time is-hidden-mobile"><.hh-mm></td>
 </!>
