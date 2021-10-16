@@ -645,7 +645,7 @@ in the selection.">
                   <div class="is-inline-flex is-block-mobile">
                     <a href="/<.name>/index.html">
                       <&icon('calendar-alt')>
-                      <span>Overview</span></a>
+                      <span>Overview</span>
                     </a>
                   </div>
       <?.active>
