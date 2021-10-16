@@ -9,7 +9,7 @@
 <tr
   <?.relative-target> id="<.relative-target>"</?>
   <?.target>target="<.target>"</?>
-  class="<?.control-events>special-system</?> <?.commit>special-commit</?> <?.camelia>special-camelia</?> <?.test-t>special-test</?> <?.same-nick>special-same-nick</?> <?$is-gist>special-selected</?>">
+  class="<?.control-events>special-system</?> <?.commit>special-commit</?> <?.camelia>special-camelia</?> <?.test-t>special-test</?> <?.same-nick>special-same-nick</?>"
 >
   <?.control-events>
   <td></td>
