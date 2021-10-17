@@ -350,11 +350,17 @@ sub day-plugins() is export {
 }
 
 sub descriptions($io) is export {
-    $io.dir.map: { .basename => .slurp.chomp }
+    $io.dir.map: {
+        .basename => .slurp.chomp
+          unless .basename.starts-with(".")
+    }
 }
 
 sub one-liners($io) is export {
-    $io.dir.map: { .basename => .slurp.chomp }
+    $io.dir.map: {
+        .basename => .slurp.chomp
+          unless .basename.starts-with(".")
+    }
 }
 
 sub channel-ordering(@channels) is export {
@@ -384,6 +390,7 @@ sub channel-ordering(@channels) is export {
     }
 
     if <
+      raku-conf
       raku-steering-council
     >.grep({ %channels{$_}:delete }) -> @community {
         @ordered.push("-community");

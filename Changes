@@ -1,6 +1,8 @@
 Revision history for App-Raku-Log
 
 {{$NEXT}}
+    - Added "raku-conf" channel to community
+    - Make sure descriptions/one-liners loading ignores ".*" files
 
 0.0.5  2021-10-15T19:58:34+02:00
     - Up dependency

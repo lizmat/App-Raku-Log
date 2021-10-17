@@ -394,10 +394,18 @@ selection."
                 <div class="dropdown-item">
                   <div class="menu">
                     <ul class="menu-list">
+<?$is-gist>
+                      <li title="Copy a link to the messages
+on this page to the clipboard.">
+                        <a><span onClick="copyTextToClipboard(
+                          'https://logs.liz.nl'
+                            + document.getElementById('Gist').getAttribute('href')
+                        )">Copy to clipboard</span></a>
+                      </li>
+</?>
                       <li title="Show the messages of the #<.channel>
 channel that have been collected by
-you so far, or save the link for other
-uses.">
+you so far.">
                         <a id="Gist" href="/<.channel>/gist.html">
                           <span>Show&nbsp;collected&nbsp;messages</span>
                         </a>
