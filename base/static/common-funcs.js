@@ -480,39 +480,62 @@ function filterExcludeByText(button) {
     filterMessages();
 }
 
+// fetch additional HTML and call callback when done
+function additionalHTML(url, whenReady) {
+    let xhr = new XMLHttpRequest();
+    xhr.ontimeout = function () {
+        console.error("The request for " + url + " timed out.");
+    }
+    xhr.onload = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                whenReady.apply(xhr);
+            } else if (xhr.status = 204) {
+                // no action needed
+            } else {
+                console.error('The request for '
+                  + url
+                  + ' failed: '
+                  + xhr.statusText
+                );
+            }
+        }
+    }
+    xhr.open("GET", url, true);
+    xhr.timeout = 5000;
+    xhr.send(null);
+}
+
 // scroll up the given channel/target for given number of entries
 // returns the new target to look for
 function scrollup(channel, entries) {
-    let xmlHttp = new XMLHttpRequest();
     let target = document.querySelector("tbody").children[1].getAttribute("target");
-    let url = "/" + channel + "/scroll-up.html?target=" + target + "&entries=" + entries;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
+    additionalHTML(
+      "/" + channel + "/scroll-up.html?target=" + target + "&entries=" + entries,
+      function() {
+        let topElement = document.querySelector("tr[target='" + target + "']");
+        if (topElement) {
+            topElement.previousSibling.previousSibling.remove();
+            topElement.previousSibling.remove();
+            topElement.remove();
+        }
 
-    let topElement = document.querySelector("tr[target='" + target + "']");
-    if (topElement) {
-        topElement.previousSibling.previousSibling.remove();
-        topElement.previousSibling.remove();
-        topElement.remove();
-    }
-
-    let tbodyEl = document.querySelector("tbody");
-    tbodyEl.innerHTML = xmlHttp.responseText + tbodyEl.innerHTML;
-    filterMessages();
+        let tbodyElem = document.querySelector("tbody");
+        tbodyElem.innerHTML = this.responseText + tbodyElem.innerHTML;
+        filterMessages();
+      }
+    );
 }
 
 // scroll down the given channel/target (finding all newest messages)
 function scrolldown(channel) {
-    let xmlHttp = new XMLHttpRequest();
     let target = document.querySelector("tbody").lastElementChild.getAttribute("target");
-    let url = "/" + channel + "/scroll-down.html?target=" + target;
-    xmlHttp.open("GET", url, false);
-    xmlHttp.send(null);
-
-    let additionalHTML = xmlHttp.responseText;
-    if (additionalHTML) {
-        let tbodyEl = document.querySelector("tbody");
-        tbodyEl.innerHTML = tbodyEl.innerHTML + additionalHTML;
-        filterMessages();
-    }
+    additionalHTML(
+      url = "/" + channel + "/scroll-down.html?target=" + target,
+      function () {
+          let tbodyEl = document.querySelector("tbody");
+          tbodyEl.innerHTML = tbodyEl.innerHTML + this.responseText;
+          filterMessages();
+      }
+    );
 }
