@@ -1,1 +1,3 @@
-<p>Description of MUGS</p>
+<div class="subtitle">
+<a href="https://github.com/Raku-MUGS/MUGS#readme">MUGS (Multi-User Gaming Services)</a> is a set of basic services written in the <a href="https://raku.org">Raku Programming Language</a> for creating client-server and multi-user games. It abstracts away the boilerplate of managing player identities, tracking active games and sessions, sending and receiving messages and actions, and so forth.
+</div>

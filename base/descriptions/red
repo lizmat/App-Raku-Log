@@ -1,1 +1,3 @@
-<p>Description of the RED ORM</p>
+<div class="subtitle">
+<a href="https://fco.github.io/Red/">Red</a> is an Object-Relational Mapping (ORM) tool for the <a href="https://raku.org">Raku Programming Language</a>.  It allows you to “hide” the layer of interaction with your relational database and work with Raku objects instead.
+</div>

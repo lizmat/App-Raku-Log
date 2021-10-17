@@ -1,7 +1,7 @@
 <img src="/camelia.png" width="28%" vspace="2%" hspace="2%" align="left">
 <div class="subtitle">
 This website provides access to the historic IRC logs of the development
-of the Raku® Programming Language.  They are provided here as complete
+of the Raku Programming Language.  They are provided here as complete
 as possible, either from
 <a href="https://colabti.org/irclogger//irclogger_logs">historic logs</a>
 or from the new <a href="https://github.com/Raku/IRC-logs">Raku IRC logs</a>.

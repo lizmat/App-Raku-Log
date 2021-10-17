@@ -1,1 +1,3 @@
-<p>Description of MoarVM</p>
+<div class="subtitle">
+<a href="https://moarvm.org">MoarVM</a> is a modern virtual machine built for the Rakudo compiler, implementing the <a href="https://raku.org">Raku Programming Language</a> and the <a href="https://github.com/raku/nqp#readme">NQP Compiler Toolchain</a>. MoarVM is the preferred virtual machine by the majority of Raku programmers.
+</div>

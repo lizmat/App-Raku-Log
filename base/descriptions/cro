@@ -1,3 +1,4 @@
-<p>
-<a href="https://cro.services">Cro</a> is framework for building reactive distributed systems (such as this website), lovingly crafted to take advantage of all that the Raku Programming Language has to offer.
-<p>
+<img src="/cro.svg" width="28%" vspace="2%" hspace="2%" align="left">
+<div class="subtitle">
+<a href="https://cro.services">Cro</a> is Raku framework for building reactive distributed systems (such as this website), lovingly crafted to take advantage of all that the <a href="https://raku.org">Raku Programming Language</a> has to offer.
+</div>

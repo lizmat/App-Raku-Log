@@ -1,4 +1,4 @@
 <:use 'base/template/common.crotmp'>
 <|log-page($_, :is-home, :icon('home'),
-  :title('Welcome to the Raku® Programming Language IRC logs')
+  :title('Welcome to the Raku Programming Language IRC logs')
 )>Home of the Raku® Programming Language IRC logs</|>
