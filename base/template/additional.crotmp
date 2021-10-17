@@ -25,6 +25,7 @@
   <!.control-events>
   <td nick="<&HTML(.nick)>"><!.same-nick><&HTML(.sender)></!></td>
   <td class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
+    onClick="toggleTargetFromGist('<.target>')"
   ><?.targets><@targets><span id="<$_>"></span></@></?><&HTML(.message)></td>
   <td class="column-time"><.hh-mm></td>
   </!>
