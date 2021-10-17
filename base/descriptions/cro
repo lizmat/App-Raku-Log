@@ -1,1 +1,3 @@
-<p>Description of Cro</p>
+<p>
+<a href="https://cro.services">Cro</a> is framework for building reactive distributed systems (such as this website), lovingly crafted to take advantage of all that the Raku Programming Language has to offer.
+<p>
