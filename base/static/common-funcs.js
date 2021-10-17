@@ -67,6 +67,11 @@ function getCookie(cname) {
     return "";
 }
 
+// Generic function to copy text to clipboard
+function copyTextToClipboard(text) {
+    navigator.clipboard.writeText(text);
+}
+
 // Generic function to scroll to the bottom of the window
 function scrollToBottom() {
     window.scrollTo(0, document.body.scrollHeight);

@@ -770,6 +770,7 @@ in the selection.">
                               <div class="dropdown-item">
                                 <div class="menu">
                                   <ul class="menu-list">
+                                    <li><&copy-link($_)></li>
                                     <li><&day-link($_, $is-day)></li>
                                     <li><&gist-link($_)></li>
                                     <?.runcode-link>

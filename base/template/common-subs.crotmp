@@ -316,3 +316,10 @@ move to the top of the page"
   ><&column-button('link', 'Show on day')></a>
 </!>
 </:>
+
+<:sub copy-link($_)>
+  <a class="msg-log-btn"
+    onClick="copyTextToClipboard('https://logs.liz.nl/<.channel>/<.date>.html#<.relative-target>')"
+    title="Copy message link to the clipboard"
+  ><&column-button('clipboard', 'Copy link')></a>
+</:>
