@@ -768,7 +768,7 @@ in the selection.">
                         class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
                         onClick="toggleTargetFromGist('<.target>')"
                       ><?.targets><@targets><span id="<$_>"></span></@></?><&HTML(.message)></td>
-                      <td class="column-time is-hidden-mobile"><.hh-mm></td>
+                      <td class="column-time"><.hh-mm></td>
 </!>
                       <td class="column-buttons">
                         <div class="dropdown is-hoverable">
