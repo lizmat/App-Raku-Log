@@ -138,27 +138,11 @@
           }, 50000 + Math.floor(Math.random() * 20000));
 
           var $minY  = 0;
-          window.addEventListener(
-            'scroll',
-            $isSafari
-              ? function(e) {
-                    let currentY = window.scrollY;
-                    if (currentY == 0) {
-                        if (-3 > $minY) {
-                            scrollup("<.channel>", 5 + Math.floor(-$minY / 3));
-                            $minY = 0;
-                        }
-                    }
-                    else if (0 > currentY) {
-                        $minY = Math.min($minY, currentY);
-                    }
-                }
-              : function(e) {
-                    if (window.scrollY == 0) {
-                        scrollup("<.channel>", 15);
-                    }
-                }
-          );
+          window.addEventListener('scroll', function(e) {
+              if (window.scrollY == 0) {
+                  scrollup("<.channel>", 15);
+              }
+          });
 </?>
       });
     </script>

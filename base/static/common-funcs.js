@@ -513,6 +513,10 @@ function scrollup(channel, entries) {
     additionalHTML(
       "/" + channel + "/scroll-up.html?target=" + target + "&entries=" + entries,
       function() {
+        let html = document.querySelector('html');
+        let oldScrollPos    = html.scrollTop;
+        let oldScrollHeight = html.scrollHeight - html.clientHeight;
+
         let topElement = document.querySelector("tr[target='" + target + "']");
         if (topElement) {
             topElement.previousSibling.previousSibling.remove();
@@ -522,6 +526,9 @@ function scrollup(channel, entries) {
 
         let tbodyElem = document.querySelector("tbody");
         tbodyElem.innerHTML = this.responseText + tbodyElem.innerHTML;
+
+        let newScrollHeight = html.scrollHeight - html.clientHeight;
+        html.scrollTop = oldScrollPos + (newScrollHeight - oldScrollHeight);
         filterMessages();
       }
     );
