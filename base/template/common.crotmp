@@ -133,9 +133,22 @@
           history.scrollRestoration = "manual";
           window.onload = scrollToBottom;
 
+          var $focused = true;
+          window.onblur  = function() {
+              $focused = false;
+          }
+          window.onfocus = function() {
+              if (!$focused) {  // not the first time
+                  scrolldown("<.channel>");
+              }
+              $focused = true;
+          }
+
           setInterval(function() {
-              scrolldown("<.channel>")  // 50 - 70 seconds randomly
-          }, 50000 + Math.floor(Math.random() * 20000));
+              if ($focused) {
+                  scrolldown("<.channel>");
+              }
+          }, 50000 + Math.floor(Math.random() * 20000)); // 50 - 70 seconds randomly
 
           var $minY  = 0;
           window.addEventListener('scroll', function(e) {
