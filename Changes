@@ -2,6 +2,10 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.7  2021-10-18T22:08:28+02:00
+    - Fix /me lines
+    - Also linkify anything dotted that ends in a valid tld
+
 0.0.6  2021-10-17T15:33:39+02:00
     - Added "raku-conf" channel to community
     - Make sure descriptions/one-liners loading ignores ".*" files
