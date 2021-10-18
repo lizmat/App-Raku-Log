@@ -152,7 +152,7 @@
 
           var $minY  = 0;
           window.addEventListener('scroll', function(e) {
-              if (window.scrollY == 0) {
+              if (100 > window.scrollY) {
                   scrollup("<.channel>", 15);
               }
           });
