@@ -1,6 +1,8 @@
 // whether sidebars to be shown or not
 var $showLeftSide  = getCookie("showLeftSide");
 var $showRightSide = getCookie("showRightSide");
+var $fetchingScrollUp   = false;
+var $fetchingScrollDown = false;
 
 // Add class to given id
 function addClassToId(id, name) {
@@ -510,39 +512,47 @@ function additionalHTML(url, whenReady) {
 // returns the new target to look for
 function scrollup(channel, entries) {
     let target = document.querySelector("tbody").children[1].getAttribute("target");
-    additionalHTML(
-      "/" + channel + "/scroll-up.html?target=" + target + "&entries=" + entries,
-      function() {
-        let html = document.querySelector('html');
-        let oldScrollPos    = html.scrollTop;
-        let oldScrollHeight = html.scrollHeight - html.clientHeight;
+    if (!$fetchingScrollUp) {
+        $fetchingScrollUp = true;
+        additionalHTML(
+          "/" + channel + "/scroll-up.html?target=" + target + "&entries=" + entries,
+          function() {
+            let html = document.querySelector('html');
+            let oldScrollPos    = html.scrollTop;
+            let oldScrollHeight = html.scrollHeight - html.clientHeight;
 
-        let topElement = document.querySelector("tr[target='" + target + "']");
-        if (topElement) {
-            topElement.previousSibling.previousSibling.remove();
-            topElement.previousSibling.remove();
-            topElement.remove();
-        }
+            let topElement = document.querySelector("tr[target='" + target + "']");
+            if (topElement) {
+                topElement.previousSibling.previousSibling.remove();
+                topElement.previousSibling.remove();
+                topElement.remove();
+            }
 
-        let tbodyElem = document.querySelector("tbody");
-        tbodyElem.innerHTML = this.responseText + tbodyElem.innerHTML;
+            let tbodyElem = document.querySelector("tbody");
+            tbodyElem.innerHTML = this.responseText + tbodyElem.innerHTML;
 
-        let newScrollHeight = html.scrollHeight - html.clientHeight;
-        html.scrollTop = oldScrollPos + (newScrollHeight - oldScrollHeight);
-        filterMessages();
-      }
-    );
+            let newScrollHeight = html.scrollHeight - html.clientHeight;
+            html.scrollTop = oldScrollPos + (newScrollHeight - oldScrollHeight);
+            filterMessages();
+            $fetchingScrollUp = false;
+          }
+        );
+    }
 }
 
 // scroll down the given channel/target (finding all newest messages)
 function scrolldown(channel) {
     let target = document.querySelector("tbody").lastElementChild.getAttribute("target");
-    additionalHTML(
-      url = "/" + channel + "/scroll-down.html?target=" + target,
-      function () {
-          let tbodyEl = document.querySelector("tbody");
-          tbodyEl.innerHTML = tbodyEl.innerHTML + this.responseText;
-          filterMessages();
-      }
-    );
+    if (!$fetchingScrollDown) {
+        $fetchingScrollDown = true;
+        additionalHTML(
+          url = "/" + channel + "/scroll-down.html?target=" + target,
+          function () {
+              let tbodyEl = document.querySelector("tbody");
+              tbodyEl.innerHTML = tbodyEl.innerHTML + this.responseText;
+              filterMessages();
+              $fetchingScrollDown = false;
+          }
+        );
+    }
 }
