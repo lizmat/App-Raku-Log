@@ -189,7 +189,7 @@
       <!-- Channel selection -->
       <div class="navbar-brand">
 <!$is-home>
-        <a href="/" class="navbar-item" 
+        <a href="/" class="navbar-item"
           title="Go to the home page of the Raku IRC log browser"
         ><img class="camelia-image" src="/camelia.png" width="40" height="28" alt="Camelia"></a>
 
@@ -592,7 +592,7 @@ in the selection.">
     <!-- Columns -->
     <div id="wrapper">
 
-      <section class="section <?$is-index>index</?><!$is-index>day</!>">
+      <section class="section <?$is-index>index</?><?$is-day>day</?><?$is-home>homepage</?>">
 
         <div class="columns">
 

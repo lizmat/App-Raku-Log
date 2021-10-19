@@ -1,7 +1,7 @@
 // Import required modules.
 @charset "utf-8";
 
-// To override any of these variables, just set them before importing Bulma. 
+// To override any of these variables, just set them before importing Bulma.
 $primary: #AA133F;
 $navbar-red-delimiter: #7C0E2E;
 
@@ -69,6 +69,10 @@ $card-shadow: unset;
 $column-gap: 0;
 
 // $tabs-toggle-link-active-background-color: $grey-dark;
+
+// Fix link color
+$link: $blue;
+$link-hover: darken($blue, 15);
 
 // Initial Bulma stuff
 @import "../node_modules/bulma/sass/utilities/_all.sass";
@@ -202,11 +206,11 @@ body {
     @include mobile {
       flex-wrap: wrap;
     }
-    
+
   }
 }
 
-.container-footer {
+#container-footer {
   padding-bottom: 1rem;
 }
 
@@ -280,7 +284,7 @@ body {
   }
 
   .navbar-item {
-    font-size: 1.125rem; 
+    font-size: 1.125rem;
     font-weight: 700;
   }
 
@@ -372,7 +376,7 @@ body {
   .date-dropdown-button {
     background-color: unset;
     border: unset;
-    
+
   }
 
   // Adjust tooltips in navbar
@@ -515,7 +519,7 @@ nav.secondary-navbar {
   .table {
     border: 1px solid $border;
   }
-  
+
   .column-time {
     text-align: right;
     padding-right: 0;
@@ -524,6 +528,10 @@ nav.secondary-navbar {
   .column-buttons {
     padding: 0em 0em;
     // text-align: right;
+
+    a:hover {
+      text-decoration: none;
+    }
   }
 
   .column-author {
@@ -543,7 +551,7 @@ nav.secondary-navbar {
     @include fix-word-wrap;
   }
 
-  
+
   .message-log-block {
     margin-bottom: 1rem;
   }
@@ -653,7 +661,7 @@ nav.secondary-navbar {
 
   &.centered {
     display: flex;
-    justify-content: center; 
+    justify-content: center;
 
     .button {
       margin: 0 0.25rem;
@@ -684,11 +692,11 @@ nav.secondary-navbar {
   }
 }
 
-// Columns for sidebar 
+// Columns for sidebar
 .column.is-narrow {
   width: $sidebar-width;
   padding: unset;
-  
+
 }
 
 // Correct color for hamburger menu
@@ -805,12 +813,16 @@ a.navbar-burger:hover {
 
 }
 
-#main-container hr {
-  height: 1px;
-  border-color: $border;
-  color: $border;
-  background-color: $border; 
-  
+#main-container {
+
+  hr {
+    height: 1px;
+    border-color: $border;
+    color: $border;
+    background-color: $border;
+
+
+  }
 }
 
 // Style homepage container
@@ -1108,11 +1120,11 @@ a.navbar-burger:hover {
           left: 50%;
           transform: translate(-50%, 0);
         }
-        
+
         &.column-author {
           text-align: left;
         }
-        
+
         &.column-code {
           font-family: monospace;
         }
@@ -1136,7 +1148,7 @@ a.navbar-burger:hover {
 // Don't move main contrainer while sidebar is opened
 @include from(1800px) {
   // #message-log,
-  #main-container {
+  #main-container, #container-footer {
     &.has-left-sidebar {
       left:  -150px;
     }
@@ -1231,12 +1243,12 @@ a.navbar-burger:hover {
     margin-top: 2rem;
   }
 
-  
+
   @include tablet {
     max-height: 300px;
     margin-top: 2rem;
   }
-  
+
   @include until(480px) {
     max-width: 100%;
   }
@@ -1284,3 +1296,10 @@ a.navbar-burger:hover {
   }
 }
 
+// Decorate links with underline
+
+#main-container, #container-footer {
+  a:hover {
+    text-decoration: underline;
+  }
+}

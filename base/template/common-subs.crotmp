@@ -89,7 +89,7 @@ for it to be shown.'
 </:>
 
 <:sub footer()>
-  <div class="container container-footer has-text-centered">
+  <div id="container-footer" class="container has-text-centered">
     <p>
       Powered by <a href="https://cro.services">Cro</a>
       and the <a href="https://raku.org">Raku® Programming Language</a>.
