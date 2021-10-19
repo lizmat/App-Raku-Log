@@ -210,7 +210,7 @@ body {
   }
 }
 
-.container-footer {
+#container-footer {
   padding-bottom: 1rem;
 }
 
@@ -1140,7 +1140,7 @@ a.navbar-burger:hover {
 // Don't move main contrainer while sidebar is opened
 @include from(1800px) {
   // #message-log,
-  #main-container {
+  #main-container, #container-footer {
     &.has-left-sidebar {
       left:  -150px;
     }
