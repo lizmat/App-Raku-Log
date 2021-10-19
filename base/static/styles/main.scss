@@ -528,6 +528,10 @@ nav.secondary-navbar {
   .column-buttons {
     padding: 0em 0em;
     // text-align: right;
+
+    a:hover {
+      text-decoration: none;
+    }
   }
 
   .column-author {
@@ -809,12 +813,16 @@ a.navbar-burger:hover {
 
 }
 
-#main-container hr {
-  height: 1px;
-  border-color: $border;
-  color: $border;
-  background-color: $border;
+#main-container {
 
+  hr {
+    height: 1px;
+    border-color: $border;
+    color: $border;
+    background-color: $border;
+
+
+  }
 }
 
 // Style homepage container
@@ -1285,5 +1293,13 @@ a.navbar-burger:hover {
       padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
+  }
+}
+
+// Decorate links with underline
+
+#main-container, #container-footer {
+  a:hover {
+    text-decoration: underline;
   }
 }
