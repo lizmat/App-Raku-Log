@@ -462,7 +462,7 @@ body {
 
 // Add extra padding for secondary navbar on mobile
 body.has-navbar-fixed-top.has-mobile-navbar-fixed-top {
-  @include mobile {
+  @include until($tablet) {
     padding-top: calc(#{$navbar-height-size} + #{$navbar-mobile-height});
   }
 }
@@ -831,27 +831,6 @@ a.navbar-burger:hover {
   border: 1px solid $border;
   padding: 1rem;
   border-radius: 3px;
-}
-
-@include mobile {
-  // Disable extra padding on mobile for main container
-  .section.homepage, .section.index {
-    padding: 0;
-  }
-
-  .section.day {
-    padding: 1rem 0;
-
-    #message-log .table {
-      border: unset;
-      border-bottom: 1px solid $border;
-    }
-  }
-
-  .container.homepage {
-    border-radius: 0;
-    border: 0;
-  }
 }
 
 // Search page
@@ -1268,13 +1247,6 @@ a.navbar-burger:hover {
   }
 }
 
-// Change template structure
-
-// Disable extra padding on mobile for main container
-.section.homepage, .section.index, .section.day {
-  padding: 0;
-}
-
 @include until($tablet) {
   #message-log {
     padding-left: 0;
@@ -1283,8 +1255,9 @@ a.navbar-burger:hover {
 }
 
 @include from($tablet) {
-  #main-container.homepage, #main-container.day {
-    margin-top: 2rem;
+  #main-container.homepage,
+  #main-container.day {
+    margin-top: 1.5rem;
     margin-bottom: 1rem;
   }
 
@@ -1295,6 +1268,33 @@ a.navbar-burger:hover {
     }
   }
 }
+
+
+// Adjust padding on mobile for main container
+@include mobile {
+  .section.homepage {
+    padding: 1.5rem 1rem;
+  }
+
+  .section.index {
+    padding: 0;
+  }
+
+  .section.day {
+    padding: 1rem 0;
+
+    #message-log .table {
+      border: unset;
+      border-bottom: 1px solid $border;
+    }
+  }
+
+  .container.homepage {
+    border-radius: 0;
+    border: 0;
+  }
+}
+
 
 // Decorate links with underline
 
