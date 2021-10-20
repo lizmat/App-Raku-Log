@@ -1,5 +1,5 @@
 my
-class App::Raku::Log:ver<0.0.7>:auth<zef:lizmat> { }  # for Mi6 only
+class App::Raku::Log:ver<0.0.8>:auth<zef:lizmat> { }  # for Mi6 only
 
 use RandomColor;
 
@@ -473,6 +473,22 @@ sub mark-camelia-invocations(@entries --> Nil) {
 
 sub live-plugins() is export {
     my constant @live-plugins =
+      &merge-commit-messages, 
+      &merge-test-t-messages, 
+      &mark-camelia-invocations,
+    ;
+}
+
+sub scrollup-plugins() is export {
+    my constant @scrollup-plugins =
+      &mark-camelia-invocations,
+    ;
+}
+
+sub scrolldown-plugins() is export {
+    my constant @scrolldown-plugins =
+      &merge-commit-messages, 
+      &merge-test-t-messages, 
       &mark-camelia-invocations,
     ;
 }
@@ -482,6 +498,12 @@ sub day-plugins() is export {
       &merge-commit-messages, 
       &merge-test-t-messages, 
       &merge-control-messages,
+      &mark-camelia-invocations,
+    ;
+}
+
+sub gist-plugins() is export {
+    my constant @gist-plugins =
       &mark-camelia-invocations,
     ;
 }

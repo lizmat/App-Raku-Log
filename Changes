@@ -2,6 +2,12 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.8  2021-10-20T13:12:19+02:00
+    - Up dependency
+    - Various template and JS tweaks, ogdenwebb++
+    - Give each view with messages its own list of plugins
+    - Activate test-t / commit message merging on scrolldown
+
 0.0.7  2021-10-18T22:08:28+02:00
     - Fix /me lines
     - Also linkify anything dotted that ends in a valid tld
