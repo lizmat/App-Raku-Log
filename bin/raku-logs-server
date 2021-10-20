@@ -2,8 +2,8 @@
 
 use v6.*;
 
-use App::IRC::Log:ver<0.0.35>:auth<zef:lizmat>;
-use App::Raku::Log:ver<0.0.8>:auth<zef:lizmat>;
+use App::IRC::Log:ver<0.0.36>:auth<zef:lizmat>;
+use App::Raku::Log:ver<0.0.9>:auth<zef:lizmat>;
 use IRC::Log::Colabti:ver<0.0.35>:auth<zef:lizmat>;
 use Cro::HTTP::Server:ver<0.8.6>;
 
