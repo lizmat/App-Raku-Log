@@ -1,5 +1,5 @@
 my
-class App::Raku::Log:ver<0.0.9>:auth<zef:lizmat> { }  # for Mi6 only
+class App::Raku::Log:ver<0.0.10>:auth<zef:lizmat> { }  # for Mi6 only
 
 use RandomColor;
 
@@ -291,6 +291,110 @@ sub merge-control-messages(@entries) {
     @entries.grep(*.defined);
 }
 
+# Return substring that is between two given strings in a string
+my sub between(str $string, str $before, str $after) {
+    with $string.index($before) -> int $left {
+        with $string.index($after, $left) -> int $right {
+            my int $offset = $left + $before.chars;
+            $string.substr($offset, $right - $offset)
+        }
+        else {
+            $string
+        }
+    }
+    else {
+        $string
+    }
+}
+
+# Return substring that is before a given string in a string
+my sub before(str $string, str $before) {
+    with $string.index($before) -> int $left {
+        $string.substr(0, $left)
+    }
+    else {
+        $string
+    }
+}
+
+# Actually convert a set of entries into a single commit entry
+my sub transmogrify-commit(@indices, @entries, int $offset) {
+    my int $index = @indices.shift;
+    my $entry    := @entries[$index];
+    $entry<targets> := @entries[@indices].map(*<relative-target>).List;
+
+    my str $first = $entry<message>.substr(2);  # drop the '¦ '
+    my int $last-index = @indices.pop;
+    my str $last = @entries[$last-index]<message>.substr($offset);
+    my str $url  = between($last, '<a href="', '">');
+    @entries[$last-index] := Any;
+
+    my str @parts;
+    if @indices {
+        if $first.contains('commits') {
+            @parts.push: $first.subst: / \d+ ' ' commits /, {
+                '<a href="' ~ $url ~ '">' ~ $/ ~ '</a>'
+            }
+            @parts.push("<ul>\n");
+            my $base-url := before($url, 'compare');
+            for @entries[@indices] {
+                my ($sha,$description) = .<message>.substr($offset).split(' | ');
+                @parts.push:
+                  '<li>- <a href="',
+                  $base-url,
+                  'commit/',
+                  $sha,
+                  '">',
+                  $description.subst(""),
+                  "</a></li>\n";
+            }
+            @parts.push: "</ul>\n";
+        }
+        else {
+            @parts.push:
+              $first.subst(/ ': ' <( \w+ )> /, {
+                  '<a href="' ~ $url ~ '">' ~ $/ ~ '</a>'
+              }),
+              "<br/>\n<em>",
+              @entries[@indices.head]<message>.substr($offset),
+              "</em><br/>\n";
+
+            my str @subparts;
+            sub collect-subparts(--> Nil) {
+                @parts.push: "<br/>\n", @subparts.join(' ');
+                @subparts = ();
+            }
+
+            for @entries[@indices.skip(2)].map(*<message>.substr($offset)) {
+                if $_ {
+                    if .contains(/^ \W/) {
+                        if .match(/ 'commit message has ' <( \d+ ' more lines' /) {
+                            @subparts.push: "... ($/)";
+                        }
+                        else {
+                            collect-subparts if @subparts;
+                            @parts.push: "<br/>\n&nbsp;&nbsp;", $_;
+                        }
+                    }
+                    else {
+                        @subparts.push: " ", $_;
+                    }
+                }
+                else {
+                    collect-subparts if @subparts;
+                }
+            }
+            collect-subparts if @subparts;
+            @parts.push: "<br/>\n";
+        }
+    }
+
+    $entry<message> := @parts.join;
+    $entry<commit>  := True;
+
+    @entries[$_] := Any for @indices;
+}
+
 # Merge messages of a commit together
 sub merge-commit-messages(@entries) {
     for @entries.kv -> $index, %entry {
@@ -303,26 +407,15 @@ sub merge-commit-messages(@entries) {
                 my $nick   := %entry<nick>;
                 my int $i   = $index;
                 my int @indices = $index;
-                while --$i >= 0 && @entries[$i] -> \entry {
-                    last if entry<commit>;  # ran into previous commit
+                while --$i >= 0 && @entries[$i] -> $entry {
+                    last if $entry<commit>;  # ran into previous commit
                     @indices.unshift($i)
-                      if entry<nick> eq $nick
-                      && entry<message>.starts-with($prefix);
+                      if $entry<nick> eq $nick
+                      && $entry<message>.starts-with($prefix);
                 }
 
-                if @indices > 1 {
-                    my str @targets = @entries[@indices].map: *<relative-target>;
-                    my int $first = @indices.shift;
-                    with @entries[$first] -> \entry {
-                        entry<message> := entry<message>
-                          ~  @entries[@indices].map({
-                              "<br/>\n&nbsp;&nbsp;" ~ .<message>.substr($pos)
-                          }).join;
-                        entry<targets> := @targets;
-                        entry<commit>  := True;
-                    }
-                    @entries[$_] := Any for @indices;
-                }
+                transmogrify-commit(@indices, @entries, ++$pos)
+                  if @indices > 1;
             }
         }
     }
@@ -340,8 +433,7 @@ sub merge-test-t-messages(@entries) {
     my constant test-t-marker = 'Rakudo v';
 
     sub part-of-test-t($line) {
-        return $_ if $line.starts-with($_) for @head;
-        Nil
+        @head.first: { $line.starts-with($_) }
     }
 
     for @entries.kv -> $index, \entry {
