@@ -1,3 +1,3 @@
 <:use 'base/template/common.crotmp'>
 <|log-page($_, :is-day, :icon('inbox'), :has-entries
-)>#<.channel> on <.date-human> - Raku® Programming Language Log</|>
+)>#<.channel> on <.date-human> - Raku Programming Language Log</|>
