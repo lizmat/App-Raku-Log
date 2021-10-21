@@ -1,5 +1,5 @@
 my
-class App::Raku::Log:ver<0.0.10>:auth<zef:lizmat> { }  # for Mi6 only
+class App::Raku::Log:ver<0.0.11>:auth<zef:lizmat> { }  # for Mi6 only
 
 use RandomColor;
 
@@ -34,6 +34,8 @@ my constant %stop-nicks = <
 # Known top level domains
 # https://data.iana.org/TLD/tlds-alpha-by-domain.txt
 # Version 2021101701, Last updated Mon Oct 18 07:07:02 2021 UTC
+# Excluded because of possible confusion with standard method:
+#  new
 my constant $tld = set <
 aaa aarp abarth abb abbott abbvie abc able abogado abudhabi ac academy
 accenture accountant accountants aco actor ad adac ads adult ae aeg aero
@@ -105,7 +107,7 @@ merckmsd mg mh miami microsoft mil mini mint mit mitsubishi mk ml mlb
 mls mm mma mn mo mobi mobile moda moe moi mom monash money monster
 mormon mortgage moscow moto motorcycles mov movie mp mq mr ms msd mt mtn
 mtr mu museum mutual mv mw mx my mz na nab nagoya name natura navy nba
-nc ne nec net netbank netflix network neustar new news next nextdirect
+nc ne nec net netbank netflix network neustar news next nextdirect
 nexus nf nfl ng ngo nhk ni nico nike nikon ninja nissan nissay nl no
 nokia northwesternmutual norton now nowruz nowtv np nr nra nrw ntt nu
 nyc nz obi observer off office okinawa olayan olayangroup oldnavy ollo
@@ -244,10 +246,11 @@ sub htmlize($entry, %colors) is export {
     else {
         $text .= subst(/^ \S+ /, { colorize-nick($/, %colors) });
 
-        if $entry.^name.ends-with("Nick-Change") {
+        my str $name = $entry.^name;
+        if $name.ends-with("Nick-Change") {
             $text .= subst(/ \S+ $/, { colorize-nick($/, %colors) });
         }
-        elsif $entry.^name.ends-with("Kick") {
+        elsif $name.ends-with("Kick") {
             $text .= subst(/ \S+ $/, { colorize-nick($/, %colors) }, :5th)
         }
     }
@@ -331,6 +334,7 @@ my sub transmogrify-commit(@indices, @entries, int $offset) {
 
     my str @parts;
     if @indices {
+        # Multiple commits
         if $first.contains('commits') {
             @parts.push: $first.subst: / \d+ ' ' commits /, {
                 '<a href="' ~ $url ~ '">' ~ $/ ~ '</a>'
@@ -350,6 +354,8 @@ my sub transmogrify-commit(@indices, @entries, int $offset) {
             }
             @parts.push: "</ul>\n";
         }
+
+        # Only a single commit
         else {
             @parts.push:
               $first.subst(/ ': ' <( \w+ )> /, {
@@ -387,6 +393,36 @@ my sub transmogrify-commit(@indices, @entries, int $offset) {
             collect-subparts if @subparts;
             @parts.push: "<br/>\n";
         }
+    }
+
+    # A pull request
+    elsif $first.contains('created pull request') {
+        with $first.index('request #') -> int $left is copy {
+            $left = $left + 8;
+            with $first.index(':', $left) -> int $right {
+                @parts.push:
+                  $first.substr(0, $left),
+                  '<a href="',
+                  $url,
+                  '">',
+                  $first.substr($left, $right - $left),
+                  '</a>:<br/><em>',
+                  $first.substr($right + 2),
+                  '</em>';
+            }
+        }
+        @parts.push: $first unless @parts;
+    }
+
+    # Commit without additional info
+    else {
+            @parts.push:
+              $first.subst(/ ': ' <( \w+ )> /, {
+                  '<a href="' ~ $url ~ '">' ~ $/ ~ '</a>'
+              }),
+              "<br/>\n<em>",
+              $last,
+              "</em>";
     }
 
     $entry<message> := @parts.join;
@@ -540,45 +576,51 @@ sub control2span($text) {
 
 # Check for invocations of Camelia, assume it's code
 sub mark-camelia-invocations(@entries --> Nil) {
-    for @entries -> \entry {
-        if entry<conversation> && entry<message> -> \message {
-            if message.starts-with('m: ') {
-                entry<runcode-link> :=
-                  "/" ~ entry<channel> ~ "/run.html?" ~ entry<target>;
+    for @entries -> $entry {
+        if $entry<conversation> && $entry<message> -> $message {
+            if $message.starts-with('m: ') {
+                $entry<runcode-link> :=
+                  "/" ~ $entry<channel> ~ "/run.html?" ~ $entry<target>;
             }
             else {
-                with message.index(': OUTPUT: «') -> $index {
-                    entry<camelia> := message.substr(0,$index);
-                    my str $output  = message.substr($index + 11, *-1);
+                with $message.index(': OUTPUT: «') -> $index {
+                    $entry<camelia> := $message.substr(0,$index);
+                    my str $output   = $message.substr($index + 11, *-1);
                     $output = $output.chop if $output.ends-with("␤");
                     $output = control2span($output);
-                    entry<message> := $output.subst("␤", "<br/>", :global);
+                    $entry<message> := $output.subst("␤", "<br/>", :global);
                 }
-                orwith message.index(': ( no output )') -> $index {
-                    entry<camelia> := message.substr(0,$index);
-                    entry<message> := message.substr($index + 2);
+                orwith $message.index(': ( no output )') -> $index {
+                    $entry<camelia> := $message.substr(0,$index);
+                    $entry<message> := $message.substr($index + 2);
                 }
             }
         }
     }
 }
 
+# Check for Discord bot bridging
+my constant discord-bot = 'discord-raku-bot';
+sub identify-discord-bridge-users(@entries --> Nil) {
+    my str $last-nick;
+    for @entries -> $entry {
+        if $entry<nick> eq discord-bot {
+            my (str $nick, str $after) = $entry<message>.substr(4).split('#',2);
+            my str $new-nick = "$nick on Discord";
+            if $new-nick ne $last-nick {
+                $entry<sender> := $entry<sender>.subst(discord-bot,$new-nick);
+                $last-nick      = $nick;
+            }
+            $entry<message> := $after.substr($after.index('&gt;') + 5);
+        }
+        elsif $last-nick {
+            $last-nick = "";
+        }
+    }
+}
+
 sub live-plugins() is export {
     my constant @live-plugins =
-      &merge-commit-messages, 
-      &merge-test-t-messages, 
-      &mark-camelia-invocations,
-    ;
-}
-
-sub scrollup-plugins() is export {
-    my constant @scrollup-plugins =
-      &mark-camelia-invocations,
-    ;
-}
-
-sub scrolldown-plugins() is export {
-    my constant @scrolldown-plugins =
       &merge-commit-messages, 
       &merge-test-t-messages, 
       &mark-camelia-invocations,
@@ -594,8 +636,28 @@ sub day-plugins() is export {
     ;
 }
 
+sub search-plugins() is export {
+    my constant @gist-plugins =
+      &mark-camelia-invocations,
+    ;
+}
+
 sub gist-plugins() is export {
     my constant @gist-plugins =
+      &mark-camelia-invocations,
+    ;
+}
+
+sub scrollup-plugins() is export {
+    my constant @scrollup-plugins =
+      &mark-camelia-invocations,
+    ;
+}
+
+sub scrolldown-plugins() is export {
+    my constant @scrolldown-plugins =
+      &merge-commit-messages, 
+      &merge-test-t-messages, 
       &mark-camelia-invocations,
     ;
 }

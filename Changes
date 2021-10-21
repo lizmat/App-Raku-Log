@@ -1,7 +1,12 @@
 Revision history for App-Raku-Log
 
 {{$NEXT}}
+
+0.0.11  2021-10-21T13:10:07+02:00
     - Make commit messages layout more palatable
+    - Add support for message plugins for search view
+    - Fix problem with 2-line commit messages
+    - Removed 'new' as valid TLD to prevent linkage of Foo.new
 
 0.0.9  2021-10-20T17:33:08+02:00
     - Get rid of some more ®'s
