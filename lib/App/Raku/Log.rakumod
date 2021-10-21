@@ -619,12 +619,22 @@ sub identify-discord-bridge-users(@entries --> Nil) {
     }
 }
 
+sub linkify-modules(@entries --> Nil) is export {
+    for @entries -> $entry {
+        $entry<message> := $entry<message>
+          .subst(/ [^ | \s+] <( \w+ ['::' \w+]+ >> /, {
+              '<a href="https://raku.land/?q=' ~ $/ ~ '">' ~ $/ ~ '</a>'
+          }, :global);
+    }
+}
+
 sub live-plugins() is export {
     my constant @live-plugins =
       &merge-commit-messages, 
       &merge-test-t-messages, 
       &mark-camelia-invocations,
       &identify-discord-bridge-users,
+      &linkify-modules,
     ;
 }
 
@@ -635,6 +645,7 @@ sub day-plugins() is export {
       &merge-control-messages,
       &mark-camelia-invocations,
       &identify-discord-bridge-users,
+      &linkify-modules,
     ;
 }
 
@@ -642,6 +653,7 @@ sub search-plugins() is export {
     my constant @gist-plugins =
       &mark-camelia-invocations,
       &identify-discord-bridge-users,
+      &linkify-modules,
     ;
 }
 
@@ -649,6 +661,7 @@ sub gist-plugins() is export {
     my constant @gist-plugins =
       &mark-camelia-invocations,
       &identify-discord-bridge-users,
+      &linkify-modules,
     ;
 }
 
@@ -656,6 +669,7 @@ sub scrollup-plugins() is export {
     my constant @scrollup-plugins =
       &mark-camelia-invocations,
       &identify-discord-bridge-users,
+      &linkify-modules,
     ;
 }
 
@@ -665,6 +679,7 @@ sub scrolldown-plugins() is export {
       &merge-test-t-messages, 
       &mark-camelia-invocations,
       &identify-discord-bridge-users,
+      &linkify-modules,
     ;
 }
 

@@ -1,6 +1,7 @@
 Revision history for App-Raku-Log
 
 {{$NEXT}}
+    - Make module names clickable towards raku.land
 
 0.0.12  2021-10-21T13:39:30+02:00
     - Make messages from the Discord bridge users more readable
