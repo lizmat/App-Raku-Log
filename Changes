@@ -2,7 +2,11 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.12  2021-10-21T13:39:30+02:00
+    - Make messages from the Discord bridge users more readable
+
 0.0.11  2021-10-21T13:10:07+02:00
+    - Up dependency of App::IRC::Log
     - Make commit messages layout more palatable
     - Add support for message plugins for search view
     - Fix problem with 2-line commit messages

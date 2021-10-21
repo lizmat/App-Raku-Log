@@ -606,7 +606,7 @@ sub identify-discord-bridge-users(@entries --> Nil) {
     for @entries -> $entry {
         if $entry<nick> eq discord-bot {
             my (str $nick, str $after) = $entry<message>.substr(4).split('#',2);
-            my str $new-nick = "$nick on Discord";
+            my str $new-nick = '<span title="on Discord">' ~ $nick ~ '<span>';
             if $new-nick ne $last-nick {
                 $entry<sender> := $entry<sender>.subst(discord-bot,$new-nick);
                 $last-nick      = $nick;
@@ -624,6 +624,7 @@ sub live-plugins() is export {
       &merge-commit-messages, 
       &merge-test-t-messages, 
       &mark-camelia-invocations,
+      &identify-discord-bridge-users,
     ;
 }
 
@@ -633,24 +634,28 @@ sub day-plugins() is export {
       &merge-test-t-messages, 
       &merge-control-messages,
       &mark-camelia-invocations,
+      &identify-discord-bridge-users,
     ;
 }
 
 sub search-plugins() is export {
     my constant @gist-plugins =
       &mark-camelia-invocations,
+      &identify-discord-bridge-users,
     ;
 }
 
 sub gist-plugins() is export {
     my constant @gist-plugins =
       &mark-camelia-invocations,
+      &identify-discord-bridge-users,
     ;
 }
 
 sub scrollup-plugins() is export {
     my constant @scrollup-plugins =
       &mark-camelia-invocations,
+      &identify-discord-bridge-users,
     ;
 }
 
@@ -659,6 +664,7 @@ sub scrolldown-plugins() is export {
       &merge-commit-messages, 
       &merge-test-t-messages, 
       &mark-camelia-invocations,
+      &identify-discord-bridge-users,
     ;
 }
 
