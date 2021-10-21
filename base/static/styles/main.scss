@@ -31,7 +31,9 @@ $fullhd: 1180px + (2 * $gap);
 
 $sidebar-width: 300px;
 
-$section-padding: 2rem 1.5rem;
+// $section-padding: 2rem 1.5rem;
+// Disable section padding, because we handle it manually
+$section-padding: 0;
 
 // Typography
 $family-sans-serif: "Lato", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -768,6 +770,8 @@ a.navbar-burger:hover {
   .thread-header {
     display: flex;
     align-items: center;
+    // justify-content: space-between;
+    flex-wrap: wrap;
 
     margin-bottom: 0.5rem;
     padding-bottom: 0.5rem;
@@ -780,13 +784,52 @@ a.navbar-burger:hover {
       width: 28px;
     }
 
+    // Split flex container into two lines on small screens
+    @include until($desktop) {
+      flex-direction: column;
+    }
+
+    .thread-title, .thread-links {
+      display: inline-flex;
+    }
+
+    .thread-title {
+      @extend .is-size-4-desktop;
+      @extend .is-size-4-tablet;
+      @extend .is-size-5-mobile;
+      font-weight: $weight-bold;
+
+      @include until(480px) {
+        text-align: center;
+        font-size: 1.1rem !important;
+      }
+    }
+
+    .thread-links {
+      // TODO: when sidebar is open it looks weird
+      @include desktop  {
+        margin-left: 1rem;
+      }
+
+      align-items: end;
+
+      // Hide delimiter on < 480px
+      @include until(480px) {
+        .date-div {
+          display: none;
+        }
+
+        div {
+          padding: 1rem;
+        }
+      }
+
+    }
+
     .title {
       margin-bottom: 0;
     }
 
-    @include mobile {
-      display: block;
-    }
   }
 
   // Vertical delimiter
@@ -1194,6 +1237,10 @@ a.navbar-burger:hover {
         padding: 1rem;
       }
     }
+
+    // .thread-header {
+    //   flex-direction: column;
+    // }
   }
 }
 
