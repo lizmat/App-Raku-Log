@@ -357,7 +357,7 @@ move to the top of the page"
     <tr
       <?.relative-target> id="<.relative-target>"</?>
       <?.target>target="<.target>"</?>
-      class="<?.control-events>special-system</?> <?.commit>special-commit</?> <?.camelia>special-camelia</?> <?.test-t>special-test</?> <?.same-nick>special-same-nick</?> <?$is-gist>special-selected</?>">
+      class="<?.initial>initial</?><?.control-events> special-system</?><?.commit> special-commit</?><?.camelia> special-camelia</?><?.test-t> special-test</?><?.same-nick> special-same-nick</?><?$is-gist> special-selected</?>">
 <?.control-events>
       <td></td>
       <td colspan="2">

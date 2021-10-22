@@ -1,7 +1,14 @@
 Revision history for App-Raku-Log
 
 {{$NEXT}}
+
+0.0.15  2021-10-22T20:07:29+02:00
+    - Up dependency
     - Fix issue with consecutive different Discord users
+    - Introduce "initial" class on messages to mark "initial"
+      message in a sequence (which should *not* be closer to
+      preceding messages).
+    - Some optimizing on plugins
 
 0.0.14  2021-10-22T12:47:23+02:00
     - Argh, uploaded 0.0.13 as 0.0.12

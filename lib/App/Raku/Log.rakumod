@@ -1,5 +1,5 @@
 my
-class App::Raku::Log:ver<0.0.14>:auth<zef:lizmat> { }  # for Mi6 only
+class App::Raku::Log:ver<0.0.15>:auth<zef:lizmat> { }  # for Mi6 only
 
 use RandomColor;
 
@@ -281,6 +281,7 @@ sub merge-control-messages(@entries) {
             }
             else {
                 $merging := @entries[$index] := Map.new((
+                  initial         => True,
                   control-events  => [{
                     hh-mm   => %entry<hh-mm>,
                     message => %entry<message>,
@@ -325,10 +326,10 @@ my sub before(str $string, str $before) {
 # Actually convert a set of entries into a single commit entry
 my sub transmogrify-commit(@indices, @entries, int $offset) {
     my int $index = @indices.shift;
-    my $entry    := @entries[$index];
-    $entry<targets> := @entries[@indices].map(*<relative-target>).List;
+    my %entry    := @entries[$index];
+    %entry<targets> := @entries[@indices].map(*<relative-target>).List;
 
-    my str $first = $entry<message>.substr(2);  # drop the '¦ '
+    my str $first = %entry<message>.substr(2);  # drop the '¦ '
     my int $last-index = @indices.pop;
     my str $last = @entries[$last-index]<message>.substr($offset);
     my str $url  = between($last, '<a href="', '">');
@@ -418,17 +419,18 @@ my sub transmogrify-commit(@indices, @entries, int $offset) {
 
     # Commit without additional info
     else {
-            @parts.push:
-              $first.subst(/ ': ' <( \w+ )> /, {
-                  '<a href="' ~ $url ~ '">' ~ $/ ~ '</a>'
-              }),
-              "<br/>\n<em>",
-              $last,
-              "</em>";
+        @parts.push:
+          $first.subst(/ ': ' <( \w+ )> /, {
+              '<a href="' ~ $url ~ '">' ~ $/ ~ '</a>'
+          }),
+          "<br/>\n<em>",
+          $last,
+          "</em>";
     }
 
-    $entry<message> := @parts.join;
-    $entry<commit>  := True;
+    %entry<message> := @parts.join;
+    %entry<initial> := True;
+    %entry<commit>  := True;
 
     @entries[$_] := Any for @indices;
 }
@@ -474,30 +476,29 @@ sub merge-test-t-messages(@entries) {
         @head.first: { $line.starts-with($_) }
     }
 
-    for @entries.kv -> $index, \entry {
+    for @entries.kv -> $index, %entry {
         # An entry by Tux?
-        if entry
-          && entry<conversation>
-          && entry<nick> eq Tux
-          && entry<message> -> \message {
-            my $nick-used := entry<nick>;
+        if %entry<conversation>
+          && %entry<nick> eq Tux
+          && %entry<message> -> $message {
+            my $nick-used := %entry<nick>;
 
             # The start of a test result stream?
-            if message.starts-with(test-t-marker) {
+            if $message.starts-with(test-t-marker) {
 
                 # Start looking for test result stream.  Allow for up to
                 # three messages inbetween.
                 my int $i = $index;
                 my int $skipped;
                 my %tests;
-                while @entries[++$i] -> \this-entry {
-                    my \this-message := this-entry<message>;
-                    if this-entry<nick> eq $nick-used
-                      && part-of-test-t(this-message) -> $name {
+                while @entries[++$i] -> %this-entry {
+                    my $this-message := %this-entry<message>;
+                    if %this-entry<nick> eq $nick-used
+                      && part-of-test-t($this-message) -> $name {
                         last   # ran into another test result stream
-                          if this-message.starts-with(test-t-marker);
-                        %tests{$name} := this-message.substr(width).words.List;
-                        this-entry = Any;
+                          if $this-message.starts-with(test-t-marker);
+                        %tests{$name} := $this-message.substr(width).words.List;
+                        @entries[$i] := Any;
                         $skipped = 0;
                     }
                     elsif ++$skipped == 3 {
@@ -507,8 +508,8 @@ sub merge-test-t-messages(@entries) {
                 next unless %tests;  # nothing found
 
                 # Synthesize the new message
-                entry<message> := '<table><tr colspan="4">'
-                  ~ message
+                %entry<message> := '<table><tr colspan="4">'
+                  ~ $message
                   ~ "</tr>\n"
                   ~ %tests.sort(*.key).map( -> (:key($name), :value(@times)) {
                     '<tr>'
@@ -521,7 +522,8 @@ sub merge-test-t-messages(@entries) {
                       ~ "</tr>"
                     }).join("\n")
                   ~ '</table>';
-                entry<test-t>  := True;
+                %entry<initial> := True;
+                %entry<test-t>  := True;
             }
         }
     }
@@ -578,23 +580,25 @@ sub control2span($text) {
 
 # Check for invocations of Camelia, assume it's code
 sub mark-camelia-invocations(@entries --> Nil) {
-    for @entries -> $entry {
-        if $entry<conversation> && $entry<message> -> $message {
+    for @entries.grep(*<conversation>) -> %entry {
+        if %entry<message> -> $message {
             if $message.starts-with('m: ') {
-                $entry<runcode-link> :=
-                  "/" ~ $entry<channel> ~ "/run.html?" ~ $entry<target>;
+                %entry<runcode-link> :=
+                  "/" ~ %entry<channel> ~ "/run.html?" ~ %entry<target>;
             }
             else {
                 with $message.index(': OUTPUT: «') -> $index {
-                    $entry<camelia> := $message.substr(0,$index);
+                    %entry<camelia> := $message.substr(0,$index);
                     my str $output   = $message.substr($index + 11, *-1);
                     $output = $output.chop if $output.ends-with("␤");
                     $output = control2span($output);
-                    $entry<message> := $output.subst("␤", "<br/>", :global);
+                    %entry<message> := $output.subst("␤", "<br/>", :global);
+                    %entry<initial> := True;
                 }
                 orwith $message.index(': ( no output )') -> $index {
-                    $entry<camelia> := $message.substr(0,$index);
-                    $entry<message> := $message.substr($index + 2);
+                    %entry<camelia> := $message.substr(0,$index);
+                    %entry<message> := $message.substr($index + 2);
+                    %entry<initial> := True;
                 }
             }
         }
@@ -605,22 +609,22 @@ sub mark-camelia-invocations(@entries --> Nil) {
 my constant discord-bot = 'discord-raku-bot';
 sub identify-discord-bridge-users(@entries --> Nil) {
     my str $last-nick;
-    for @entries -> $entry {
-        if $entry<nick> eq discord-bot {
-            my (str $nick, str $after) = $entry<message>.substr(4).split('#',2);
-            $entry<nick> := $nick;
+    for @entries.grep(*<conversation>) -> %entry {
+        if %entry<nick> eq discord-bot {
+            my (str $nick, str $after) = %entry<message>.substr(4).split('#',2);
+            %entry<nick> := $nick;
             if $nick eq $last-nick {
-                $entry<same-nick> := True;
+                %entry<same-nick> := True;
             }
             else {
-                $entry<same-nick>:delete;
-                $entry<sender> := $entry<sender>.subst(
+                %entry<same-nick>:delete;
+                %entry<sender> := %entry<sender>.subst(
                   discord-bot,
                   '<em title="on Discord">' ~ $nick ~ '</em>'
                 );
                 $last-nick      = $nick;
             }
-            $entry<message> := $after.substr($after.index('&gt;') + 5);
+            %entry<message> := $after.substr($after.index('&gt;') + 5);
         }
         elsif $last-nick {
             $last-nick = "";
@@ -629,8 +633,8 @@ sub identify-discord-bridge-users(@entries --> Nil) {
 }
 
 sub linkify-modules(@entries --> Nil) is export {
-    for @entries -> $entry {
-        $entry<message> := $entry<message>
+    for @entries.grep(*<conversation>) -> %entry {
+        %entry<message> := %entry<message>
           .subst(/ [^ | \s+] <( \w+ ['::' \w+]+ >> /, {
               '<a href="https://raku.land/?q=' ~ $/ ~ '">' ~ $/ ~ '</a>'
           }, :global);
