@@ -31,7 +31,9 @@ $fullhd: 1180px + (2 * $gap);
 
 $sidebar-width: 300px;
 
-$section-padding: 2rem 1.5rem;
+// $section-padding: 2rem 1.5rem;
+// Disable section padding, because we handle it manually
+$section-padding: 0;
 
 // Typography
 $family-sans-serif: "Lato", BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -479,7 +481,6 @@ nav.secondary-navbar {
     z-index: 25;
   }
 
-  // TODO: Valign to middle
   height: $navbar-mobile-height;
   display: flex;
   width: 100%;
@@ -768,6 +769,13 @@ a.navbar-burger:hover {
   .thread-header {
     display: flex;
     align-items: center;
+    // justify-content: center;
+
+    // Wrap flex elemens to acquire better alignment
+    flex-wrap: wrap;
+    .thread-title, .thread-links {
+      flex-wrap: wrap;
+    }
 
     margin-bottom: 0.5rem;
     padding-bottom: 0.5rem;
@@ -780,12 +788,79 @@ a.navbar-burger:hover {
       width: 28px;
     }
 
+    // Reverse flex container on small screens
+    @include until($desktop) {
+      flex-direction: column;
+    }
+
+    .thread-title, .thread-links {
+      display: inline-flex;
+    }
+
+    .thread-title {
+      padding-right: 0.75rem;
+
+      @extend .is-size-4-desktop;
+      @extend .is-size-4-tablet;
+      @extend .is-size-5-mobile;
+      font-weight: $weight-bold;
+
+      @include until(480px) {
+        text-align: center;
+        font-size: 1.1rem !important;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+    .thread-links {
+      .date-div {
+        margin-left: 0.25rem;
+        display: inline-flex;
+      }
+
+      @include desktop  {
+        // margin-left: 1rem;
+      }
+
+      align-items: end;
+
+      @include until(480px) {
+        justify-content: center;
+
+        // Hide delimiter on < 480px
+        .date-div {
+          display: none;
+        }
+
+        // Add extra padding
+        div {
+          padding: 1rem;
+        }
+      }
+
+    }
+
     .title {
       margin-bottom: 0;
     }
 
-    @include mobile {
-      display: block;
+    // Thread details
+    .thread-title-delimiter {
+      width: 1rem;
+
+      &::before {
+        margin-left: 0.25rem;
+        content: '-';
+        margin-right: 1rem;
+      }
+
+      @include until(480px) {
+        display: none;
+        &::before {
+          display: none;
+        }
+      }
     }
   }
 
@@ -811,17 +886,21 @@ a.navbar-burger:hover {
 
   }
 
+  // Add extra padding for months on mobile
+  @include until($tablet) {
+    .month-link {
+      padding: 0.5rem;
+    }
+  }
+
 }
 
 #main-container {
-
   hr {
     height: 1px;
     border-color: $border;
     color: $border;
     background-color: $border;
-
-
   }
 }
 
@@ -907,7 +986,6 @@ a.navbar-burger:hover {
       overflow-y: scroll;
     }
   }
-
 
   .month-block {
     display: block;
@@ -1124,7 +1202,7 @@ a.navbar-burger:hover {
   }
 }
 
-// Don't move main contrainer while sidebar is opened
+// Don't move main contrainer while sidebar is openned
 @include from(1800px) {
   // #message-log,
   #main-container, #container-footer {
@@ -1194,6 +1272,10 @@ a.navbar-burger:hover {
         padding: 1rem;
       }
     }
+
+    // .thread-header {
+    //   flex-direction: column;
+    // }
   }
 }
 

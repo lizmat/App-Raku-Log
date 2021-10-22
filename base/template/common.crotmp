@@ -627,32 +627,39 @@ in the selection.">
                   </div>
     </?>
     <!.divider>
-                  <div class="is-size-4-desktop is-size-5-mobile is-size-4-tablet">
-                    <b>#<.name></b>
+                  <div class="thread-title">
+                    <div class="thread-name">#<.name></div>
       <?.one-liner>
-                    &nbsp;-&nbsp;<em><&HTML(.one-liner)></em>
+                    <div class="thread-title-delimiter"></div>
+                    <div class="thread-description"><&HTML(.one-liner)></div>
       </?>
                   </div>
-                  <div class="is-inline-flex is-block-mobile">
-                    <a href="/<.name>/<.first-date>.html"><.first-human-date></a>
-                    -
-                    <a href="/<.name>/<.last-date>.html"><.last-human-date></a>
-                  </div>
-                  &nbsp;
-                  <div class="is-inline-flex is-block-mobile">
-                    <a href="/<.name>/index.html">
-                      <&icon('calendar-alt')>
-                      <span>Overview</span>
-                    </a>
-                  </div>
+
+
+                  <div class="thread-links">
+                    <div class="date-start">
+                      <a href="/<.name>/<.first-date>.html"><.first-human-date></a>
+                    </div>
+                    <div class="date-end">
+                      <div class="date-div">-</div>
+                      <a href="/<.name>/<.last-date>.html"><.last-human-date></a>
+                    </div>
+                    &nbsp;
+                    <div class="">
+                      <a href="/<.name>/index.html">
+                        <&icon('calendar-alt')>
+                        <span>Overview</span>
+                      </a>
+                    </div>
       <?.active>
-                  &nbsp;
-                  <div class="is-inline-flex is-block-mobile">
-                    <a href="/<.name>/live.html" class="thread-link">
-                      <&icon('signal')><span>Live</span>
-                    </a>
-                  </div>
+                    &nbsp;
+                    <div class="">
+                      <a href="/<.name>/live.html" class="thread-link">
+                        <&icon('signal')><span>Live</span>
+                      </a>
+                    </div>
       </?>
+                  </div>
                 </div>
 
                 <div class="block thread-years">
@@ -661,7 +668,7 @@ in the selection.">
                     <strong class="year"><.year></strong>
         <@months>
                     <span class="vline">&nbsp;&#124;&nbsp;</span>
-                    <a class="month-block" href="/<.channel>/<.month>"><.human-month></a>
+                    <a class="month-link" href="/<.channel>/<.month>"><.human-month></a>
         </@>
                   </div>
       </@>
