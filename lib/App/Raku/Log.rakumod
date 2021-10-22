@@ -606,9 +606,15 @@ sub identify-discord-bridge-users(@entries --> Nil) {
     for @entries -> $entry {
         if $entry<nick> eq discord-bot {
             my (str $nick, str $after) = $entry<message>.substr(4).split('#',2);
-            my str $new-nick = '<em title="on Discord">' ~ $nick ~ '</em>';
-            if $new-nick ne $last-nick {
-                $entry<sender> := $entry<sender>.subst(discord-bot,$new-nick);
+            if $nick eq $last-nick {
+                $entry<same-nick> := True;
+            }
+            else {
+                $entry<same-nick>:delete;
+                $entry<sender> := $entry<sender>.subst(
+                  discord-bot,
+                  '<em title="on Discord">' ~ $nick ~ '</em>'
+                );
                 $last-nick      = $nick;
             }
             $entry<message> := $after.substr($after.index('&gt;') + 5);
