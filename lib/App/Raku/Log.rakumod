@@ -1,5 +1,5 @@
 my
-class App::Raku::Log:ver<0.0.13>:auth<zef:lizmat> { }  # for Mi6 only
+class App::Raku::Log:ver<0.0.14>:auth<zef:lizmat> { }  # for Mi6 only
 
 use RandomColor;
 
