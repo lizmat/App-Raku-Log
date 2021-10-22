@@ -1,5 +1,5 @@
 my
-class App::Raku::Log:ver<0.0.12>:auth<zef:lizmat> { }  # for Mi6 only
+class App::Raku::Log:ver<0.0.13>:auth<zef:lizmat> { }  # for Mi6 only
 
 use RandomColor;
 
@@ -230,9 +230,9 @@ sub htmlize($entry, %colors) is export {
         if $entry.^name.ends-with("Self-Reference") {
             with $text.index('</span>') -> int $index {
                 $text = '<em><strong>'
-                  ~ $text.substr(0,$index+7)
+                  ~ $text.substr(0, $index + 7)
                   ~ '</strong>'
-                  ~ $text.substr($index+7)
+                  ~ $text.substr($index + 7)
                   ~ '</em>';
             }
         }
@@ -606,7 +606,7 @@ sub identify-discord-bridge-users(@entries --> Nil) {
     for @entries -> $entry {
         if $entry<nick> eq discord-bot {
             my (str $nick, str $after) = $entry<message>.substr(4).split('#',2);
-            my str $new-nick = '<span title="on Discord">' ~ $nick ~ '<span>';
+            my str $new-nick = '<em title="on Discord">' ~ $nick ~ '</em>';
             if $new-nick ne $last-nick {
                 $entry<sender> := $entry<sender>.subst(discord-bot,$new-nick);
                 $last-nick      = $nick;

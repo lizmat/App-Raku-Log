@@ -1,7 +1,12 @@
 Revision history for App-Raku-Log
 
 {{$NEXT}}
+
+0.0.13  2021-10-22T12:44:24+02:00
+    - Up dependency
     - Make module names clickable towards raku.land
+    - Reorganize messages rendering into a sub
+    - Fix rendering of self-referencing messages
 
 0.0.12  2021-10-21T13:39:30+02:00
     - Make messages from the Discord bridge users more readable

@@ -323,3 +323,89 @@ move to the top of the page"
     title="Copy message link to the clipboard"
   ><&column-button('clipboard', 'Copy link')></a>
 </:>
+
+<:sub mobile-search-options($_)>
+  <div id="tab-search" class="tab-block tab-search" data-content="2">
+    <!-- Search tab -->
+    <form id="SearchMobile" action="/search.html"
+    onsubmit="return checkChannel()">
+      <&search-query($_)>
+      <&search-type($_)>
+      <&search-all-words($_)>
+      <&search-ignorecase($_)>
+      <&search-nicks($_)>
+      <&search-include-aliases($_)>
+      <&search-channel($_)>
+      <&search-message-type($_)>
+      <&search-entries-pp($_)>
+      <&search-from($_)>
+      <&search-until($_)>
+      <&search-submit($_)>
+    </form>
+  </div>
+</:>
+
+<:sub render-messages($_, $is-day, $is-gist)>
+  <@entries>
+<!$is-day>
+  <?.human-date>
+    <tr class="special-date">
+      <td colspan="4"><a href="/<.channel>/<.date>.html"><.human-date></a></td>
+    </tr>
+  </?>
+</!>
+    <tr
+      <?.relative-target> id="<.relative-target>"</?>
+      <?.target>target="<.target>"</?>
+      class="<?.control-events>special-system</?> <?.commit>special-commit</?> <?.camelia>special-camelia</?> <?.test-t>special-test</?> <?.same-nick>special-same-nick</?> <?$is-gist>special-selected</?>">
+<?.control-events>
+      <td></td>
+      <td colspan="2">
+        <div class="is-size-7">
+          <@control-events>
+          <b id="<.id>"><.hh-mm></b>
+          <&HTML(.message)>
+          </@>
+        </div>
+      </td>
+</?>
+<!.control-events>
+      <td nick="<&HTML(.nick)>"><!.same-nick><!.self-reference><&HTML(.sender)></!></!></td>
+      <td
+        class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
+        onClick="toggleTargetFromGist('<.target>')"
+      ><?.targets><@targets><span id="<$_>"></span></@></?><&HTML(.message)></td>
+      <td class="column-time"><.hh-mm></td>
+</!>
+      <td class="column-buttons">
+        <div class="dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <button class="button is-text" aria-haspopup="true" aria-controls="dropdown-menu4">
+              <span class="icon is-small">
+                <i class="fas fa-ellipsis-h" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div id="dropdown-menu4"
+            class="dropdown-menu msg-mobile-dropdown"
+            role="menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item">
+                <div class="menu">
+                  <ul class="menu-list">
+                    <li><&copy-link($_)></li>
+                    <li><&day-link($_, $is-day)></li>
+                    <li><&gist-link($_)></li>
+                    <?.runcode-link>
+                    <li><&runcode-link($_)></li>
+                    </?>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  </@>
+</:>
