@@ -175,9 +175,11 @@ sub htmlize($entry, %colors) is export {
     # Something with a text
     if $entry.conversation {
         # escaping <  > and &
-        $text .= subst('&', '&amp;', :global);
-        $text .= subst('<', '&lt;',  :global);
-        $text .= subst('>', '&gt;',  :global);
+        $text = $text
+          .subst('&', '&amp;', :global)
+          .subst('<', '&lt;',  :global)
+          .subst('>', '&gt;',  :global)
+        ;
 
         sub strip-protocol($url) {
             with $url.index('://') {
@@ -606,6 +608,7 @@ sub identify-discord-bridge-users(@entries --> Nil) {
     for @entries -> $entry {
         if $entry<nick> eq discord-bot {
             my (str $nick, str $after) = $entry<message>.substr(4).split('#',2);
+            $entry<nick> := $nick;
             if $nick eq $last-nick {
                 $entry<same-nick> := True;
             }
