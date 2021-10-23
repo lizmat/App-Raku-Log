@@ -1156,6 +1156,47 @@ a.navbar-burger:hover {
   }
 
   .message-table {
+    // Force messages with the same nick use smaller padding
+    tr.special-system:first-child td,
+    tr.special-system.is-hidden:first-child + tr td
+    {
+      padding-top: 0.5rem;
+    }
+
+    tr td {
+      padding-top: 0.15em;
+      padding-bottom: 0.15em;
+    }
+
+    .column-buttons .button {
+      padding-top: 0.5em;
+      height: 1.5em;
+    }
+
+    tr:not(.special-same-nick) + tr:not(.special-same-nick):not(.special-camelia):not(.special-commit):not(.special-date),
+    tr.special-same-nick + tr:not(.special-same-nick):not(.special-camelia):not(.special-commit):not(.special-date),
+    tr.special-same-nick + tr.special-system.is-hidden + tr:not(.special-camelia):not(.special-commit):not(.special-date),
+    {
+      td {
+        padding-top: 1.25rem;
+      }
+    }
+
+    tr.special-date td {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    tr.special-commit td {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    tr.special-camelia td {
+      padding-top: 0.35rem;
+      padding-bottom: 0.35rem;
+    }
+
     // Fix jumps
     tr {
       scroll-margin-top: $navbar-height-size;
