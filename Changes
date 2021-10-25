@@ -2,6 +2,12 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.16  2021-10-25T23:46:04+02:00
+    - Up dependency on App::IRC::Log
+    - Add dependency on IRC::Channel::Log
+    - Add support for "special-entry"
+    - Make scroll-up and live handle special messages much better
+
 0.0.15  2021-10-22T20:07:29+02:00
     - Up dependency
     - Fix issue with consecutive different Discord users

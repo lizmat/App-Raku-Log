@@ -1,5 +1,5 @@
 my
-class App::Raku::Log:ver<0.0.15>:auth<zef:lizmat> { }  # for Mi6 only
+class App::Raku::Log:ver<0.0.16>:auth<zef:lizmat> { }  # for Mi6 only
 
 use RandomColor;
 
@@ -394,7 +394,6 @@ my sub transmogrify-commit(@indices, @entries, int $offset) {
                 }
             }
             collect-subparts if @subparts;
-            @parts.push: "<br/>\n";
         }
     }
 
@@ -462,26 +461,28 @@ sub merge-commit-messages(@entries) {
     @entries.grep(*.defined);
 }
 
+# Constants for test-t testing
+my constant @test-t-head = <<
+  csv-ip5xs csv-ip5xs-20 csv-parser csv-test-xs-20
+  test test-t 'test-t --race' test-t-20 'test-t-20 --race'
+>>.sort(-*.chars);
+my constant Tux = '[Tux]' | '[TuxCM]' | '|Tux|';
+my constant test-t-marker = 'Rakudo v';
+
+sub part-of-test-t($line) {
+    @test-t-head.first: { $line.starts-with($_) }
+}
+
 # Merge messages of test-t report together
 sub merge-test-t-messages(@entries) {
-    my constant @head = <<
-      csv-ip5xs csv-ip5xs-20 csv-parser csv-test-xs-20
-      test test-t 'test-t --race' test-t-20 'test-t-20 --race'
-    >>.sort(-*.chars);
-    my constant width = @head[0].chars;
-    my constant Tux = '[Tux]' | '[TuxCM]' | '|Tux|';
-    my constant test-t-marker = 'Rakudo v';
+    my constant width = @test-t-head[0].chars;
 
-    sub part-of-test-t($line) {
-        @head.first: { $line.starts-with($_) }
-    }
-
-    for @entries.kv -> $index, %entry {
+    for @entries.kv -> $index, \entry {
         # An entry by Tux?
-        if %entry<conversation>
-          && %entry<nick> eq Tux
-          && %entry<message> -> $message {
-            my $nick-used := %entry<nick>;
+        if entry<conversation>
+          && entry<nick> eq Tux
+          && entry<message> -> $message {
+            my $nick-used := entry<nick>;
 
             # The start of a test result stream?
             if $message.starts-with(test-t-marker) {
@@ -508,7 +509,7 @@ sub merge-test-t-messages(@entries) {
                 next unless %tests;  # nothing found
 
                 # Synthesize the new message
-                %entry<message> := '<table><tr colspan="4">'
+                entry<message> := '<table><tr colspan="4">'
                   ~ $message
                   ~ "</tr>\n"
                   ~ %tests.sort(*.key).map( -> (:key($name), :value(@times)) {
@@ -522,8 +523,8 @@ sub merge-test-t-messages(@entries) {
                       ~ "</tr>"
                     }).join("\n")
                   ~ '</table>';
-                %entry<initial> := True;
-                %entry<test-t>  := True;
+                entry<initial> := True;
+                entry<test-t>  := True;
             }
         }
     }
@@ -641,6 +642,12 @@ sub linkify-modules(@entries --> Nil) is export {
     }
 }
 
+sub special-entry($entry --> Bool:D) is export {
+    my $message := $entry.message;
+    $message.starts-with('¦ ')
+      || (($entry.nick eq Tux).Bool && part-of-test-t($message).Bool)
+}
+
 sub live-plugins() is export {
     my constant @live-plugins =
       &merge-commit-messages, 
@@ -653,9 +660,9 @@ sub live-plugins() is export {
 
 sub day-plugins() is export {
     my constant @day-plugins =
+      &merge-control-messages,
       &merge-commit-messages, 
       &merge-test-t-messages, 
-      &merge-control-messages,
       &mark-camelia-invocations,
       &identify-discord-bridge-users,
       &linkify-modules,
@@ -680,6 +687,8 @@ sub gist-plugins() is export {
 
 sub scrollup-plugins() is export {
     my constant @scrollup-plugins =
+      &merge-commit-messages, 
+      &merge-test-t-messages, 
       &mark-camelia-invocations,
       &identify-discord-bridge-users,
       &linkify-modules,
