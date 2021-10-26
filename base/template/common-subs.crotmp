@@ -197,10 +197,12 @@ want to search for messages">
       <div class="select">
         <select name="channel" id="SearchChannel">
           <@channels : $c>
+<!$c.divider>
             <option value="<$c>"
               <?{ $c eq .channel }> selected="selected"</?>>
               <$c>
             </option>
+</!>
           </@>
         </select>
       </div>
