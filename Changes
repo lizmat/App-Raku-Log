@@ -2,6 +2,11 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.17  2021-10-26T14:50:44+02:00
+    - Argh, uploaded 0.0.16 as 0.0.15
+    - Remove divider from channel pulldown in search options
+    - Make upscrolling on live a little smoother by fetching earlier
+
 0.0.16  2021-10-25T23:46:04+02:00
     - Up dependency on App::IRC::Log
     - Add dependency on IRC::Channel::Log
