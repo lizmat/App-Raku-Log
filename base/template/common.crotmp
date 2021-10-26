@@ -139,7 +139,7 @@
       });
     </script>
   </head>
-  <body class="has-navbar-fixed-top <?$is-day>has-mobile-navbar-fixed-top</?>">
+  <body class="has-navbar-fixed-top<?$is-day> has-mobile-navbar-fixed-top</?>">
 
 
     <!-- Header -->

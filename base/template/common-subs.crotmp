@@ -111,7 +111,7 @@ text that you enter here.">
     <p><strong>Query</strong></p>
     <div class="control">
       <input name="query" type="text"
-        value="<.query>"
+        value="<?.query><.query></?>"
         class="input"
         placeholder="Look for this string"
         onkeydown="submitSearchIfEnter()">
@@ -168,7 +168,7 @@ of messages you would like to see">
     <p><strong>Nick(s)</strong></p>
     <div class="control">
       <input name="nicks" type="text"
-        value="<.nicks>"
+        value="<?.nicks><.nicks></?>"
         class="input"
         placeholder="Limit search to these nick(s)"
         onkeydown="submitSearchIfEnter()">
