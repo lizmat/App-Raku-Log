@@ -2,6 +2,9 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.18  2021-10-26T21:02:10+02:00
+    - Up dependency to get cleaner log files
+
 0.0.17  2021-10-26T14:50:44+02:00
     - Argh, uploaded 0.0.16 as 0.0.15
     - Remove divider from channel pulldown in search options

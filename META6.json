@@ -6,7 +6,7 @@
   "build-depends": [
   ],
   "depends": [
-    "App::IRC::Log:ver<0.0.40>:auth<zef:lizmat>",
+    "App::IRC::Log:ver<0.0.41>:auth<zef:lizmat>",
     "Cro::HTTP::Server:ver<0.8.6>",
     "IRC::Channel::Log:ver<0.0.37>:auth<zef:lizmat>",
     "IRC::Log::Colabti:ver<0.0.37>:auth<zef:lizmat>"
@@ -25,5 +25,5 @@
   ],
   "test-depends": [
   ],
-  "version": "0.0.17"
+  "version": "0.0.18"
 }
