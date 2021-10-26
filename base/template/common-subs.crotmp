@@ -356,29 +356,28 @@ move to the top of the page"
     </tr>
   </?>
 </!>
-    <tr
-      <?.relative-target> id="<.relative-target>"</?>
-      <?.target>target="<.target>"</?>
-      class="<?.initial>initial</?><?.control-events> special-system</?><?.commit> special-commit</?><?.camelia> special-camelia</?><?.test-t> special-test</?><?.same-nick> special-same-nick</?><?$is-gist> special-selected</?>">
 <?.control-events>
-      <td></td>
-      <td colspan="2">
+    <tr class="initial special-system">
+      <td colspan="4">
         <div class="is-size-7">
-          <@control-events>
-          <b id="<.id>"><.hh-mm></b>
-          <&HTML(.message)>
+          <@control-events><strong id="<.id>"><.hh-mm></strong>
+            <&HTML(.message)>
           </@>
         </div>
       </td>
+    </tr>
 </?>
 <!.control-events>
+    <tr
+      <?.relative-target>id="<.relative-target>"</?>
+      <?.target>target="<.target>"</?>
+      class="<?.initial>initial</?><?.commit> special-commit</?><?.camelia> special-camelia</?><?.test-t> special-test</?><?.same-nick> special-same-nick</?><?$is-gist> special-selected</?>">
       <td nick="<&HTML(.nick)>"><!.same-nick><!.self-reference><&HTML(.sender)></!></!></td>
       <td
         class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
         onClick="toggleTargetFromGist('<.target>')"
       ><?.targets><@targets><span id="<$_>"></span></@></?><&HTML(.message)></td>
       <td class="column-time"><.hh-mm></td>
-</!>
       <td class="column-buttons">
         <div class="dropdown is-hoverable">
           <div class="dropdown-trigger">
@@ -396,9 +395,9 @@ move to the top of the page"
                     <li><&copy-link($_)></li>
                     <li><&day-link($_, $is-day)></li>
                     <li><&gist-link($_)></li>
-                    <?.runcode-link>
+  <?.runcode-link>
                     <li><&runcode-link($_)></li>
-                    </?>
+  </?>
                   </ul>
                 </div>
               </div>
@@ -407,5 +406,6 @@ move to the top of the page"
         </div>
       </td>
     </tr>
+</!>
   </@>
 </:>

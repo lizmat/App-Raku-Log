@@ -1,5 +1,5 @@
 my
-class App::Raku::Log:ver<0.0.18>:auth<zef:lizmat> { }  # for Mi6 only
+class App::Raku::Log:ver<0.0.19>:auth<zef:lizmat> { }  # for Mi6 only
 
 use RandomColor;
 
@@ -446,11 +446,12 @@ sub merge-commit-messages(@entries) {
                 my $nick   := %entry<nick>;
                 my int $i   = $index;
                 my int @indices = $index;
-                while --$i >= 0 && @entries[$i] -> $entry {
-                    last if $entry<commit>;  # ran into previous commit
+                while --$i >= 0 && @entries[$i] -> %this-entry {
+                    last if %this-entry<commit>;  # ran into previous commit
                     @indices.unshift($i)
-                      if $entry<nick> eq $nick
-                      && $entry<message>.starts-with($prefix);
+                      if !%this-entry<control-events>
+                      &&  %this-entry<nick> eq $nick
+                      &&  %this-entry<message>.starts-with($prefix);
                 }
 
                 transmogrify-commit(@indices, @entries, ++$pos)
