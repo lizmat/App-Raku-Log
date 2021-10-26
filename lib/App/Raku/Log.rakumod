@@ -495,7 +495,8 @@ sub merge-test-t-messages(@entries) {
                 my %tests;
                 while @entries[++$i] -> %this-entry {
                     my $this-message := %this-entry<message>;
-                    if %this-entry<nick> eq $nick-used
+                    if  !%this-entry<control-events>
+                      && %this-entry<nick> eq $nick-used
                       && part-of-test-t($this-message) -> $name {
                         last   # ran into another test result stream
                           if $this-message.starts-with(test-t-marker);
