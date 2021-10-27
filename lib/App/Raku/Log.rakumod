@@ -115,7 +115,7 @@ om omega one ong onl online ooo open oracle orange org organic origins
 osaka otsuka ott ovh pa page panasonic paris pars partners parts party
 passagens pay pccw pe pet pf pfizer pg ph pharmacy phd philips phone
 photo photography photos physio pics pictet pictures pid pin ping pink
-pioneer pizza pk pl place play playstation plumbing plus pm pn pnc pohl
+pioneer pizza pk place play playstation plumbing plus pn pnc pohl
 poker politie porn post pr pramerica praxi press prime pro prod
 productions prof progressive promo properties property protection pru
 prudential ps pt pub pw pwc py qa qpon quebec quest racing radio raid
