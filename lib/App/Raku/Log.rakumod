@@ -439,10 +439,10 @@ sub merge-commit-messages(@entries) {
     for @entries.kv -> $index, %entry {
         if %entry<conversation> {
             my $message := %entry<message>;
-            with $message.index(": review:")
-              // $message.index(": review:") -> int $pos is copy {
+            with $message.index(" review:")
+              // $message.index(" review:") -> int $pos is copy {
 
-                my $prefix := $message.substr(0,++$pos);
+                my $prefix := $message.substr(0,$pos);
                 my $nick   := %entry<nick>;
                 my int $i   = $index;
                 my int @indices = $index;
