@@ -1,5 +1,5 @@
 my
-class App::Raku::Log:ver<0.0.19>:auth<zef:lizmat> { }  # for Mi6 only
+class App::Raku::Log:ver<0.0.20>:auth<zef:lizmat> { }  # for Mi6 only
 
 use RandomColor;
 
@@ -171,15 +171,10 @@ sub htmlize($entry, %colors) is export {
     my $text = $entry.^name.ends-with('::Topic')
       ?? $entry.text
       !! $entry.message;
+    my str $entry-name = $entry.^name;
 
     # Something with a text
     if $entry.conversation {
-        # escaping <  > and &
-        $text = $text
-          .subst('&', '&amp;', :global)
-          .subst('<', '&lt;',  :global)
-          .subst('>', '&gt;',  :global)
-        ;
 
         sub strip-protocol($url) {
             with $url.index('://') {
@@ -190,29 +185,31 @@ sub htmlize($entry, %colors) is export {
             }
         }
 
-        # URLify what looks like a valid domain without protocol
-        $text .= subst(/ [^ | \s+] <( \w+ [\. \w+]+ >> /, {
-            my $domain := $/.Str;
-            $tld{$domain.substr($domain.rindex('.') + 1)}
-              ?? "https://$domain"
-              !! $domain
-        }, :global);
-
-        # URL linking
-        $text .= subst( / https? '://' \S+ /, {
-            my $link   := $/.Str;
-            '<a href="'
-              ~ $link
-              ~ '">'
-              ~ strip-protocol($link.chars > 55
-                  ?? "$link.substr(0,42)...$link.substr(*-10)"
-                  !! $link
-                )
-              ~ '</a>'
-        }, :global);
+        $text = $text
+          .subst(/ <cntrl>+ /, :global)   # no control characters please
+          .subst('&', '&amp;', :global)   # HTML escaping
+          .subst('<', '&lt;',  :global)
+          .subst('>', '&gt;',  :global)
+          .subst(/ [^ | \s+] <( \w+ [\. \w+]+ >> /, {        # URLify what
+              my $domain := $/.Str;                          # looks a valid
+              $tld{$domain.substr($domain.rindex('.') + 1)}  # domain without
+                ?? "https://$domain"                         # protocol
+                !! $domain
+          }, :global)
+          .subst( / https? '://' \S+ /, {   # URL linking
+              my $link   := $/.Str;
+              '<a href="'
+                ~ $link
+                ~ '">'
+                ~ strip-protocol($link.chars > 55
+                    ?? "$link.substr(0,42)...$link.substr(*-10)"
+                    !! $link
+                  )
+                ~ '</a>'
+          }, :global);
 
         # Nick highlighting
-        if $entry.^name.ends-with("Topic") {
+        if $entry-name.ends-with("Topic") {
             $text .= subst(/ ^ \S+ /, { colorize-nick($/, %colors) });
         }
         else {
@@ -229,7 +226,7 @@ sub htmlize($entry, %colors) is export {
         }
 
         # Emotes highlighting
-        if $entry.^name.ends-with("Self-Reference") {
+        if $entry-name.ends-with("Self-Reference") {
             with $text.index('</span>') -> int $index {
                 $text = '<em><strong>'
                   ~ $text.substr(0, $index + 7)
@@ -248,11 +245,10 @@ sub htmlize($entry, %colors) is export {
     else {
         $text .= subst(/^ \S+ /, { colorize-nick($/, %colors) });
 
-        my str $name = $entry.^name;
-        if $name.ends-with("Nick-Change") {
+        if $entry-name.ends-with("Nick-Change") {
             $text .= subst(/ \S+ $/, { colorize-nick($/, %colors) });
         }
-        elsif $name.ends-with("Kick") {
+        elsif $entry-name.ends-with("Kick") {
             $text .= subst(/ \S+ $/, { colorize-nick($/, %colors) }, :5th)
         }
     }
@@ -352,7 +348,7 @@ my sub transmogrify-commit(@indices, @entries, int $offset) {
                   'commit/',
                   $sha,
                   '">',
-                  $description.subst(""),
+                  $description,
                   "</a></li>\n";
             }
             @parts.push: "</ul>\n";
@@ -439,8 +435,7 @@ sub merge-commit-messages(@entries) {
     for @entries.kv -> $index, %entry {
         if %entry<conversation> {
             my $message := %entry<message>;
-            with $message.index(" review:")
-              // $message.index(" review:") -> int $pos is copy {
+            with $message.index(" review:") -> int $pos is copy {
 
                 my $prefix := $message.substr(0,$pos);
                 my $nick   := %entry<nick>;

@@ -2,6 +2,14 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.20  2021-10-28T22:11:47+02:00
+    - Fix commit messages to raku.org
+    - Fix warnings in test-t and commit handling
+    - Remove .pl and .pm as tlds to prevent confusion
+    - Some template tweaks
+    - Streamline htmlize, remove control characters
+    - Simplify commit message handling
+
 0.0.19  2021-10-26T23:06:43+02:00
     - Up dependency
     - Fix several template issues caused by Nils

@@ -303,8 +303,7 @@ to that discussion"
 
 <:sub day-link($_, $is-day)>
 <?$is-day>
-  <a id="<.relative-target>"
-    class="msg-log-btn"
+  <a class="msg-log-btn"
     href="#<.relative-target>"
     title="Reference to this message to be used in other
 places, or just click on it to make this message
@@ -374,7 +373,7 @@ move to the top of the page"
       class="<?.initial>initial</?><?.commit> special-commit</?><?.camelia> special-camelia</?><?.test-t> special-test</?><?.same-nick> special-same-nick</?><?$is-gist> special-selected</?>">
       <td nick="<&HTML(.nick)>"><!.same-nick><!.self-reference><&HTML(.sender)></!></!></td>
       <td
-        class="column-message <?.code> column-code</?> <?.commit> column-commit</?>"
+        class="column-message<?.code> column-code</?><?.commit> column-commit</?>"
         onClick="toggleTargetFromGist('<.target>')"
       ><?.targets><@targets><span id="<$_>"></span></@></?><&HTML(.message)></td>
       <td class="column-time"><.hh-mm></td>
