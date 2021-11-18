@@ -219,7 +219,8 @@ repeat the current search."
     <?{ .channel ne $c }>
                   <li id="<$c>">
                     <a
-                      <?{ $is-index || $is-home }>href="/<$c>/index.html"</?>
+                      <?$is-home>href="/<$c>/index.html"</?>
+                      <?$is-index>href="/<$c>/index.html"</?>
                       <?$is-live> href="/<$c>/live.html"</?>
                       <?$is-day> href="/<$c>/this/<.date>"</?>
                       <?$is-gist> href="/<$c>/gist.html"</?>

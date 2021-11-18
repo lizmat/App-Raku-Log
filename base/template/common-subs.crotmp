@@ -359,7 +359,7 @@ move to the top of the page"
     <tr class="initial special-system">
       <td colspan="4">
         <div class="is-size-7">
-          <@control-events><strong id="<.id>"><.hh-mm></strong>
+          <@control-events><strong id="<.id>"><?.hh-mm><.hh-mm></?></strong>
             <&HTML(.message)>
           </@>
         </div>
@@ -376,7 +376,7 @@ move to the top of the page"
         class="column-message<?.code> column-code</?><?.commit> column-commit</?>"
         onClick="toggleTargetFromGist('<.target>')"
       ><?.targets><@targets><span id="<$_>"></span></@></?><&HTML(.message)></td>
-      <td class="column-time"><.hh-mm></td>
+      <td class="column-time"><?.hh-mm><.hh-mm></?></td>
       <td class="column-buttons">
         <div class="dropdown is-hoverable">
           <div class="dropdown-trigger">
