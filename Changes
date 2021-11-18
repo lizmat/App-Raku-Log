@@ -2,7 +2,11 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
-0.0.10  2021-11-18T13:34:31+01:00
+0.0.22  2021-11-18T14:20:30+01:00
+    - Attempt to fix version snafu
+    - Upped dependency on App::IRC::Log for fixes
+
+0.0.21  2021-11-18T13:34:31+01:00
     - Upped dependencies for better performance and less
       memory usage
 
