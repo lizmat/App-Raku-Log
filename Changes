@@ -2,6 +2,10 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.10  2021-11-18T13:34:31+01:00
+    - Upped dependencies for better performance and less
+      memory usage
+
 0.0.20  2021-10-28T22:11:47+02:00
     - Fix commit messages to raku.org
     - Fix warnings in test-t and commit handling
