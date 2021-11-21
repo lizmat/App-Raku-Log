@@ -2,6 +2,9 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.24  2021-11-22T00:23:28+01:00
+    - Bump App::IRC::Log to get search fixes
+
 0.0.23  2021-11-18T22:20:28+01:00
     - Bump Cro to 0.8.7
     - Fix various warnings, thank you Oleksander!
