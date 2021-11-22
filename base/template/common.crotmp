@@ -189,7 +189,7 @@ messages as they come in."
 </?>
 <?$is-day>
             title="Select the channel of which to show
-the messages of <.date-human>."
+the messages of <.human-date>."
 </?>
 <?$is-gist>
             title="Select the channel of which to show
@@ -332,7 +332,7 @@ serendipitous experience.">
                       </li>
   <?$is-day>
                       <li title="Download the raw log of the #<.channel>
-channel on <.date-human>.">
+channel on <.human-date>.">
                         <a href="/<.channel>/<.date>.log">
                           <&icon('download')>
                           <span>Raw</span>
@@ -469,7 +469,7 @@ in the selection.">
                   </li>
   <?$is-day>
                   <li title="Download the raw log of the #<.channel>
-                             channel on <.date-human>.">
+                             channel on <.human-date>.">
                     <a href="/<.channel>/<.date>.log">
                       <&icon('download')>
                       <span>Raw</span>
