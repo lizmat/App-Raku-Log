@@ -23,8 +23,8 @@ sub MAIN(
   IO() :$one-liners-dir   = $base-dir.add('one-liners'),
        :$host   = 'localhost',
        :$port   = 10000,
-       :$batch  = 16,
-       :$degree = Kernel.cpu-cores / 2,
+       :$batch  = 32,
+       :$degree = Kernel.cpu-cores,
        :$channels,
        :$dontstart,
   ) {
