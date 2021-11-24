@@ -4,6 +4,21 @@ var $showRightSide = getCookie("showRightSide");
 var $fetchingScrollUp   = false;
 var $fetchingScrollDown = false;
 
+// search status
+var $channel;          // the channel we're on
+var $first_date;       // first yyyymmdd on the channel
+var $last_date;        // last yyyymmdd on the channel
+var $query;            // the text to look for, if any
+var $type;             // the type of query (words/contains/starts-with/matches)
+var $all_words;        // boolean to indicate any / all
+var $ignorecase;       // boolean to indicate case sensitivity
+var $nicks;            // the nick names to limit to, if any
+var $include_aliases;  // boolean to indicate whether to include nick aliases
+var $message_type;     // type of message to filter on ""/conversation/control
+var $from_yyyymmdd;    // first date to include
+var $to_yyyymmdd;      // last date to include
+var $scroll_root_uri;  // root to be used for search scrolling
+
 // Add class to given id
 function addClassToId(id, name) {
     document.getElementById(id).classList.add(name);
@@ -31,7 +46,6 @@ if ($showRightSide === true) {
 }
 
 // targets for gist of current channel
-var $currentChannel;
 var $gistTargets;
 
 // Filter settings
@@ -170,20 +184,41 @@ function switchMobileTab(num) {
 
 // Submit search if Enter was pressed and all requirements are met
 function submitSearchIfEnter() {
-    if (event.keyCode == 13 && okToSubmitSearch()) {
+    if (event.keyCode == 13) {
         document.getElementById('Search').submit();
     }
 }
 
-// Submit search with current parameters on given channel
-function submitSearchOnChannel(channel) {
-    document.getElementById('SearchChannel').value = channel;
-    document.getElementById('Search').submit();
+// Submit search with current parameters on given channel, don't
+// add the date range if no channel is given (for infiniscrolling)
+function uriForSearchOnChannel(channel = "") {
+    let uri = '/'
+      + (channel ? channel : $channel)
+      + '/search.html?type='
+      + $type;
+
+    if ($query)           { uri += '&query=' + $query               }
+    if ($all_words)       { uri += '&all-words=True'                }
+    if ($ignorecase)      { uri += '&ignorecase=True'               }
+    if ($nicks)           { uri += '&nicks=' + $nicks               }
+    if ($include_aliases) { uri += '&include-aliases=True'          }
+    if ($message_type)    { uri += '&message-type=' + $message_type }
+
+    if (channel) {
+        if ($from_yyyymmdd && $from_yyyymmdd != $first_date) {
+            uri += '&from-yyymmdd=' + $from_yyyymmdd
+        }
+        if ($to_yyyymmdd && $to_yyyymmdd != $last_date) {
+            uri += '&to-yyymmdd=' + $to_yyyymmdd
+        }
+    }
+
+    return uri;
 }
 
-// Return whether it is ok to submit a search request
-function okToSubmitSearch() {
-    return document.getElementById('SearchChannel').value;
+// Submit search with current parameters on given channel
+function submitSearchOnChannel(channel) {
+    window.location.href = encodeURI(uriForSearchOnChannel(channel));
 }
 
 // Check search form, highlight part(s) that are not ok if not ok
@@ -196,15 +231,15 @@ function checkSearchParameters() {
 }
 
 // Get the gist targets for a channel
-function getGistTargets(channel = $currentChannel) {
+function getGistTargets(channel = $channel) {
     return getCookie(channel + "Targets");
 }
 
 // Set gist targets in cookie and set the Gist link with those targets
 function setGistTargets(targets = $gistTargets) {
-    $gistTargets = setCookie($currentChannel + 'Targets', targets);
+    $gistTargets = setCookie($channel + 'Targets', targets);
     document.getElementById('Gist').href =
-      '/' + $currentChannel + '/gist.html?' + targets;
+      '/' + $channel + '/gist.html?' + targets;
 }
 
 // Get the element that has a "target" attribute in the given element
@@ -509,19 +544,17 @@ function additionalHTML(url, whenReady) {
             }
         }
     }
-    xhr.open("GET", url, true);
+    xhr.open("GET", encodeURI(url), true);
     xhr.timeout = 5000;
     xhr.send(null);
 }
 
-// scroll up the given channel/target for given number of entries
-// returns the new target to look for
-function scrollup(channel, entries) {
-    let target = document.querySelector("tbody").children[1].getAttribute("target");
+// helper function to do the actual upscrolling
+function scrollup(url, target) {
     if (!$fetchingScrollUp) {
         $fetchingScrollUp = true;
         additionalHTML(
-          "/" + channel + "/scroll-up.html?target=" + target + "&entries=" + entries,
+          url,
           function() {
             let html = document.querySelector('html');
             let oldScrollPos    = html.scrollTop;
@@ -546,13 +579,12 @@ function scrollup(channel, entries) {
     }
 }
 
-// scroll down the given channel/target (finding all newest messages)
-function scrolldown(channel) {
-    let target = document.querySelector("tbody").lastElementChild.getAttribute("target");
+// helper function to do the actual downscrolling
+function scrolldown(url) {
     if (!$fetchingScrollDown) {
         $fetchingScrollDown = true;
         additionalHTML(
-          url = "/" + channel + "/scroll-down.html?target=" + target,
+          url,
           function () {
               let tbodyEl = document.querySelector("tbody");
               tbodyEl.innerHTML = tbodyEl.innerHTML + this.responseText;
@@ -561,4 +593,38 @@ function scrolldown(channel) {
           }
         );
     }
+}
+
+// live scroll up live page given number of entries
+function scrollupLive(entries) {
+    let target = document.querySelector("tbody").children[1].getAttribute("target");
+    let url = '/' + $channel + '/scroll-up.html'
+      + '?target='  + target
+      + "&entries=" + entries;
+    scrollup(url, target);
+}
+
+// live scroll down live page (finding all newest messages)
+function scrolldownLive(entries) {
+    let url = '/' + $channel + '/scroll-down.html'
+      + '?target='
+      + document.querySelector("tbody").lastElementChild.getAttribute("target");
+    scrolldown(url);
+}
+
+// live scroll up the search page given number of entries
+function scrollupSearch(entries) {
+    let target = document.querySelector("tbody").children[1].getAttribute("target");
+    let url = $scroll_root_uri
+      + '&le-target=' + target
+      + "&entries=" + entries;
+    scrollup(url, target);
+}
+
+// live scroll down search page (finding all newest messages)
+function scrolldownSearch(entries) {
+    let url = $scroll_root_uri
+      + '&ge-target='
+      + document.querySelector("tbody").lastElementChild.getAttribute("target");
+    scrolldown(url);
 }

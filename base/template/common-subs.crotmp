@@ -114,6 +114,7 @@ text that you enter here.">
         value="<?.query><.query></?>"
         class="input"
         placeholder="Look for this string"
+        onChange="$query = event.target.value"
         onkeydown="submitSearchIfEnter()">
     </div>
   </div>
@@ -124,7 +125,7 @@ text that you enter here.">
     title="Determines how your query should be interpreted">
     <div class="control">
       <div class="select">
-        <select name="type">
+        <select name="type" onChange="$type = event.target.value">
           <@type-options : $opt>
             <option value="<$opt.key>"
               <?{ $opt.key eq .type }> selected="selected"</?>>
@@ -143,7 +144,8 @@ text that you enter here.">
 should occur in a message">
     <div class="control">
       <input name="all-words" type="checkbox"
-          value="True"<?.all-words> checked</?>>
+        onChange="$all_words = event.target.checked"
+        value="True"<?.all-words> checked</?>>
         <strong>must contain all words</strong>
     </div>
   </div>
@@ -155,6 +157,7 @@ should occur in a message">
 should be considered identical">
     <div class="control">
       <input name="ignorecase" type="checkbox"
+        onChange="$ignorecase = event.target.checked"
         value="True"<?.ignorecase> checked</?>>
       <strong>case insensitive</strong>
     </div>
@@ -171,6 +174,7 @@ of messages you would like to see">
         value="<?.nicks><.nicks></?>"
         class="input"
         placeholder="Limit search to these nick(s)"
+        onChange="$nicks = event.target.value"
         onkeydown="submitSearchIfEnter()">
     </div>
   </div>
@@ -182,20 +186,22 @@ of messages you would like to see">
 should also be considered">
     <div class="control">
       <input type="checkbox" name="include-aliases"
+        onChange="$include_aliases = event.target.checked""
         value="True"<?.include-aliases> checked</?>>
       <strong>include nick aliases</strong>
     </div>
   </div>
 </:>
 
-<:sub search-channel($_)>
+<:sub search-channel($_, $pulldown)>
+<?$pulldown>
   <div class="field"
     title="Determines the channel on which you
 want to search for messages">
     <p><strong>Channel</strong></p>
     <div class="control">
       <div class="select">
-        <select name="channel" id="SearchChannel">
+        <select name="channel">
           <@channels : $c>
 <!$c.divider>
             <option value="<$c>"
@@ -208,6 +214,10 @@ want to search for messages">
       </div>
     </div>
   </div>
+</?>
+<!$pulldown>
+  <input type="hidden" name="channel" value="<.channel>">
+</!>
 </:>
 
 <:sub search-message-type($_)>
@@ -217,7 +227,7 @@ searched for">
     <p><strong>Include</strong></p>
     <div class="control">
       <div class="select">
-        <select name="message-type">
+        <select name="message-type" onChange="$message_type = event.target.value">
           <@message-options : $opt>
             <option value="<$opt.key>"
               <?{ $opt.key eq .message-type }> selected="selected"</?>>
@@ -230,33 +240,16 @@ searched for">
   </div>
 </:>
 
-<:sub search-entries-pp($_)>
-  <div class="field"
-    title="Determines the maximum number of messages
-that will be returned at a time">
-    <p><strong>Results at a time</strong></p>
-    <div class="control">
-      <div class="select">
-        <select name="entries-pp">
-          <@entries-pp-options : $opt>
-            <option value="<$opt>"
-              <?{ $opt eq .entries-pp }> selected="selected"</?>>
-              <$opt>
-            </option>
-          </@>
-         </select>
-      </div>
-    </div>
-  </div>
-</:>
-
 <:sub search-from($_)>
   <div class="control">
     <strong>From</strong>
     <input type="date" name="from-yyyymmdd"
       class="input"
-      value="<?.from-yyyymmdd><.from-yyyymmdd></?><!.from-yyyymmdd><.first-date></!>"
-      min="<.first-date>" max="<.last-date>">
+      value="<.from-yyyymmdd>"
+      min="<.first-date>"
+      max="<.last-date>"
+      onChange="$from_yyyymmdd = event.target.value"
+    >
   </div>
 </:>
 
@@ -265,8 +258,11 @@ that will be returned at a time">
     <strong>Until</strong>
     <input type="date" name="to-yyyymmdd"
       class="input"
-      value="<?.to-yyyymmdd><.to-yyyymmdd></?><!.to-yyyymmdd><.last-date></!>"
-      min="<.first-date>" max="<.last-date>">
+      value="<.to-yyyymmdd>"
+      min="<.first-date>"
+      max="<.last-date>"
+      onChange="$from_yyyymmdd = event.target.value"
+    >
   </div>
 </:sub>
 
@@ -325,7 +321,7 @@ move to the top of the page"
   ><&column-button('clipboard', 'Copy link')></a>
 </:>
 
-<:sub mobile-search-options($_)>
+<:sub mobile-search-options($_, $pulldown)>
   <div id="tab-search" class="tab-block tab-search" data-content="2">
     <!-- Search tab -->
     <form id="SearchMobile" action="/search.html"
@@ -336,9 +332,8 @@ move to the top of the page"
       <&search-ignorecase($_)>
       <&search-nicks($_)>
       <&search-include-aliases($_)>
-      <&search-channel($_)>
+      <&search-channel($_, $pulldown)>
       <&search-message-type($_)>
-      <&search-entries-pp($_)>
       <&search-from($_)>
       <&search-until($_)>
       <&search-submit($_)>

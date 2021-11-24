@@ -2,6 +2,12 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.26  2021-11-24T19:52:10+01:00
+    - Bump App::IRC::Log for from/to-yyyymmdd fix
+    - Remove channel pulldown from search except on home page
+    - Fix channel switch from menu on search page
+    - Implement infini-scroll on search results
+
 0.0.25  2021-11-22T20:45:00+01:00
     - Bump IRC::Log::Colabti to get double logged lines fix
 

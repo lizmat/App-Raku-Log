@@ -50,7 +50,24 @@
     <script>
       document.addEventListener('DOMContentLoaded', () => {
 
-          $currentChannel = "<.channel>";
+          // Initialize search shadow parameters
+          $channel = '<.channel>';
+
+<?$is-search>
+          $first_date = '<.first-date>';
+          $last_date = '<.last-date>';
+          <?.query>$query = '<.query>';</?>
+          $type = '<.type>';
+          <?.all-words>$all_words = true;</?>
+          <?.ignorecase>$ignorecase = true;</?>
+          <?.nicks>$nicks = '<.nicks>';</?>
+          <?.include-aliases>$include_aliases = true;</?>
+          $message_type = '<.message-type>';
+          $from_yyymmdd = '<.from-yyyymmdd>';
+          $to_yyymmdd = '<.to-yyyymmdd>';
+          $scroll_root_uri = uriForSearchOnChannel();
+</?>
+
           $gistTargets    = getGistTargets();
           var $ua = navigator.userAgent.toLowerCase();
           var $isSafari = $ua.indexOf('safari') != -1 && $ua.indexOf('chrome') == -1;
@@ -108,8 +125,8 @@
           filterMessages();
 </?>
 
-<?$is-live>
-          history.scrollRestoration = "manual";
+<?{ $is-live || $is-search }>
+          history.scrollRestoration = 'manual';
           window.onload = scrollToBottom;
 
           var $focused = true;
@@ -118,21 +135,21 @@
           }
           window.onfocus = function() {
               if (!$focused) {  // not the first time
-                  scrolldown("<.channel>");
+                  scrolldown<?$is-live>Live</?><?$is-search>Search</?>(100);
               }
               $focused = true;
           }
 
           setInterval(function() {
               if ($focused) {
-                  scrolldown("<.channel>");
+                  scrolldown<?$is-live>Live</?><?$is-search>Search</?>(100);
               }
           }, 50000 + Math.floor(Math.random() * 20000)); // 50 - 70 seconds randomly
 
           var $minY  = 0;
           window.addEventListener('scroll', function(e) {
               if (150 > window.scrollY) {
-                  scrollup("<.channel>", 15);
+                  scrollup<?$is-live>Live</?><?$is-search>Search</?>(25);
               }
           });
 </?>
@@ -169,7 +186,7 @@
       <!-- Channel selection -->
       <div class="navbar-brand">
 <!$is-home>
-        <a href="/" class="navbar-item"
+        <a href="/home.html" class="navbar-item"
           title="Go to the home page of the Raku IRC log browser"
         ><img class="camelia-image" src="/camelia.png" width="40" height="28" alt="Camelia"></a>
 
@@ -272,7 +289,7 @@ repeat the current search."
         <div class="navbar-start">
 <?$is-home>
           <div id="mobile-forms" class="is-hidden-desktop">
-            <&mobile-search-options($_)>
+            <&mobile-search-options($_, $is-home)>
           </div>
 </?>
 <!$is-home>
@@ -518,7 +535,7 @@ in the selection.">
                 <&camelia-messages-box('block')>
   </?>
               </div>
-              <&mobile-search-options($_)>
+              <&mobile-search-options($_, $is-home)>
             </div>
 
 
@@ -592,9 +609,8 @@ in the selection.">
                 <&search-ignorecase($_)>
                 <&search-nicks($_)>
                 <&search-include-aliases($_)>
-                <&search-channel($_)>
+                <&search-channel($_, $is-home)>
                 <&search-message-type($_)>
-                <&search-entries-pp($_)>
                 <&search-from($_)>
                 <&search-until($_)>
                 <&search-submit($_)>
