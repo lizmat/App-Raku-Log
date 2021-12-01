@@ -2,6 +2,9 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.28  2021-12-01T21:59:04+01:00
+    - Upped depencies for fixes and better performance
+
 0.0.27  2021-12-01T16:14:17+01:00
     - Bump App::IRC::Log for nick aliases search fix
 
