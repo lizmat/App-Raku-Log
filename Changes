@@ -2,6 +2,9 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.27  2021-12-01T16:14:17+01:00
+    - Bump App::IRC::Log for nick aliases search fix
+
 0.0.26  2021-11-24T19:52:10+01:00
     - Bump App::IRC::Log for from/to-yyyymmdd fix
     - Remove channel pulldown from search except on home page
