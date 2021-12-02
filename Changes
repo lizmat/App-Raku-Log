@@ -2,6 +2,12 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.29  2021-12-02T20:31:18+01:00
+    - Upped depencies for fixes
+    - Add support for "oldes first" option when searching
+    - Properly implement down-scrolling for live and search
+    - Remove some debug statements in JS
+
 0.0.28  2021-12-01T21:59:04+01:00
     - Upped depencies for fixes and better performance
 

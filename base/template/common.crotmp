@@ -60,6 +60,7 @@
           $type = '<.type>';
           <?.all-words>$all_words = true;</?>
           <?.ignorecase>$ignorecase = true;</?>
+          <?.oldest-first>$oldest_first = true;</?>
           <?.nicks>$nicks = '<.nicks>';</?>
           <?.include-aliases>$include_aliases = true;</?>
           $message_type = '<.message-type>';
@@ -107,7 +108,6 @@
             endDate: new Date("<.end-date>"),
           };
           var calendars = bulmaCalendar.attach('[class="sidebar-datepicker"]', options);
-          console.log(calendars);
           for (let i = 0; i < calendars.length; i++) {
               // Add listener to select event
               calendars[i].on('select', date => {
@@ -127,7 +127,9 @@
 
 <?{ $is-live || $is-search }>
           history.scrollRestoration = 'manual';
-          window.onload = scrollToBottom;
+          if (!$oldest_first) {
+              window.onload = scrollToBottom;
+          }
 
           var $focused = true;
           window.onblur  = function() {
@@ -146,11 +148,20 @@
               }
           }, 50000 + Math.floor(Math.random() * 20000)); // 50 - 70 seconds randomly
 
-          var $minY  = 0;
+          var $last_from_bottom = 999;
+          var $last_scrollY     = 999;
           window.addEventListener('scroll', function(e) {
-              if (150 > window.scrollY) {
+              let scrollY = Math.max(window.scrollY, 0);
+              if ($last_scrollY > scrollY && 150 > scrollY) {
                   scrollup<?$is-live>Live</?><?$is-search>Search</?>(25);
               }
+              $last_scrollY = scrollY;
+
+              let from_bottom = document.body.offsetHeight - window.innerHeight - scrollY;
+              if ($last_from_bottom > from_bottom && 150 > from_bottom) {
+                  scrolldown<?$is-live>Live</?><?$is-search>Search</?>(100);
+              }
+              $last_from_bottom = from_bottom;
           });
 </?>
       });
@@ -607,6 +618,7 @@ in the selection.">
                 <&search-type($_)>
                 <&search-all-words($_)>
                 <&search-ignorecase($_)>
+                <&search-oldest-first($_)>
                 <&search-nicks($_)>
                 <&search-include-aliases($_)>
                 <&search-channel($_, $is-home)>

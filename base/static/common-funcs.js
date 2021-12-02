@@ -1,6 +1,7 @@
 // whether sidebars to be shown or not
 var $showLeftSide  = getCookie("showLeftSide");
 var $showRightSide = getCookie("showRightSide");
+var $scrollUpOK         = true;
 var $fetchingScrollUp   = false;
 var $fetchingScrollDown = false;
 
@@ -12,6 +13,7 @@ var $query;            // the text to look for, if any
 var $type;             // the type of query (words/contains/starts-with/matches)
 var $all_words;        // boolean to indicate any / all
 var $ignorecase;       // boolean to indicate case sensitivity
+var $oldest_first;     // boolean to indicate oldest entries first
 var $nicks;            // the nick names to limit to, if any
 var $include_aliases;  // boolean to indicate whether to include nick aliases
 var $message_type;     // type of message to filter on ""/conversation/control
@@ -200,6 +202,7 @@ function uriForSearchOnChannel(channel = "") {
     if ($query)           { uri += '&query=' + $query               }
     if ($all_words)       { uri += '&all-words=True'                }
     if ($ignorecase)      { uri += '&ignorecase=True'               }
+    if ($oldest_first)    { uri += '&oldest-first=True'             }
     if ($nicks)           { uri += '&nicks=' + $nicks               }
     if ($include_aliases) { uri += '&include-aliases=True'          }
     if ($message_type)    { uri += '&message-type=' + $message_type }
@@ -524,9 +527,9 @@ function filterExcludeByText(button) {
 }
 
 // fetch additional HTML and call callback when done
-function additionalHTML(url, whenReady) {
+function additionalHTML(url, whenReady, noAction) {
     let xhr = new XMLHttpRequest();
-    xhr.ontimeout = function () {
+    xhr.ontimeout = function() {
         console.error("The request for " + url + " timed out.");
     }
     xhr.onload = function() {
@@ -534,7 +537,7 @@ function additionalHTML(url, whenReady) {
             if (xhr.status === 200) {
                 whenReady.apply(xhr);
             } else if (xhr.status = 204) {
-                // no action needed
+                noAction.apply(xhr);
             } else {
                 console.error('The request for '
                   + url
@@ -551,7 +554,7 @@ function additionalHTML(url, whenReady) {
 
 // helper function to do the actual upscrolling
 function scrollup(url, target) {
-    if (!$fetchingScrollUp) {
+    if ($scrollUpOK && !$fetchingScrollUp) {
         $fetchingScrollUp = true;
         additionalHTML(
           url,
@@ -574,6 +577,9 @@ function scrollup(url, target) {
             html.scrollTop = oldScrollPos + (newScrollHeight - oldScrollHeight);
             filterMessages();
             $fetchingScrollUp = false;
+          },
+          function() {
+              $scrollUpOK = false;
           }
         );
     }
@@ -585,10 +591,13 @@ function scrolldown(url) {
         $fetchingScrollDown = true;
         additionalHTML(
           url,
-          function () {
+          function() {
               let tbodyEl = document.querySelector("tbody");
               tbodyEl.innerHTML = tbodyEl.innerHTML + this.responseText;
               filterMessages();
+              $fetchingScrollDown = false;
+          },
+          function() {
               $fetchingScrollDown = false;
           }
         );

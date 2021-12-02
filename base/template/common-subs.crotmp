@@ -164,6 +164,19 @@ should be considered identical">
   </div>
 </:>
 
+<:sub search-oldest-first($_)>
+  <div class="field"
+    title="Show oldest entries first if set,
+otherwise show most recent first">
+    <div class="control">
+      <input name="oldest-first" type="checkbox"
+        onChange="$oldest_first = event.target.checked"
+        value="True"<?.oldest-first> checked</?>>
+      <strong>oldest first</strong>
+    </div>
+  </div>
+</:>
+
 <:sub search-nicks($_)>
   <div class="field"
     title="Specify the nick(s) of the author
@@ -330,6 +343,7 @@ move to the top of the page"
       <&search-type($_)>
       <&search-all-words($_)>
       <&search-ignorecase($_)>
+      <&search-oldest-first($_)>
       <&search-nicks($_)>
       <&search-include-aliases($_)>
       <&search-channel($_, $pulldown)>
