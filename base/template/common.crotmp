@@ -745,7 +745,6 @@ in the selection.">
               <section id="message-log">
                 <table class="table message-table is-fullwidth">
 <?.initial-topic-text>
-<!--
                   <tr class="special-topic">
                     <td colspan="4">
                       <&HTML(.initial-topic-text)><br/>
@@ -753,7 +752,6 @@ in the selection.">
                       <a href="/<.channel>/<.initial-topic-date>.html#<.initial-topic-relative-target>"><.initial-topic-human-date></a>.
                     </td>
                   </tr>
--->
 </?>
                   <&render-messages($_, $is-day, $is-gist)>
                 </table>

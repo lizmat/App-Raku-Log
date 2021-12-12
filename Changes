@@ -2,6 +2,10 @@ Revision history for App-Raku-Log
 
 {{$NEXT}}
 
+0.0.30  2021-12-12T13:28:31+01:00
+    - Upped dependency on IRC::Log::Colabti for fixes
+    - Activate topic showing on day view
+
 0.0.29  2021-12-02T20:31:18+01:00
     - Upped depencies for fixes
     - Add support for "oldes first" option when searching
