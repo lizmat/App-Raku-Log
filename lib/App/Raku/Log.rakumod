@@ -25,7 +25,7 @@ my constant %stop-nicks = <
   success such synthetic system systems tag tea test tester
   testing tests the there they think this total trick trigger
   try twigil type undefined unix user usr variable variables
-  visiting wake was welcome what when who will writer yes
+  very visiting wake was welcome what when who will writer yes
 >.map: { $_ => True }
 
 # Known top level domains
