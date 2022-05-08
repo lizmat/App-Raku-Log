@@ -329,7 +329,7 @@ move to the top of the page"
 
 <:sub copy-link($_)>
   <a class="msg-log-btn"
-    onClick="copyTextToClipboard('https://logs.liz.nl/<.channel>/<.date>.html#<.relative-target>')"
+    onClick="copyTextToClipboard('https://irclogs.raku.org/<.channel>/<.date>.html#<.relative-target>')"
     title="Copy message link to the clipboard"
   ><&column-button('clipboard', 'Copy link')></a>
 </:>

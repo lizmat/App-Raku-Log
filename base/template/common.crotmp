@@ -415,7 +415,7 @@ selection."
                       <li title="Copy a link to the messages
 on this page to the clipboard.">
                         <a><span onClick="copyTextToClipboard(
-                          'https://logs.liz.nl'
+                          'https://irclogs.raku.org'
                             + document.getElementById('Gist').getAttribute('href')
                         )">Copy to clipboard</span></a>
                       </li>

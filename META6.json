@@ -6,10 +6,10 @@
   "build-depends": [
   ],
   "depends": [
-    "App::IRC::Log:ver<0.0.51>:auth<zef:lizmat>",
+    "App::IRC::Log:ver<0.0.52>:auth<zef:lizmat>",
     "Cro::HTTP::Server:ver<0.8.7>",
-    "IRC::Channel::Log:ver<0.0.40>:auth<zef:lizmat>",
-    "IRC::Log::Colabti:ver<0.0.50>:auth<zef:lizmat>"
+    "IRC::Channel::Log:ver<0.0.41>:auth<zef:lizmat>",
+    "IRC::Log::Colabti:ver<0.0.51>:auth<zef:lizmat>"
   ],
   "description": "Cro application for presenting Raku IRC logs",
   "license": "Artistic-2.0",
@@ -25,5 +25,5 @@
   ],
   "test-depends": [
   ],
-  "version": "0.0.33"
+  "version": "0.0.34"
 }
