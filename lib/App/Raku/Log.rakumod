@@ -605,8 +605,9 @@ my constant discord-bot = 'discord-raku-bot';
 sub identify-discord-bridge-users(@entries --> Nil) {
     my str $last-nick;
     for @entries.grep(*<conversation>) -> %entry {
-        if %entry<nick> eq discord-bot {
-            my (str $nick, str $after) = %entry<message>.substr(4).split('#',2);
+        if %entry<nick> eq discord-bot && %entry<message> -> $message {
+            my (str $nick, str $after) = $message.substr(4).split('&gt; ',2);
+            $nick = $nick.substr(0,$_) with $nick.index('#');
             %entry<nick> := $nick;
             if $nick eq $last-nick {
                 %entry<same-nick> := True;
@@ -619,7 +620,7 @@ sub identify-discord-bridge-users(@entries --> Nil) {
                 );
                 $last-nick      = $nick;
             }
-            %entry<message> := $after.substr($after.index('&gt;') + 5);
+            %entry<message> := $after;
         }
         elsif $last-nick {
             $last-nick = "";
