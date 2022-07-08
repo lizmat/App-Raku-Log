@@ -1,7 +1,7 @@
 #!/usr/bin/env raku --ll-exception
 BEGIN %*ENV<RAKUDO_PRECOMPILATION_PROGRESS> = 1;
 
-use App::Raku::Log:ver<0.0.34>:auth<zef:lizmat>;
+use App::Raku::Log:ver<0.0.35>:auth<zef:lizmat>;
 use App::IRC::Log:ver<0.0.52>:auth<zef:lizmat>;
 use IRC::Channel::Log:ver<0.0.41>:auth<zef:lizmat>;
 use IRC::Log::Colabti:ver<0.0.51>:auth<zef:lizmat>;

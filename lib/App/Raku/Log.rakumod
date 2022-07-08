@@ -606,6 +606,7 @@ sub identify-discord-bridge-users(@entries --> Nil) {
     my str $last-nick;
     for @entries.grep(*<conversation>) -> %entry {
         if %entry<nick> eq discord-bot && %entry<message> -> $message {
+            # line starts with '&lt;', hence the .substr(4)
             my (str $nick, str $after) = $message.substr(4).split('&gt; ',2);
             $nick = $nick.substr(0,$_) with $nick.index('#');
             %entry<nick> := $nick;
@@ -722,6 +723,7 @@ sub channel-ordering(@channels) is export {
     >.grep: { %channels{$_}:delete }
 
     if <
+      raku-doc
       raku-dev
       moarvm
     >.grep({ %channels{$_}:delete }) -> @core {
