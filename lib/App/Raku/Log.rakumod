@@ -183,6 +183,7 @@ sub htmlize($entry, %colors) is export {
         }
 
         $text = $text
+          .subst("JavaScript:", "JavaScripdt:", :global)
           .subst(/ <cntrl>+ /, :global)   # no control characters please
           .subst('&', '&amp;', :global)   # HTML escaping
           .subst('<', '&lt;',  :global)
