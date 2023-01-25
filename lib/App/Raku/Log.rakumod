@@ -607,10 +607,19 @@ sub identify-discord-bridge-users(@entries --> Nil) {
     my str $last-nick;
     for @entries.grep(*<conversation>) -> %entry {
         if %entry<nick> eq discord-bot && %entry<message> -> $message {
+            my str $nick;
+            my str $after;
+
             # line starts with '&lt;', hence the .substr(4)
-            my (str $nick, str $after) = $message.substr(4).split('&gt; ',2);
-            $nick = $nick.substr(0,$_) with $nick.index('#');
-            %entry<nick> := $nick;
+            if $message.starts-with('&lt') {
+		($nick, $after) = $message.substr(4).split('&gt; ',2);
+		$nick = $nick.substr(0,$_) with $nick.index('#');
+		%entry<nick> := $nick;
+            }
+            else {
+	        %entry<nick> := $nick = $last-nick;
+                $after = $message;
+            }
             if $nick eq $last-nick {
                 %entry<same-nick> := True;
             }
