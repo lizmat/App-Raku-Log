@@ -9,9 +9,9 @@ SYNOPSIS
 ========
 
 ```raku
-$ ./start
+$ ./bin/raku-logs-server
 
-$ ./start logs base
+$ ./bin/raku-logs-server logs base
 ```
 
 DESCRIPTION

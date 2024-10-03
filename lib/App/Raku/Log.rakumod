@@ -789,9 +789,9 @@ App::Raku::Log - Cro application for presenting Raku IRC logs
 
 =begin code :lang<raku>
 
-$ ./start
+$ ./bin/raku-logs-server
 
-$ ./start logs base
+$ ./bin/raku-logs-server logs base
 
 =end code
 
