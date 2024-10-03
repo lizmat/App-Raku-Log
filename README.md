@@ -29,7 +29,7 @@ Source can be located at: https://github.com/lizmat/App-Raku-Log . Comments and 
 COPYRIGHT AND LICENSE
 =====================
 
-Copyright 2021 Elizabeth Mattijsen
+Copyright 2021--2024 Elizabeth Mattijsen
 
 This library is free software; you can redistribute it and/or modify it under the Artistic License 2.0.
 
