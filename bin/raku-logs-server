@@ -1,4 +1,4 @@
-#!/usr/bin/env raku --ll-exception
+#!/usr/bin/env -S raku --ll-exception
 BEGIN %*ENV<RAKUDO_PRECOMPILATION_PROGRESS> = 1;
 
 use App::Raku::Log:ver<0.0.35>:auth<zef:lizmat>;
