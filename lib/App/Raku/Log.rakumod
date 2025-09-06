@@ -603,10 +603,12 @@ sub mark-camelia-invocations(@entries --> Nil) {
 
 # Check for Discord bot bridging
 my constant discord-bot = 'discord-raku-bot';
+my constant disbot1     = 'disbot1';
 sub identify-discord-bridge-users(@entries --> Nil) {
     my str $last-nick;
     for @entries.grep(*<conversation>) -> %entry {
-        if %entry<nick> eq discord-bot && %entry<message> -> $message {
+        if (%entry<nick> eq discord-bot | disbot1)
+          && %entry<message> -> $message {
             my str $nick;
             my str $after;
 
@@ -627,6 +629,9 @@ sub identify-discord-bridge-users(@entries --> Nil) {
                 %entry<same-nick>:delete;
                 %entry<sender> := %entry<sender>.subst(
                   discord-bot,
+                  '<em title="on Discord">' ~ $nick ~ '</em>'
+                ).subst(
+                  disbot1,
                   '<em title="on Discord">' ~ $nick ~ '</em>'
                 );
                 $last-nick      = $nick;
