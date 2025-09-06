@@ -1,6 +1,8 @@
 Revision history for App-Raku-Log
 
 {{$NEXT}}
+
+0.0.36  2025-09-06T17:56:37+02:00
      - Up dependencies, because we can
      - Add CI badge for each OS
      - Various modernizations

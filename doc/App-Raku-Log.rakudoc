@@ -10,7 +10,7 @@ App::Raku::Log - Cro application for presenting Raku IRC logs
 $ ./bin/raku-logs-server
 
 $ ./bin/raku-logs-server logs base
-=end codeoutput
+=end output
 
 =head1 DESCRIPTION
 
