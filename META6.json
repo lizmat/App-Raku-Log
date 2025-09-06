@@ -5,25 +5,37 @@
   ],
   "build-depends": [
   ],
-  "depends": [
-    "App::IRC::Log:ver<0.0.52>:auth<zef:lizmat>",
-    "Cro::HTTP::Server:ver<0.8.7>",
-    "IRC::Channel::Log:ver<0.0.41>:auth<zef:lizmat>",
-    "IRC::Log::Colabti:ver<0.0.51>:auth<zef:lizmat>"
-  ],
+  "depends": {
+    "runtime": {
+      "requires": [
+        "App::IRC::Log:ver<0.0.53+>:auth<zef:lizmat>",
+        "Cro::HTTP:ver<0.8.11+>:auth<zef:cro>",
+        "IRC::Channel::Log:ver<0.0.42+>:auth<zef:lizmat>",
+        "IRC::Log::Colabti:ver<0.0.52+>:auth<zef:lizmat>"
+      ]
+    }
+  },
   "description": "Cro application for presenting Raku IRC logs",
   "license": "Artistic-2.0",
   "name": "App::Raku::Log",
-  "perl": "6.d",
   "provides": {
     "App::Raku::Log": "lib/App/Raku/Log.rakumod"
   },
+  "raku": "6.d",
   "resources": [
   ],
   "source-url": "https://github.com/lizmat/App-Raku-Log.git",
+  "support": {
+    "bugtracker": "https://github.com/lizmat/App-Raku-Log/issues",
+    "email": "liz@raku.rocks",
+    "source": "https://github.com/lizmat/App-Raku-Log.git"
+  },
   "tags": [
+    "APP",
+    "IRC",
+    "LOG"
   ],
   "test-depends": [
   ],
-  "version": "0.0.35"
+  "version": "0.0.36"
 }

@@ -1,6 +1,10 @@
 Revision history for App-Raku-Log
 
 {{$NEXT}}
+     - Up dependencies, because we can
+     - Add CI badge for each OS
+     - Various modernizations
+     - Update copyright year
 
 0.0.35  2022-07-08T14:25:28+02:00
     - Add raku-doc description
@@ -8,26 +12,26 @@ Revision history for App-Raku-Log
 
 0.0.34  2022-05-08T16:07:00+02:00
     - Fix URL to live site
-    - Upped dependencies
+    - Up dependencies
 
 0.0.33  2022-02-11T18:14:09+01:00
-    - Upped dependencies
+    - Up dependencies
 
 0.0.32  2021-12-21T23:54:59+01:00
     - Bump App::IRC::Log dependency to get search highlighting
 
 0.0.30  2021-12-12T13:28:31+01:00
-    - Upped dependency on IRC::Log::Colabti for fixes
+    - Up dependency on IRC::Log::Colabti for fixes
     - Activate topic showing on day view
 
 0.0.29  2021-12-02T20:31:18+01:00
-    - Upped depencies for fixes
+    - Up depencies for fixes
     - Add support for "oldes first" option when searching
     - Properly implement down-scrolling for live and search
     - Remove some debug statements in JS
 
 0.0.28  2021-12-01T21:59:04+01:00
-    - Upped depencies for fixes and better performance
+    - Up depencies for fixes and better performance
 
 0.0.27  2021-12-01T16:14:17+01:00
     - Bump App::IRC::Log for nick aliases search fix
@@ -51,10 +55,10 @@ Revision history for App-Raku-Log
 
 0.0.22  2021-11-18T14:20:30+01:00
     - Attempt to fix version snafu
-    - Upped dependency on App::IRC::Log for fixes
+    - Up dependency on App::IRC::Log for fixes
 
 0.0.21  2021-11-18T13:34:31+01:00
-    - Upped dependencies for better performance and less
+    - Up dependencies for better performance and less
       memory usage
 
 0.0.20  2021-10-28T22:11:47+02:00
