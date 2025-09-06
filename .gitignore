@@ -5,3 +5,4 @@
 /IRC-logs
 /old
 node_modules
+*.rakucov
