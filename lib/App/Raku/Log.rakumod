@@ -747,24 +747,38 @@ sub channel-ordering(@channels) is export {
 
     if <
       cro
+      raku-l10n
       red
       mugs
-      raku-land
       raku-gamedev
-    >.grep({ %channels{$_}:delete }) -> @associated {
-        @ordered.push("-associated");
-        @ordered.append(@associated);
+    >.grep({ %channels{$_}:delete }) -> @frameworks {
+        @ordered.push("-frameworks");
+        @ordered.append(@frameworks);
     }
 
     if <
+      raku-community-modules
       raku-conf
+      raku-land
       raku-steering-council
     >.grep({ %channels{$_}:delete }) -> @community {
         @ordered.push("-community");
         @ordered.append(@community);
     }
 
+
     if <
+      raku-rak
+      raku-sparrow
+      raku-zef
+    >.grep({ %channels{$_}:delete }) -> @applications {
+        @ordered.push("-applications");
+        @ordered.append(@applications);
+    }
+
+    if <
+      parrot
+      parrotsketch
       perl6
       perl6-dev
       p6dev
