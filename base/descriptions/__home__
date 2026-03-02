@@ -2,9 +2,9 @@
 <div class="subtitle">
 This website provides access to the historic IRC logs of the development
 of the Raku Programming Language.  They are provided here as complete
-as possible, either from
-<a href="https://colabti.org/irclogger//irclogger_logs">historic logs</a>
-or from the new <a href="https://github.com/Raku/IRC-logs">Raku IRC logs</a>.
+as possible, either from the historic Colabti logs, from the perlgeek.de
+database or from the new
+<a href="https://github.com/Raku/IRC-logs">Raku IRC logs</a>.
 </div>
 <div class="subtitle">
 Due to the nature of IRC, there can be no guarantee that these logs are
