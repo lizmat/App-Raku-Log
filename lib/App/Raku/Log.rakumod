@@ -783,7 +783,10 @@ sub channel-ordering(@channels) is export {
       perl6-dev
       p6dev
       perl6-macros
+      perl6-noise-gang
       perl6-toolchain
+      phasers
+      rakudosketch
     >.grep({ %channels{$_}:delete }) -> @historical {
         @ordered.push("-historical");
         @ordered.append(@historical);
