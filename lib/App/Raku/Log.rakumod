@@ -777,6 +777,7 @@ sub channel-ordering(@channels) is export {
     }
 
     if <
+      masakism
       parrot
       parrotsketch
       perl6
