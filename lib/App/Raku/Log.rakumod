@@ -778,6 +778,7 @@ sub channel-ordering(@channels) is export {
 
     if <
       masakism
+      november-wiki
       parrot
       parrotsketch
       perl6
